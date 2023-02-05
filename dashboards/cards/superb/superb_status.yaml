@@ -1,0 +1,91 @@
+type: grid
+columns: 1
+square: false
+cards:
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: gauge
+        entity: sensor.ronny_s_superb_fuel_level
+        min: 0
+        max: 100
+        name: Diesel
+        severity:
+          green: 20
+          yellow: 5
+          red: 0
+        needle: true
+      - type: gauge
+        entity: sensor.ronny_s_superb_adblue_level
+        min: 0
+        max: 15000
+        name: AdBlu
+        severity:
+          green: 1000
+          yellow: 500
+          red: 50
+        needle: true
+      - type: gauge
+        entity: sensor.ronny_s_superb_outside_temperature
+        min: -20
+        max: 40
+        name: Temp
+        needle: true
+        severity:
+          green: 0
+          yellow: 0
+          red: 0
+        theme: temp_gauge
+  - type: grid
+    columns: 3
+    square: false
+    cards:      
+      - type: custom:mushroom-template-card
+        primary: Rekkevidde
+        secondary: '{{ states(''sensor.ronny_s_superb_combustion_range'') }} km'
+        icon: mdi:fuel
+      - type: custom:mushroom-template-card
+        primary: Oppdatert
+        secondary: >-
+                  {{
+                  as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%d.%m.%Y')
+                  }}
+                  {{
+                  as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%H.%M.%S')
+                  }}
+        multiline_secondary: true
+        icon: mdi:clock
+      - type: custom:mushroom-template-card
+        entity: switch.ronny_s_superb_force_data_refresh
+        primary: Oppdater
+        tap_action:
+          action: toggle
+        icon: mdi:car-connected
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: button
+        name: Varme
+        entity: switch.ronny_s_superb_parking_heater_heating
+        icon: mdi:radiator
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-template-card
+        secondary: "{{ states('sensor.ronny_s_superb_parking_heater_heating_ventilation_status') }}"
+        primary: Status
+        icon: >-
+          {% if states('sensor.ronny_s_superb_parking_heater_heating_ventilation_status') == 'heating' %}
+            mdi:radiator
+          {% elif states('sensor.ronny_s_superb_parking_heater_heating_ventilation_status') == 'cooling' %}
+            mdi:snowflake
+          {% else %}
+            mdi:fan-off
+          {% endif %}
+      - type: button
+        name: Kjøling
+        entity: switch.ronny_s_superb_parking_heater_ventilation
+        icon: mdi:snowflake
+        tap_action:
+          action: toggle

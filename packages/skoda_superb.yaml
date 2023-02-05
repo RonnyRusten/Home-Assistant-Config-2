@@ -2,5 +2,5 @@ template:
   - sensor:
     - name: "superb_last_update"
       unique_id: "superb_last_update"
-      state: "{{ as_timestamp(states('sensor.superb_last_connected')) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
+      state: "{{ as_timestamp(states('sensor.ronny_s_superb_last_connected')) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
       icon: "mdi:clock"
