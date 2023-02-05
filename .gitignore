@@ -1,0 +1,13 @@
+/*
+
+!.gitignore
+!/packages/
+#!/entities/
+!/esphome/
+#!/other/
+!*.yaml
+!*.json
+
+google_calendars.yaml
+secrets.yaml
+scripts.yaml

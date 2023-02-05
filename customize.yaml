@@ -1,0 +1,15 @@
+zone.home:
+  radius: 30
+# binary_sensor.master_bedroom_magnet_window_contact:
+#   device_class: window
+switch.master_bedroom_heater_plug:
+  device_class: outlet
+# binary_sensor.magnet_garasjedor_on_off:
+#   device_class: garage_door
+# binary_sensor.magnet_vindfangdor_on_off:
+#   device_class: door
+# binary_sensor.switchlaundry_door_on_off:
+#   device_class: door
+sensor.energy_total:
+  device_class: energy
+  state_class: total_increasing

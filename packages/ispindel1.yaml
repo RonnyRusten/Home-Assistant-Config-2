@@ -1,0 +1,47 @@
+mqtt:
+  sensor:
+    - name: "iSpindel1 Angle"
+      unique_id: ispindel1_angle
+      state_topic: "brew/ferment/iSpindel/angle"
+      value_template: "{{value | round(2) }}"
+      unit_of_measurement: "°"
+
+    - name: "iSpindel1 Battery"
+      unique_id: ispindel1_battery
+      state_topic: "brew/ferment/iSpindel/battery"
+      value_template: "{{value | round(2) }}"
+      unit_of_measurement: "V"
+
+    - name: "iSpindel1 SG"
+      unique_id: ispindel1_sg
+      state_topic: "brew/ferment/iSpindel/gravity"
+      value_template: "{{value | round(3) }}"
+      unit_of_measurement: "SG"
+
+    - name: "iSpindel1 Id"
+      unique_id: ispindel1_id
+      state_topic: "brew/ferment/iSpindel/id"
+
+    - name: "iSpindel1 RSSI"
+      unique_id: ispindel1_rssi
+      state_topic: "brew/ferment/iSpindel/rssi"
+      unit_of_measurement: "dBm"
+      
+    - name: "iSpindel1 Temperature"
+      unique_id: ispindel1_temperature
+      state_topic: "brew/ferment/iSpindel/temp"
+      value_template: "{{value | round(2) }}"
+      unit_of_measurement: "°C"
+
+    - name: "iSpindel1 Time"
+      unique_id: ispindel1_time
+      state_topic: "brew/ferment/iSpindel/time"
+      value_template: "{{ as_timestamp((value | int /1000)|timestamp_local) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
+
+template:
+  - sensor:
+    - name: 'iSpindel1 battery percent'
+      unique_id: 'ispindel_battery_percent'
+      state: "{{ ((states('sensor.ispindel1_battery') | float(0) -3.2)*100) | round(2) }}"
+      unit_of_measurement: "%"
+      icon: "mdi:battery"

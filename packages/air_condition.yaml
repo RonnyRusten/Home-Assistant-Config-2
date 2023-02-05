@@ -1,0 +1,38 @@
+sensor:
+  - platform: integration
+    source: sensor.air_condition_power
+    name: air_condition_energy
+    unique_id: air_condition_energy
+    round: 2
+    unit_prefix: k
+
+  - platform: history_stats
+    name: air_condition_runtime_today
+    entity_id: sensor.air_condition_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: air_condition_power
+      unique_id: air_condition_power
+      state: >-
+        {% if states('sensor.air_condition_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.air_condition_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "Air condition running"
+      unique_id : "air_condition_running"
+      state: "{{ states('sensor.air_condition_power') | float(0) > 10 }}"
+
+utility_meter:
+  air_condition_daily_energy:
+    source: sensor.air_condition_energy
+    name: air_condition_daily_energy
+    unique_id: air_condition_daily_energy
+    cycle: daily

@@ -1,0 +1,30 @@
+##
+# https://www.home-assistant.io/integrations/logger/
+##
+
+logger:
+  default: info
+  # logs:
+  #   skodaconnect.connection: debug
+  #   skodaconnect.vehicle: debug
+  #   custom_components.skodaconnect: debug
+  #   custom_components.skodaconnect.climate: debug
+  #   custom_components.skodaconnect.lock: debug
+  #   custom_components.skodaconnect.device_tracker: debug
+  #   custom_components.skodaconnect.switch: debug
+  #   custom_components.skodaconnect.binary_sensor: debug
+  #   custom_components.skodaconnect.sensor: debug
+
+#    homeassistant.core: debug
+#    homeassistant.components.zha: debug
+#    bellows.zigbee.application: debug
+#    bellows.ezsp: debug
+#    zigpy: debug
+#    zigpy_cc: debug
+#    zigpy_deconz.zigbee.application: debug
+#    zigpy_deconz.api: debug
+#    zigpy_xbee.zigbee.application: debug
+#    zigpy_xbee.api: debug
+#    zigpy_zigate: debug
+#    zigpy_znp: debug
+#    zhaquirks: debug

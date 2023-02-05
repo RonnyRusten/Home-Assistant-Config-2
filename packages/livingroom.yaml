@@ -1,0 +1,53 @@
+input_boolean:
+  livingroom_lights_on:
+    name: livingroom_lights_on
+    icon: mdi:lightbulb
+
+automation:
+  - id: 'livingroom_lights'
+    alias: '_Stue lys'
+    description: ''
+    trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/livingroom_switch_double
+      payload: "single_right"
+      value_template: "{{ value_json.action }}"
+    condition: []
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.livingroom_lights_on
+                state: 'off'
+            sequence:
+              - service: light.turn_on
+                data:
+                  transition: 1
+                target:
+                  entity_id:
+                    - light.livingroom_lights #Gruppe i Zigbee2MQTT
+                    - light.livingroom_light_window_south_1
+                    - light.livingroom_light_window_south_2
+              - service: input_boolean.turn_on
+                data: {}
+                target:
+                  entity_id: input_boolean.livingroom_lights_on
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.livingroom_lights_on
+                state: 'on'
+            sequence:
+              - service: light.turn_off
+                data:
+                  transition: 1
+                target:
+                  entity_id:
+                    - light.livingroom_lights #Gruppe i Zigbee2MQTT
+                    - light.livingroom_light_window_south_1
+                    - light.livingroom_light_window_south_2
+              - service: input_boolean.turn_off
+                data: {}
+                target:
+                  entity_id: input_boolean.livingroom_lights_on
+        default: []
+    mode: single

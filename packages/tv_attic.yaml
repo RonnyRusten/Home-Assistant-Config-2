@@ -1,0 +1,51 @@
+sensor:
+  - platform: integration
+    source: sensor.tv_attic_power
+    name: tv_attic_energy
+    unique_id: tv_attic_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: tv_attic_runtime_today
+    entity_id: sensor.tv_attic_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+utility_meter:
+  tv_attic_daily_energy:
+    source: sensor.tv_attic_energy
+    name: tv_attic_daily_energy
+    unique_id: tv_attic_daily_energy
+    cycle: daily
+
+template:
+  - sensor:
+      - name: tv_attic_power2
+        unique_id: tv_attic_power2
+        device_class: power
+        state: >-
+          {% if states('sensor.attic_tv_plug_power') | float(0) < 0 %}
+            0
+          {% else %}
+            {{ states('sensor.attic_tv_plug_power') | float(0) }}
+          {% endif %}
+        unit_of_measurement: W
+
+      - name: tv_attic_power
+        unique_id: tv_attic_power
+        device_class: power
+        state: >-
+          {% if states('sensor.attic_tv_plug_voltage') | float(0) < 0 %}
+            0
+          {% else %}
+            {{ (states('sensor.attic_tv_plug_voltage') | float(0) * states('sensor.attic_tv_plug_current') | float(0)) | round(2) }}
+          {% endif %}
+        unit_of_measurement: W
+
+      - name: "TV attic running"
+        unique_id: "tv_attic_running"
+        state: "{{ states('sensor.tv_attic_power') | float(0) > 15 }}"

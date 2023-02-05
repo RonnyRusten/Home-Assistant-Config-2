@@ -1,0 +1,21 @@
+lovelace:
+  mode: storage
+  # AVM; make note of the requirement for a '-' in the 'dashboard-definition' - or you will get the error;
+  #        Invalid config for [lovelace]: Url path needs to contain a hyphen (-) for dictionary value when checking configuration
+  dashboards:
+    livingroom-tablet-main:
+      mode: yaml
+      title: Oversikt
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: dashboards/tablet_dashboard.yaml
+
+  resources:
+  # Duplicates needed for casting...
+  #   info-source:  https://community.home-assistant.io/t/custom-element-doesnt-exist-but-only-when-casting/140458/14
+  - url: /local/community/history-explorer-card/history-explorer-card.js
+    type: module
+  - url: /local/community/button-card/button-card.js
+    type: module
+  - url: /local/mushroom.js
+    type: module

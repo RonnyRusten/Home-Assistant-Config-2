@@ -1,0 +1,86 @@
+###############################################################################
+#   @author       :   RR
+#   @date         :   17.march.2022
+#   @integration  :   HACS; Min_renovasjon
+#   @description  :   Norwegian garbaage-pickup-schedule
+#   @basic concept:
+#      Some Norwegian garbage companies have got together and created
+#      an app to enable customers warnings of regular and changed
+#      garbage pick-up-times.
+#
+#   Then some smart people wanted this data in HA, and one solution after
+#   another ended up with this one approved onto the HACS-
+#   Instalation via HACS -> /config/custom_components/min_renovasjon
+#   some config in HACS-intgration ?
+#
+#   Stole this heading and the templates from AVM
+#
+#   further info: https://github.com/Danielhiversen/home_assistant_min_renovasjon
+#
+###############################################################################
+
+min_renovasjon:
+  street_name: !secret min_renovasjon_street_name
+  house_no: !secret min_renovasjon_house_no
+  street_code: !secret min_renovasjon_street_code
+  county_id: "1507"
+  date_format: "%d.%m.%Y"
+
+sensor:
+  - platform: min_renovasjon
+    fraction_id:
+      - 1 # sensor.restavfall
+      - 2 # sensor.papp_papir_og_drikkekartong
+      - 3 # sensor.matavfall
+      - 4 # sensor.glass_og_metallemballasje
+      - 19 #
+
+# Stolen from AVM and changed to fit my needs
+template:
+  - sensor:
+      - name: min_renovasjon_next_restavfall
+        unique_id: min_renovasjon_next_restavfall
+        icon: mdi:trash-can
+        state: >
+          {% set seconds = as_timestamp(strptime(states('sensor.restavfall'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+          {% if (seconds/86400) | round() == 1 %}
+          I morgen
+          {% elif (seconds/86400) | round() == 0 %}
+          I dag
+          {% else %}
+          Om {{(seconds / 86400)|round() }} dager
+          {% endif %}
+
+      - name: min_renovasjon_next_papir
+        unique_id: min_renovasjon_next_papir
+        icon: mdi:trash-can
+        state: >
+          {% set seconds = as_timestamp(strptime(states('sensor.papp_papir_og_drikkekartong'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+          {% if (seconds/86400) | round() == 1 %}
+          I morgen
+          {% elif (seconds/86400) | round() == 0 %}
+          I dag
+          {% else %}
+          Om {{(seconds / 86400)|round() }} dager
+          {% endif %}
+
+      # No food waste in my county, yet.
+      # - name: min_renovasjon_next_mat
+      #   unique_id: min_renovasjon_next_mat
+      #   icon: mdi:trash-can
+      #   state: >
+      #     {% set seconds = as_timestamp(strptime(states('sensor.matavfall'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+      #     {{(seconds / 86400)|round()}} dager
+
+      - name: min_renovasjon_next_glass_metall
+        unique_id: min_renovasjon_next_glass_metall
+        icon: mdi:trash-can
+        state: >
+          {% set seconds = as_timestamp(strptime(states('sensor.glass_og_metallemballasje'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+          {% if (seconds/86400) | round() == 1 %}
+          I morgen
+          {% elif (seconds/86400) | round() == 0 %}
+          I dag
+          {% else %}
+          Om {{(seconds / 86400)|round() }} dager
+          {% endif %}

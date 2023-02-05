@@ -1,0 +1,26 @@
+automation:
+  - id: 'basement_office_lights_on'
+    alias: '_Kjellerkontor lys på'
+    description: ''
+    trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/office_basement_switch_light
+      payload: "on"
+      value_template: "{{ value_json.action }}"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.office_basement_light_window
+          
+  - id: 'basement_office_lights_off'
+    alias: '_Kjellerkontor lys av'
+    description: ''
+    trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/office_basement_switch_light
+      payload: "off"
+      value_template: "{{ value_json.action }}"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.office_basement_light_window

@@ -1,0 +1,71 @@
+automation:
+  - id: "person_observed_at_entrance"
+    alias: _Person observert ved inngangsdør
+    description: ""
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.ezviz_person_occupancy
+        to: "on"
+    condition: []
+    action:
+      # - service: notify.mobile_app_ronny_pixel_7_pro #notify.mobile_app_ronnys_iphone
+      #   data:
+      #     message: Person observert
+      #     title: The computer says
+      #     data:
+      #       ttl: 0
+      #       priority: high
+      # - service: notify.telia_box_loftet
+      #   data:
+      #     message: En luring er observert...
+      #     title: Så noen
+      #     data:
+      #       fontsize: small
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: http://192.168.68.42:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
+      #         username: !secret adm_user
+      #         password: !secret adm_password
+      - service: notify.attic_google_tv
+        data:
+          message: En luring er observert...
+          title: Så noen
+          data:
+            fontsize: small
+            position: bottom-right
+            duration: 10
+            transparency: 50%
+            image:
+              url: http://192.168.68.42:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
+              username: !secret adm_user
+              password: !secret adm_password
+      
+      # - service: notify.telia_box_stue
+      #   data:
+      #     message: En luring er observert...
+      #     title: Så noen
+      #     data:
+      #       fontsize: small
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: http://192.168.68.42:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
+      #         username: !secret adm_user
+      #         password: !secret adm_password
+      # - service: notify.telia_box_ingeborg
+      #   data:
+      #     message: En luring er observert...
+      #     title: Så noen
+      #     data:
+      #       fontsize: small
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: http://192.168.68.42:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
+      #         username: !secret adm_user
+      #         password: !secret adm_password
+    mode: single

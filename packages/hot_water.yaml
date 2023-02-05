@@ -1,0 +1,41 @@
+
+sensor:
+  - platform: integration
+    source: sensor.hot_water_power
+    name: hot_water_energy
+    unique_id: hot_water_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: hot_water_runtime_today
+    entity_id: sensor.hot_water_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: hot_water_power
+      unique_id: hot_water_power
+      device_class: power
+      state: >-
+        {% if states('sensor.hot_water_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.hot_water_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+    
+    - name: "hot_water_running"
+      unique_id : "hot_water_running"
+      state: "{{ states('sensor.hot_water_power') | float(0) > 10 }}"
+
+utility_meter:
+  hot_water_daily_energy:
+    source: sensor.hot_water_energy
+    name: hot_water_daily_energy
+    unique_id: hot_water_daily_energy
+    cycle: daily

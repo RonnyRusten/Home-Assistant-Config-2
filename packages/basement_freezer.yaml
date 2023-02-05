@@ -1,0 +1,52 @@
+sensor:
+  - platform: integration
+    source: sensor.basement_freezer_power
+    name: basement_freezer_energy
+    unique_id: basement_freezer_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: basement_freezer_runtime_today
+    entity_id: sensor.basement_freezer_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: basement_freezer_power
+      unique_id: basement_freezer_power
+      device_class: power
+      state: >-
+        {% if states('sensor.basement_freezer_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.basement_freezer_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "Basement Freezer running"
+      unique_id : basement_freezer_running
+      state: "{{ states('sensor.basement_freezer_power') | float(0) > 10 }}"
+
+utility_meter:
+  basement_freezer_daily_energy:
+    source: sensor.basement_freezer_energy
+    name: basement_freezer_daily_energy
+    unique_id: basement_freezer_daily_energy
+    cycle: daily
+
+  basement_freezer_monthly_energy:
+    source: sensor.basement_freezer_energy
+    name: basement_freezer_monthly_energy
+    unique_id: basement_freezer_monthly_energy
+    cycle: monthly
+
+  basement_freezer_yearly_energy:
+    source: sensor.basement_freezer_energy
+    name: basement_freezer_yearly_energy
+    unique_id: basement_freezer_yearly_energy
+    cycle: yearly

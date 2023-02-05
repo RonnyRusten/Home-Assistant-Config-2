@@ -1,0 +1,43 @@
+climate:
+  - platform: generic_thermostat
+    name: Bathroom Basement Temperature
+    unique_id: bathroom_basement_temperature
+    max_temp: 35
+    #target_temp: 23
+    cold_tolerance: 0.1
+    hot_tolerance: 0.1
+    sleep_temp: 10
+    comfort_temp: 28
+    away_temp: 21
+    heater: switch.bathroom_basement_floor_heating
+    target_sensor: sensor.bathroom_basement_climate_temperature
+
+sensor:
+  - platform: integration
+    source: sensor.bathroom_basement_floor_heating_power_1
+    name: bathroom_basement_floor_heating_energy
+    unique_id: bathroom_basement_floor_heating_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: bathroom_basement_floor_heating_runtime_today
+    entity_id: sensor.bathroom_basement_floor_heating_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: "Bathroom basement floor heating running"
+      unique_id: bathroom_basement_floor_heating_running
+      state: "{{ states('sensor.bathroom_basement_floor_heating_power_1') | float(0) > 10 }}"
+
+utility_meter:
+  bathroom_basement_floor_heating_daily_energy:
+    source: sensor.bathroom_basement_floor_heating_energy
+    name: bathroom_basement_floor_heating_daily_energy
+    unique_id: bathroom_basement_floor_heating_daily_energy
+    cycle: daily

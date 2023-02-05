@@ -1,0 +1,77 @@
+sensor:
+  - platform: integration
+    source: sensor.fridge_basement_power
+    name: fridge_basement_energy
+    unique_id: fridge_basement_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: integration
+    source: sensor.fridge_kitchen_power
+    name: fridge_kitchen_energy
+    unique_id: fridge_kitchen_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: fridge_basement_runtime_today
+    entity_id: sensor.fridge_basement_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: fridge_kitchen_runtime_today
+    entity_id: sensor.fridge_kitchen_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: fridge_kitchen_power
+      unique_id: fridge_kitchen_power
+      device_class: power
+      state: >-
+        {% if states('sensor.kitchen_fridge_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.kitchen_fridge_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: fridge_basement_power
+      unique_id: fridge_basement_power
+      device_class: power
+      state: >-
+        {% if states('sensor.basement_fridge_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.basement_fridge_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "fridge_kitchen running"
+      unique_id : "fridge_kitchen_running"
+      state: "{{ states('sensor.fridge_kitchen_power') | float(0) > 10 }}"
+
+    - name: "fridge_basement running"
+      unique_id : "fridge_basement_running"
+      state: "{{ states('sensor.fridge_basement_power') | float(0) > 10 }}"
+
+utility_meter:
+  fridge_kitchen_daily_energy:
+    source: sensor.fridge_kitchen_energy
+    name: fridge_kitchen_daily_energy
+    unique_id: fridge_kitchen_daily_energy
+    cycle: daily
+
+  fridge_basement_daily_energy:
+    source: sensor.fridge_basement_energy
+    name: fridge_basement_daily_energy
+    unique_id: fridge_basement_daily_energy
+    cycle: daily

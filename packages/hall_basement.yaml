@@ -1,0 +1,104 @@
+sensor:
+  - platform: integration
+    source: sensor.basement_hall_floor_heating_electric_consumption_w
+    name: basement_hall_floor_heating_energy
+    unique_id: basement_hall_floor_heating_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: basement_hall_floor_heating_runtime_today
+    entity_id: sensor.basement_hall_floor_heating_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: "basement_hall_floor_heating_running"
+      unique_id : "basement_hall_floor_heating_running"
+      state: "{{ is_state_attr('climate.basement_hall_floor_heating', 'hvac_action', 'heating') }}"
+
+utility_meter:
+  basement_hall_floor_heating_daily_energy:
+    source: sensor.basement_hall_floor_heating_energy
+    name: basement_hall_floor_heating_daily_energy
+    unique_id: basement_hall_floor_heating_daily_energy
+    cycle: daily
+
+automation:
+  - id: 'hall_basement_light_on'
+    alias: _Kjellergang - Automatisk lys på
+    description: ''
+    trigger:
+    - type: motion
+      platform: device
+      device_id: 3d74d5252ef3e9b00d830ca3be4d1fdd
+      entity_id: binary_sensor.hall_basement_motion_occupancy
+      domain: binary_sensor
+    condition: []
+    action:
+    - choose:
+      - conditions:
+        - condition: time
+          after: 02:00
+          before: 06:00
+        sequence:
+        - service: light.turn_on
+          data:
+            transition: 2
+            brightness_pct: 30
+          target:
+            entity_id:
+            - light.hall_basement_light_switch
+      default:
+      - service: light.turn_on
+        data:
+          transition: 1
+          brightness_pct: 60
+        target:
+          entity_id:
+          - light.hall_basement_light_switch
+    mode: single
+
+  - id: 'hall_basement_light_off'
+    alias: _Kjellergang - automatisk lys av
+    description: ''
+    trigger:
+    - type: no_motion
+      platform: device
+      device_id: 3d74d5252ef3e9b00d830ca3be4d1fdd
+      entity_id: binary_sensor.hall_basement_motion_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 10
+        seconds: 0
+        milliseconds: 0
+    - platform: time
+      at: 01:00
+    condition: []
+    action:
+    - choose:
+      - conditions:
+        - condition: time
+          after: 01:00
+          before: 06:00
+        sequence:
+        - service: light.turn_off
+          target:
+            entity_id:
+            - light.hall_basement_light_switch
+          data:
+            transition: 1
+      default:
+      - service: light.turn_on
+        data:
+          transition: 2
+          brightness_pct: 15
+        target:
+          entity_id:
+            - light.hall_basement_light_switch
+    mode: restart

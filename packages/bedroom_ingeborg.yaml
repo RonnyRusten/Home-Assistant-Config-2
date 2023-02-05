@@ -1,0 +1,54 @@
+climate:
+  - platform: generic_thermostat
+    name: Bedroom Ingeborg Temperature
+    unique_id: bedroom_ingeborg_temperature
+    max_temp: 30
+    #target_temp: 23
+    cold_tolerance: 1
+    hot_tolerance: 0.2
+    sleep_temp: 10
+    comfort_temp: 25
+    away_temp: 19
+    heater: switch.bedroom_ingeborg_heater_plug
+    target_sensor: sensor.bedroom_ingeborg_climate_temperature
+
+sensor:
+  - platform: integration
+    source: sensor.bedroom_ingeborg_heater_power
+    name: bedroom_ingeborg_heater_energy
+    unique_id: bedroom_ingeborg_heater_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: bedroom_ingeborg_heater_runtime_today
+    entity_id: sensor.bedroom_ingeborg_heater_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+utility_meter:
+  bedroom_ingeborg_heater_daily_energy:
+    source: sensor.bedroom_ingeborg_heater_energy
+    name: bedroom_ingeborg_heater_daily_energy
+    unique_id: bedroom_ingeborg_heater_daily_energy
+    cycle: daily
+
+template:
+  - sensor:
+    - name: bedroom_ingeborg_heater_power
+      unique_id: bedroom_ingeborg_heater_power
+      device_class: power
+      state: >-
+        {% if states('sensor.bedroom_ingeborg_heater_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.bedroom_ingeborg_heater_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "Bedroom Ingeborg heater running"
+      unique_id : "bedroom_ingeborg_heater_running"
+      state: "{{ states('sensor.bedroom_ingeborg_heater_power') | float(0) > 15 }}"

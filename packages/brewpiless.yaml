@@ -1,0 +1,60 @@
+mqtt:
+  sensor:
+    - name: "BrewPiLess1 FermentingBeerSet"
+      unique_id: brewpiless1_fermentingbeerset
+      state_topic: "brewpiless1/beerSet"
+      unit_of_measurement: "°C"
+
+    - name: "BrewPiLess1 FermentingBeerTemp"
+      unique_id: brewpiless1_fermentingbeertemp
+      state_topic: "brewpiless1/beerTemp"
+      unit_of_measurement: "°C"
+
+    - name: "BrewPiLess1 FermenterFridgeSet"
+      unique_id: brewpiless1_fermenterfridgeset
+      state_topic: "brewpiless1/fridgeSet"
+      unit_of_measurement: "°C"
+
+    - name: "BrewPiLess1 FermenterTemp"
+      unique_id: brewpiless1_fermentertemp
+      state_topic: "brewpiless1/fridgeTemp"
+      value_template: "{{ value | round(2) }}"
+      unit_of_measurement: "°C"
+
+    - name: "BrewPiLess1 Gravity"
+      unique_id: brewpiless1_gravity
+      state_topic: "brewpiless1/gravity"
+      unit_of_measurement: ""
+
+    - name: "BrewPiLess1 modus"
+      unique_id: brewpiless1_modus
+      state_topic: "brewpiless1/mode"
+      qos: 0
+      value_template: >-
+        {% if value == "o" %} Av
+        {% elif value == "f" %} Kjøleskap
+        {% elif value == "b" %} Gjæring konstant temperatur
+        {% elif value == "p" %} Gjæringsprofil
+        {%- endif %}
+
+    - name: "BrewPiLess1 RoomTemp"
+      unique_id: brewpiless1_roomtemp
+      state_topic: "brewpiless1/roomTemp"
+      unit_of_measurement: "°C"
+
+    - name: "BrewPiLess1 status"
+      unique_id: brewpiless1_status
+      state_topic: "brewpiless1/state"
+      qos: 0
+      value_template: >-
+        {% if    value | int == 0 %} Venter
+        {% elif  value | int == 1 %} Av
+        {% elif  value | int == 2 %} Door open
+        {% elif  value | int == 3 %} Varmer
+        {% elif  value | int == 4 %} Kjøler
+        {% elif  value | int == 5 %} Venter på å kjøle
+        {% elif  value | int == 6 %} Venter på å varme
+        {% elif  value | int == 7 %} Venter på topp
+        {% elif  value | int == 8 %} Kjøling minimum tid
+        {% elif  value | int == 9 %} Varme minimum tid
+        {%- endif %}

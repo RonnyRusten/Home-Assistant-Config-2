@@ -1,0 +1,116 @@
+sensor:
+  - platform: integration
+    source: sensor.washing_machine_power
+    name: washing_machine_energy
+    unique_id: washing_machine_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: washing_machine_runtime_today
+    entity_id: sensor.washing_machine_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: washing_machine_power
+      unique_id: washing_machine_power
+      device_class: power
+      state: >-
+        {% if states('sensor.washing_machine_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.washing_machine_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "washing_machine_running"
+      unique_id: "washing_machine_running"
+      state: "{{ states('sensor.washing_machine_power') | float(0) > 6 }}"
+
+utility_meter:
+  washing_machine_daily_energy:
+    source: sensor.washing_machine_energy
+    name: washing_machine_daily_energy
+    unique_id: washing_machine_daily_energy
+    cycle: daily
+
+automation:
+  - id: "washing_machine_finished"
+    alias: _Vaskemaskin ferdig
+    description: ""
+    trigger:
+      - platform: state
+        entity_id: sensor.washing_machine_running
+        to: "False"
+        for: 00:00:30
+        from: "True"
+    condition: []
+    action:
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.kjellerkontoret_speaker
+          message: Vaskemaskinen er ferdig
+          cache: true
+      - service: notify.mobile_app_ronny_pixel_7_pro
+        data:
+          message: Vaskemaskinen er ferdig
+          title: The computer says
+          data:
+            ttl: 0
+            priority: high
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: person.ingeborg
+            state: home
+          sequence:
+            - service: notify.mobile_app_iphone_ingeborg
+              data:
+                message: Vaskemaskinen er ferdig
+                title: The computer says
+                data:
+                  ttl: 0
+                  priority: high
+      - service: notify.mobile_app_iphone
+        data:
+          message: Vaskemaskinen er ferdig
+          title: The computer says
+      # - service: notify.telia_box_loftet
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret washing_machine_image_url
+      #     message: Vaskemaskinen er ferdig
+      #     title: The computer says
+      # - service: notify.telia_box_ingeborg
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret washing_machine_image_url
+      #     message: Vaskemaskinen er ferdig
+      #     title: The computer says
+      # - service: notify.telia_box_stue
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret washing_machine_image_url
+      #     message: Vaskemaskinen er ferdig
+      #     title: The computer says
+    mode: single

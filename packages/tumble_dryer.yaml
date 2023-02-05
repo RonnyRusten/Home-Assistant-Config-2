@@ -1,0 +1,116 @@
+sensor:
+  - platform: integration
+    source: sensor.tumble_dryer_power
+    name: tumble_dryer_energy
+    unique_id: tumble_dryer_energy
+    round: 2
+    method: left
+    unit_prefix: k
+
+  - platform: history_stats
+    name: tumble_dryer_runtime_today
+    entity_id: sensor.tumble_dryer_running
+    state: "True"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+template:
+  - sensor:
+    - name: tumble_dryer_power
+      unique_id: tumble_dryer_power
+      device_class: power
+      state: >-
+        {% if states('sensor.tumble_dryer_plug_power') | float(0) < 0 %}
+          0
+        {% else %}
+          {{ states('sensor.tumble_dryer_plug_power') | float(0) }}
+        {% endif %}
+      unit_of_measurement: W
+
+    - name: "tumble_dryer_running"
+      unique_id: "tumble_dryer_running"
+      state: "{{ states('sensor.tumble_dryer_power') | float(0) > 0 }}"
+
+utility_meter:
+  tumble_dryer_daily_energy:
+    source: sensor.tumble_dryer_energy
+    name: tumble_dryer_daily_energy
+    unique_id: tumble_dryer_daily_energy
+    cycle: daily
+
+automation:
+  - id: "tumble_dryer_finished"
+    alias: _Tørketrommel ferdig
+    description: ""
+    trigger:
+      - platform: state
+        entity_id: sensor.tumble_dryer_running
+        to: "False"
+        for: 00:00:30
+        from: "True"
+    condition: []
+    action:
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.kjellerkontoret_speaker
+          message: Tørketrommelen er ferdig
+          cache: true
+      - service: notify.mobile_app_ronny_pixel_7_pro
+        data:
+          message: Tørketrommelen er ferdig
+          title: The computer says
+          data:
+            ttl: 0
+            priority: high
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: person.ingeborg
+            state: home
+          sequence:
+            - service: notify.mobile_app_iphone_ingeborg
+              data:
+                message: Tørketrommelen er ferdig
+                title: The computer says
+                data:
+                  ttl: 0
+                  priority: high
+      - service: notify.mobile_app_iphone
+        data:
+          message: Tørketrommelen er ferdig
+          title: The computer says
+      # - service: notify.telia_box_loftet
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret tumble_dryer_image_url
+      #     message: Tørketrommelen er ferdig
+      #     title: The computer says
+      # - service: notify.telia_box_ingeborg
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret tumble_dryer_image_url
+      #     message: Tørketrommelen er ferdig
+      #     title: The computer says
+      # - service: notify.telia_box_stue
+      #   data:
+      #     data:
+      #       fontsize: large
+      #       position: bottom-right
+      #       duration: 10
+      #       transparency: 50%
+      #       image:
+      #         url: !secret tumble_dryer_image_url
+      #     message: Tørketrommelen er ferdig
+      #     title: The computer says
+    mode: single

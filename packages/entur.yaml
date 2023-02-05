@@ -1,0 +1,13 @@
+sensor:
+  - platform: entur_public_transport
+    expand_platforms: false
+    show_on_map: true
+    stop_ids:
+      - "NSR:StopPlace:38775" #Ålesund Rutebilstasjon
+      - "NSR:StopPlace:39567" #Malaga
+      - "NSR:StopPlace:37796" #Røysebakken
+      - "NSR:StopPlace:60264" #Campus Ålesund
+      - "NSR:StopPlace:40138" #Røysegata
+    line_whitelist:
+      - "MOR:Line:1" #Mot sentrum
+      # - "MOR:Line:602" #Mot Moa
