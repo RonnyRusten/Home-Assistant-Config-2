@@ -1,0 +1,126 @@
+type: grid
+square: false
+columns: 1
+cards:
+  - type: custom:mushroom-title-card
+    title: Lys
+  - square: false
+    columns: 2
+    type: grid
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_lights
+        name: Alle lamper
+        icon: mdi:lamps-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: call-service
+          service: automation.trigger
+          data: {}
+          target:
+            entity_id: automation.stue_lys
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_cupboard
+        name: Skjenk
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: true
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+        primary_info: name
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_north_east
+        name: Vindu nord
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_tv_board
+        name: TV-bord
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_north_east
+        name: Ved trappa
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_window_south_1
+        name: Vindu sør-vest
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_window_south_2
+        name: Vindu sør-øst
+        icon: mdi:lamp-outline
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_floorlamp
+        name: Stålampe
+        icon: mdi:lava-lamp
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_dining_table
+        name: Spisetue
+        icon: mdi:ceiling-light-multiple
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-light-card
+        entity: light.outdoors_light_terrace
+        name: Hagestue
+        icon: mdi:outdoor-lamp
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: true
+        show_color_control: false
+        collapsible_controls: true
+        tap_action:
+          action: toggle
+        primary_info: name

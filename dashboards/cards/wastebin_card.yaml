@@ -1,0 +1,44 @@
+type: grid
+columns: 3
+square: false
+cards:
+  - type: custom:mushroom-template-card
+    primary: Restavfall
+    secondary: '{{ states(''sensor.min_renovasjon_next_restavfall'') }}'
+    icon: mdi:trash-can
+    layout: vertical
+    entity: sensor.restavfall
+    tap_action:
+      action: more-info
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+
+  - type: custom:mushroom-template-card
+    primary: Papir og plast
+    secondary: '{{ states(''sensor.min_renovasjon_next_papir'') }}'
+    icon: mdi:trash-can
+    layout: vertical
+    entity: sensor.papir
+    tap_action:
+      action: more-info
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    icon_color: blue
+    
+  - type: custom:mushroom-template-card
+    primary: Glass og metall
+    secondary: '{{ states(''sensor.min_renovasjon_next_glass_metall'') }}'
+    icon: mdi:trash-can
+    layout: vertical
+    entity: sensor.glass_metallemballasje
+    tap_action:
+      action: more-info
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    icon_color: orange

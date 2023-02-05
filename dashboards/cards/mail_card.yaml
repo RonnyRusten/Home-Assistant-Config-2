@@ -1,0 +1,15 @@
+type: grid
+columns: 1
+square: false
+cards:
+  - type: markdown
+    title: Postleveringer
+    content: >-
+      ![Image](https://upload.wikimedia.org/wikipedia/commons/5/53/Posten-Norge-Logo.svg)
+
+      ***
+      {% set days = states('sensor.posten_sensor').split(',') %}
+    
+      {% for day in days -%}
+          {{ day | replace("[","") | replace("]","") | replace("'","") | replace('i dag','') | title }}{{'\r\n'}} 
+      {%- endfor %}

@@ -1,0 +1,19 @@
+# lovelace_gen
+
+type: grid
+columns: 1
+square: false
+cards:
+  - type: history-graph
+    entities:
+      - entity: {{ entity }}
+  - type: logbook
+    hours_to_show: 24
+    entities:
+      - {{ entity }}
+  - type: map
+    entities:
+      - {{ entity }}
+    hours_to_show: 24
+    aspect_ratio: '1:1.4'
+    default_zoom: 15

@@ -1,0 +1,35 @@
+
+cards:
+  - type: grid
+    columns: 1
+    square: false
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - !include ../chips/weather_chip.yaml
+          - !include ../chips/mail_chip.yaml
+          - !include ../chips/waste_chip.yaml
+          - !include ../chips/superb_chip.yaml
+          - !include ../chips/gas_chip.yaml
+      - !include ../cards/people/people_card.yaml
+      - type: vertical-stack
+        cards:
+          - type: custom:swipe-card
+            start_card: 1
+            simulateTouch: true
+            spaceBetween: 8
+            preventInteractionOnTransition: true
+            freeMode: true
+            cards:
+              - type: grid
+                square: false
+                columns: 2
+                cards:
+                  - !include ../area/livingroom/livingroom_area_card.yaml
+                  - !include ../area/master_bedroom/master_bedroom_area_card.yaml
+                  - !include ../area/bedroom_ingeborg/bedroom_ingeborg_area_card.yaml
+                  - !include ../area/bedroom_marius/bedroom_marius_area_card.yaml
+                  - !include ../area/basement_hall/basement_hall_area_card.yaml
+                  - !include ../area/bathroom_basement/bathroom_basement_area_card.yaml
+                  - !include ../area/laundry/laundry_area_card.yaml
+    

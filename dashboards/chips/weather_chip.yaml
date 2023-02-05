@@ -1,0 +1,14 @@
+type: weather
+entity: weather.mylocation
+show_conditions: true 
+show_temperature: true
+tap_action:
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      size: normal
+      content:
+        type: vertical-stack
+        cards:
+          - !include ../cards/weather_card.yaml 

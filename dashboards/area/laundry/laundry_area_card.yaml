@@ -1,0 +1,53 @@
+type: custom:stack-in-card
+card_mod:
+  style: |
+    ha-card {
+      height: 102px;
+    }
+cards:
+  - type: custom:mushroom-template-card
+    card_mod:
+      style: |
+        :host([dark-mode]) {
+          background: rgba(var(--rgb-primary-background-color), 0.2);
+        } 
+        :host {
+          background: rgba(var(--rgb-primary-text-color), 0.025);
+        }
+    entity: ''
+    primary: Vaskerom
+    # secondary: >-
+    #   {{ states('sensor.bedroom_ingeborg_climate_temperature') }} °C - {{ states('sensor.bedroom_ingeborg_climate_humidity') }} %
+    multiline_secondary: false
+    icon: mdi:washing-machine
+    # icon_color: '{{ 'pink' if is_state(entity, 'on') else 'disabled' }}'
+    icon_color: cyan
+    fill_container: true
+    layout: horizontal
+    tap_action:
+      # action: navigate
+      # navigation_path: ingeborg
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: vertical-stack
+            cards:
+              - !include laundry_card.yaml
+    hold_action:
+      action: none
+  - type: custom:mushroom-chips-card
+    alignment: end
+    card_mod:
+      style: |
+        ha-card {
+          --chip-box-shadow: none;
+          --chip-background: none;
+          --chip-spacing: 0;
+        }
+    chips:
+      - !include ../basement_hall/chips/laundry_magnet_chip.yaml
+      - !include chips/washing_machine_chip.yaml
+      - !include chips/tumble_dryer_chip.yaml
+      - !include chips/hot_water_tank_chip.yaml

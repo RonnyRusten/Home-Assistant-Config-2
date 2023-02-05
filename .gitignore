@@ -2,6 +2,7 @@
 
 !.gitignore
 !/packages/
+!/dashboards/
 #!/entities/
 !/esphome/
 #!/other/

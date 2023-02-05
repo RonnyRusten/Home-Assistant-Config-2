@@ -1,0 +1,52 @@
+type: custom:stack-in-card
+card_mod:
+  style: |
+    ha-card {
+      height: 102px;
+    }
+cards:
+  - type: custom:mushroom-template-card
+    card_mod:
+      style: |
+        :host([dark-mode]) {
+          background: rgba(var(--rgb-primary-background-color), 0.2);
+        } 
+        :host {
+          background: rgba(var(--rgb-primary-text-color), 0.025);
+        }
+    entity: 'light.bedroom_marius_light_desk'
+    primary: Soverom Marius
+    secondary: >-
+      {{ states('sensor.bedroom_marius_climate_temperature') }} °C - {{ states('sensor.bedroom_marius_climate_humidity') }} %
+    multiline_secondary: false
+    icon: mdi:face-man-shimmer-outline
+    # icon_color: '{{ 'blue' if is_state(entity, 'on') else 'disabled' }}'
+    icon_color: blue
+    fill_container: true
+    layout: horizontal
+    tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: vertical-stack
+            cards:
+              - !include bedroom_marius_main_card.yaml
+    hold_action:
+      action: toggle
+
+  - type: custom:mushroom-chips-card
+    alignment: end
+    card_mod:
+      style: |
+        ha-card {
+          --chip-box-shadow: none;
+          --chip-background: none;
+          --chip-spacing: 0;
+        }
+    chips:
+      - !include chips/bedroom_marius_light_desk_chip.yaml
+      - !include chips/bedroom_marius_light_nightstand_chip.yaml
+      - !include chips/bedroom_marius_heater_chip.yaml
+      - !include chips/bedroom_marius_misc_plug_chip.yaml

@@ -1,0 +1,167 @@
+type: custom:tabbed-card
+tabs:
+  - attributes:
+      label: Været
+      icon: mdi:weather-sunny-alert
+    card:
+      type: vertical-stack
+      cards:
+        - type: weather-forecast
+          name: K2b
+          entity: weather.mylocation
+          secondary_info_attribute: wind_speed
+          show_current: true
+          show_forecast: true
+        # - type: weather-forecast
+        #   entity: weather.mylocation_hourly
+        #   secondary_info_attribute: wind_bearing
+        #   show_current: false
+        #   show_forecast: true
+        - type: iframe
+          url: !secret yr_weather_link
+          aspect_ratio: 75%
+
+  - attributes:
+      label: Astronomi
+      icon: mdi:sun-angle
+    card:
+      type: vertical-stack
+      cards:
+        - type: custom:sun-card
+        - type: entity
+          entity: sun.sun
+          name: "Sol"
+          content_info: none
+        - type: history-graph
+          entities:
+            - entity: sun.sun
+              name: Historikk
+          hours_to_show: 24
+          refresh_interval: 0
+        - type: entity
+          entity: sensor.moon_phase
+          name: "Månefase"
+        - type: history-graph
+          entities:
+            - entity: sensor.moon_phase
+              name: Historikk
+          hours_to_show: 720
+          refresh_interval: 0
+
+  - attributes:
+      label: Tidevann
+      icon: mdi:waves
+    card:
+      type: vertical-stack
+      cards:
+        - type: "custom:apexcharts-card"
+          graph_span: 36h
+          span:
+            offset: +24h
+          now:
+            show: true
+            #label: Now
+          header:
+            show: true
+            title: Vannstand
+            show_states: true
+            colorize_states: true
+          series:
+            - entity: sensor.mylocation_tide_main
+              name: Beregnet
+              stroke_width: 2
+              show:
+                extremas: true
+                in_header: before_now
+                legend_value: false
+              data_generator: |
+                return entity.attributes.data.map((entry) => {
+                  return [new Date(entry.datetime).getTime(), entry.prediction];
+                });
+            - entity: sensor.mylocation_tide_main
+              name: Prognose
+              stroke_width: 2
+              show:
+                in_header: before_now
+                legend_value: false
+              data_generator: |
+                return entity.attributes.data.map((entry) => {
+                  return [new Date(entry.datetime).getTime(), entry.forecast];
+                });
+            - entity: sensor.mylocation_tide_main
+              name: Observasjon
+              stroke_width: 2
+              show:
+                in_header: raw
+                legend_value: false
+              data_generator: |
+                return entity.attributes.data.map((entry) => {
+                  return [new Date(entry.datetime).getTime(), entry.observation];
+                });
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+            - type: custom:mushroom-template-card
+              fill_container: true
+              primary: Høyvann
+              multiline_secondary: true
+              secondary: >-
+                Om {{ (timedelta(hours=(states('sensor.mylocation_tide_time_to_next_high')|float))|string)[:-3] }}
+
+                Kl {{ as_timestamp(states('sensor.mylocation_tide_next_high')) | timestamp_custom('%H:%M:%S') }}
+              icon: mdi:waves
+              entity: sensor.mylocation_tide_next_high
+              icon_color: blue
+              badge_icon: |-
+                {% if is_state('binary_sensor.mylocation_tide_ebbing','on') %}
+                  mdi:waves-arrow-right
+                {% elif is_state('binary_sensor.mylocation_tide_flowing', 'on') %}
+                  mdi:waves-arrow-up
+                {% else %}
+                  mdi:dash
+                {% endif %}
+              badge_color: |-
+                {% if is_state('binary_sensor.mylocation_tide_ebbing','on') %}
+                  red
+                {% elif is_state('binary_sensor.mylocation_tide_flowing', 'on') %}
+                  green
+                {% else %}
+                  grey
+                {% endif %}
+
+            - type: custom:mushroom-template-card
+              fill_container: true
+              primary: Lavvann
+              multiline_secondary: true
+              secondary: >-
+                Om {{ (timedelta(hours=(states('sensor.mylocation_tide_time_to_next_low')|float))|string)[:-3] }}
+
+                Kl {{ as_timestamp(states('sensor.mylocation_tide_next_low')) | timestamp_custom('%H:%M:%S') }}
+              icon: mdi:wave
+              entity: sensor.mylocation_tide_next_low
+              icon_color: blue
+              badge_icon: |-
+                {% if is_state('binary_sensor.mylocation_tide_ebbing','on') %}
+                  mdi:waves-arrow-left
+                {% elif is_state('binary_sensor.mylocation_tide_flowing', 'on') %}
+                  mdi:waves-arrow-up
+                {% else %}
+                  mdi:dash
+                {% endif %}
+              badge_color: |-
+                {% if is_state('binary_sensor.mylocation_tide_ebbing','on') %}
+                  green
+                {% elif is_state('binary_sensor.mylocation_tide_flowing', 'on') %}
+                  red
+                {% else %}
+                  grey
+                {% endif %}
+
+        - type: history-graph
+          entities:
+            #- entity: sensor.mylocation_tide_ebb_flow
+            - entity: sensor.mylocation_tide_state
+              name: Historikk
+          hours_to_show: 24
+          refresh_interval: 0

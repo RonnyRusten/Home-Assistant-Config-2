@@ -1,0 +1,55 @@
+type: custom:stack-in-card
+card_mod:
+  style: |
+    ha-card {
+      height: 102px;
+    }
+cards:
+  - type: custom:mushroom-template-card
+    card_mod:
+      style: |
+        :host([dark-mode]) {
+          background: rgba(var(--rgb-primary-background-color), 0.2);
+        } 
+        :host {
+          background: rgba(var(--rgb-primary-text-color), 0.025);
+        }
+    entity: 'light.bedroom_ingeborg_light_ceiling'
+    primary: Soverom Ingeborg
+    secondary: >-
+      {{ states('sensor.bedroom_ingeborg_climate_temperature') }} °C - {{ states('sensor.bedroom_ingeborg_climate_humidity') }} %
+    multiline_secondary: false
+    icon: mdi:face-woman-shimmer-outline
+    # icon_color: '{{ 'pink' if is_state(entity, 'on') else 'disabled' }}'
+    icon_color: pink
+    fill_container: true
+    layout: horizontal
+    tap_action:
+      action: navigate
+      navigation_path: ingeborg
+      # action: fire-dom-event
+      # browser_mod:
+      #   service: browser_mod.popup
+      #   data:
+      #     content:
+      #       type: vertical-stack
+      #       cards:
+      #         - !include bedroom_ingeborg_main_card.yaml
+    hold_action:
+      action: toggle
+  - type: custom:mushroom-chips-card
+    alignment: end
+    card_mod:
+      style: |
+        ha-card {
+          --chip-box-shadow: none;
+          --chip-background: none;
+          --chip-spacing: 0;
+        }
+    chips:
+      - !include chips/bedroom_ingeborg_light_nightstand_chip.yaml
+      - !include chips/bedroom_ingeborg_light_ceiling_chip.yaml
+      - !include chips/bedroom_ingeborg_heater_chip.yaml
+      - !include chips/bedroom_ingeborg_tv_box_chip.yaml
+      # - !include chips/heater_chip.yaml
+      # - !include chips/window_chip.yaml

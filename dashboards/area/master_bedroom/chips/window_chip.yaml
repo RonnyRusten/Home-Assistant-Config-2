@@ -1,0 +1,23 @@
+type: template
+card_mod: 
+  style: |
+    ha-card {
+      --chip-box-shadow: none;
+      --chip-background: none;
+      --chip-spacing: 0;
+      margin-left: -10px;
+    }
+icon: >-
+  {% if
+  is_state('binary_sensor.master_bedroom_magnet_window_contact','on') %}
+     mdi:window-open
+  {% else %}
+    mdi:window-closed
+  {% endif %}
+icon_color: >-
+  {% if
+  is_state('binary_sensor.master_bedroom_magnet_window_contact','on') %}
+    blue
+  {% else %}
+    green
+  {% endif %}
