@@ -1,0 +1,13 @@
+type: grid
+columns: 2
+square: false
+cards:
+ - !include circle_k_hatlane.yaml
+ - !include circle_k_moa.yaml
+ - !include bunker_oil_breivika.yaml
+ - !include bunker_oil_norvevika.yaml
+ - !include esso_norvegata.yaml
+ - !include esso_spjelkavik.yaml
+ - !include shell_lerstad.yaml
+ - !include uno_x_gaseid.yaml
+ - !include yx_7_eleven_ysteneset.yaml

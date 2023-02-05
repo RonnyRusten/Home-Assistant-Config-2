@@ -137,7 +137,7 @@ rest:
 # New sensors with more suitable state and attributes.
 template:
   - sensor:
-      - name: "Bunker Oil Breivika"
+      - name: "Breivika"
         unique_id: "bunker_oil_breivika"
         picture: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.bunker_oil_breivika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -150,7 +150,7 @@ template:
           location: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.bunker_oil_breivika_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Bunker Oil Nørvevika"
+      - name: "Nørvevika"
         unique_id: "bunker_oil_norvevika"
         picture: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.bunker_oil_norvevika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -163,7 +163,7 @@ template:
           location: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.bunker_oil_norvevika_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Circle K Hatlane"
+      - name: "Hatlane"
         unique_id: "circle_k_hatlane"
         picture: "{{ state_attr('sensor.circle_k_hatlane_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.circle_k_hatlane_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -176,7 +176,7 @@ template:
           location: "{{ state_attr('sensor.circle_k_hatlane_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.circle_k_hatlane_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Circle K Moa"
+      - name: "Moa"
         unique_id: "circle_k_moa"
         picture: "{{ state_attr('sensor.circle_k_moa_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -189,7 +189,7 @@ template:
           location: "{{ state_attr('sensor.circle_k_moa_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Esso Nørvegata"
+      - name: "Nørvegata"
         unique_id: "esso_norvegata"
         picture: "{{ state_attr('sensor.esso_norvegata_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -202,7 +202,7 @@ template:
           location: "{{ state_attr('sensor.esso_norvegata_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Esso Spjelkavik"
+      - name: "Spjelkavik"
         unique_id: "esso_spjelkavik"
         picture: "{{ state_attr('sensor.esso_spjelkavik_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.esso_spjelkavik_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -215,7 +215,7 @@ template:
           location: "{{ state_attr('sensor.esso_spjelkavik_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.esso_spjelkavik_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Shell Lerstad"
+      - name: "Lerstad"
         unique_id: "shell_lerstad"
         picture: "{{ state_attr('sensor.shell_lerstad_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.shell_lerstad_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -228,7 +228,7 @@ template:
           location: "{{ state_attr('sensor.shell_lerstad_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.shell_lerstad_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Uno-X Gåseid"
+      - name: "Gåseid"
         unique_id: "uno_x_gaseid"
         picture: "{{ state_attr('sensor.uno_x_gaseid_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.uno_x_gaseid_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
@@ -241,7 +241,7 @@ template:
           location: "{{ state_attr('sensor.uno_x_gaseid_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.uno_x_gaseid_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "YX 7-Eleven Ysteneset"
+      - name: "Ysteneset"
         unique_id: "yx_7_eleven_ysteneset"
         picture: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'pictureUrl') }}"
         state: "{{ (state_attr('sensor.yx_7_eleven_ysteneset_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
