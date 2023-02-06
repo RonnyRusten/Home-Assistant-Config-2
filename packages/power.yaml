@@ -276,7 +276,7 @@ template:
 
       - name: nordpool_price_high
         unique_id: nordpool_price_high
-        state: "{{ (states('sensor.nordpool_kwh_molde_nok_3_10_025') | float) >= (state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'average') | float * (1 + states('input_number.nordpool_over_avg_acceptance') | float /100)) }}"
+        state: "{{ (states('sensor.nordpool_kwh_molde_nok_3_10_025') | float(0)) >= (state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'average') | float(0) * (1 + states('input_number.nordpool_over_avg_acceptance') | float(0) /100)) }}"
 
       - name: electricity_energy_cost
         unique_id: electricity_energy_cost
