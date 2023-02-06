@@ -30,8 +30,14 @@ cards:
     #     mdi:door-closed
     #   {% endif %}
     tap_action:
-      action: navigate
-      navigation_path: basement
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: vertical-stack
+            cards:
+              - !include bathroom_basement_card.yaml
     # badge_color: >-
     #   {% if is_state('binary_sensor.laundry_magnet_contact', 'on') or
     #   is_state('binary_sensor.porch_magnet_contact', 'on') %}

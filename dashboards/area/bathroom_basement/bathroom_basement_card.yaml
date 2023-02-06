@@ -1,0 +1,54 @@
+type: grid
+square: false
+columns: 1
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: back
+  - square: false
+    columns: 2
+    type: grid
+    cards:
+      - type: sensor
+        hours_to_show: 24
+        graph: line
+        entity: sensor.bathroom_basement_climate_temperature
+        detail: 1
+        name: Temperatur
+      - type: sensor
+        hours_to_show: 24
+        graph: line
+        entity: sensor.bathroom_basement_climate_humidity
+        detail: 1
+        name: Luftfuktighet
+      - type: custom:mushroom-template-card
+        primary: Varmekabel
+        secondary: >-
+          Effekt nå: {{ states('sensor.bathroom_basement_floor_heating_power_1') }} W
+        
+          Forbruk i dag: {{
+          states('sensor.bathroom_basement_floor_heating_daily_energy') }} kWh
+        
+          Tid på i dag: {{
+          (timedelta(hours=(states('sensor.bathroom_basement_floor_heating_runtime_today')|float))|string)[:-3]
+          }}
+        icon: mdi:heating-coil
+        layout: horizontal
+        entity: sensor.bathroom_basement_floor_heating_daily_energy
+        icon_color: blue
+        tap_action:
+          action: more-info
+        multiline_secondary: true
+        badge_icon: mdi:heating-coil
+        badge_color: |-
+          {% if states('sensor.bathroom_basement_floor_heating_running') == 'True' %}
+            red
+          {% endif %}
+
+  - square: false
+    columns: 1
+    type: grid
+    cards:
+      - type: thermostat
+        entity: climate.bathroom_basement_temperature
+        name: Bad kjeller
