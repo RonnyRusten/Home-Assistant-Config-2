@@ -24,10 +24,14 @@ cards:
     fill_container: true
     layout: horizontal
     tap_action:
-      action: navigate
-      navigation_path: bedroom
-    hold_action:
-      action: toggle
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: vertical-stack
+            cards:
+              - !include master_bedroom_card.yaml
   - type: custom:mushroom-chips-card
     alignment: end
     card_mod:

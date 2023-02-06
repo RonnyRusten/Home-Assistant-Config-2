@@ -1,0 +1,78 @@
+type: grid
+square: false
+columns: 1
+cards:
+  - type: grid
+    square: false
+    title: Soverom
+    columns: 2
+    cards:
+      - type: sensor
+        hours_to_show: 24
+        graph: line
+        entity: sensor.master_bedroom_climate_temperature
+        detail: 1
+        name: Temperatur
+
+      - type: sensor  
+        hours_to_show: 24
+        graph: line
+        entity: sensor.master_bedroom_climate_humidity
+        name: Luftfuktighet
+        detail: 1
+
+      - type: custom:mushroom-template-card
+        primary: Varmeovn
+        secondary: >-
+          Effekt nå: {{ states('sensor.master_bedroom_heater_plug_power') }} W
+
+          Forbruk i dag: {{ states('sensor.master_bedroom_daily_energy') }} kWh
+
+          Tid på i dag: {{
+          (timedelta(hours=(states('sensor.master_bedroom_heater_runtime_today')|float))|string)[:-3]
+          }}
+        icon: mdi:radiator
+        entity: sensor.master_bedroom_daily_energy
+        icon_color: |-
+          {% if is_state('switch.master_bedroom_heater_plug','on') %}
+            amber
+          {% endif %}
+        multiline_secondary: true
+        tap_action:
+          action: more-info
+        hold_action:
+          action: toggle
+        badge_color: |-
+          {% if states('sensor.master_bedroom_heater_running') == 'True' %}
+            red
+          {% endif %}
+        badge_icon: mdi:flash
+        fill_container: true
+        
+      - type: custom:mushroom-entity-card
+        entity: binary_sensor.master_bedroom_magnet_window_contact
+        name: Vindu
+        icon: mdi:window-maximize
+        secondary_info: state
+        fill_container: true
+
+      - type: custom:mushroom-template-card
+        primary: 'Automasjon '
+        secondary: '{{ states(''automation.soverom_varme'') }}'
+        icon: mdi:cog
+        entity: automation.soverom_varme
+        icon_color: |-
+          {% if is_state('automation.soverom_varme','on') %}
+            green
+          {% else %}
+            red
+          {% endif %}
+        multiline_secondary: false
+        tap_action:
+          action: toggle
+        hold_action:
+          action: toggle
+
+  - type: thermostat
+    entity: climate.master_bedroom_temperature
+    name: Temperatur
