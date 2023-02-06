@@ -1,4 +1,17 @@
 type: template
+entity: automation.soverom_varme
+icon: >
+  {% if is_state('automation.soverom_varme', 'on') %}
+    mdi:thermostat-auto
+  {% else %}
+    mdi:thermostat
+  {% endif %}
+icon_color: >
+  {% if is_state('automation.soverom_varme', 'on') %}
+    green
+  {% else %}
+    grey
+  {% endif %}
 card_mod: 
   style: |
     ha-card {
@@ -7,10 +20,3 @@ card_mod:
       --chip-spacing: 0;
       margin-left: -10px;
     }
-icon: mdi:home-automation
-icon_color: |-
-  {% if is_state('automation.soverom_varme', 'on') %}
-    green
-  {% else %}
-    grey
-  {% endif %}
