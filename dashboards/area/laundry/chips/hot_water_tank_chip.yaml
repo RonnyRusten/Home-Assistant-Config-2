@@ -9,8 +9,8 @@ card_mod:
     }
 icon: mdi:water-boiler
 icon_color: |-
-  {% if is_state('binary_sensor.hot_water_running', 'True') %}
-    teal
+  {% if is_state('sensor.hot_water_running', 'True') %}
+    red
   {% else %}
     disabled
   {% endif %}

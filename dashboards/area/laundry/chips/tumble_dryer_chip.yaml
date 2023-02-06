@@ -9,7 +9,7 @@ card_mod:
     }
 icon: mdi:tumble-dryer
 icon_color: |-
-  {% if is_state('binary_sensor.tumble_dryer_running', 'True') %}
+  {% if is_state('sensor.tumble_dryer_running', 'True') %}
     blue
   {% else %}
     disabled

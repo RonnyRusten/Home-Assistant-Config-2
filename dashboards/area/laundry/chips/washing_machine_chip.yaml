@@ -9,7 +9,7 @@ card_mod:
     }
 icon: mdi:washing-machine
 icon_color: |-
-  {% if is_state('binary_sensor.washing_machine_running', 'True') %}
+  {% if is_state('sensor.washing_machine_running', 'True') %}
     blue
   {% else %}
     disabled
