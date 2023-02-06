@@ -11,7 +11,7 @@ entity: binary_sensor.porch_motion_occupancy
 content: VF
 icon: mdi:motion-sensor
 icon_color: |
-  {{ 'green' if
+  {{ 'disabled' if
      (is_state(entity, 'off'))
      else
      'red'
