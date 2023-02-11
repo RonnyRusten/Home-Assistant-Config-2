@@ -2,11 +2,9 @@ type: grid
 square: false
 columns: 1
 cards:
-  - type: custom:mushroom-title-card
-    title: Lys
-  - square: false
+  - type: grid
+    square: false
     columns: 2
-    type: grid
     cards:
       - type: custom:mushroom-light-card
         entity: light.livingroom_lights
@@ -16,13 +14,13 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: call-service
           service: automation.trigger
           data: {}
           target:
             entity_id: automation.stue_lys
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_cupboard
         name: Skjenk
@@ -31,10 +29,10 @@ cards:
         show_brightness_control: true
         show_color_temp_control: true
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
         primary_info: name
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_north_east
         name: Vindu nord
@@ -43,9 +41,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_tv_board
         name: TV-bord
@@ -54,9 +52,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_north_east
         name: Ved trappa
@@ -68,6 +66,7 @@ cards:
         collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_window_south_1
         name: Vindu sør-vest
@@ -76,9 +75,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_window_south_2
         name: Vindu sør-øst
@@ -87,9 +86,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_floorlamp
         name: Stålampe
@@ -98,9 +97,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_dining_table
         name: Spisetue
@@ -109,9 +108,9 @@ cards:
         show_brightness_control: true
         show_color_temp_control: false
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
+
       - type: custom:mushroom-light-card
         entity: light.outdoors_light_terrace
         name: Hagestue
@@ -120,7 +119,6 @@ cards:
         show_brightness_control: true
         show_color_temp_control: true
         show_color_control: false
-        collapsible_controls: true
         tap_action:
           action: toggle
         primary_info: name

@@ -23,14 +23,16 @@ cards:
     fill_container: true
     layout: horizontal
     tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          content:
-            type: vertical-stack
-            cards:
-              - !include livingroom_light_card.yaml
+      action: navigate
+      navigation_path: livingroom
+      # action: fire-dom-event
+      # browser_mod:
+      #   service: browser_mod.popup
+      #   data:
+      #     content:
+      #       type: vertical-stack
+      #       cards:
+      #         - !include livingroom_light_card.yaml
     hold_action:
       action: toggle
   - type: custom:mushroom-chips-card

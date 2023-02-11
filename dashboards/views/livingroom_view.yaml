@@ -1,0 +1,18 @@
+title: Stue
+path: livingroom
+theme: minimalist-desktop
+icon: mdi:sofa
+subview: true
+cards:
+  - type: grid
+    columns: 1
+    square: false
+    cards:
+      - !include ../area/livingroom/livingroom_main_card.yaml
+  - type: grid
+    columns: 1
+    square: false
+    cards:
+      - !include ../area/livingroom/livingroom_light_card.yaml
+
+    
