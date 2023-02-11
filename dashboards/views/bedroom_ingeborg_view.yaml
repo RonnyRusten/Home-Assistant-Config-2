@@ -19,47 +19,14 @@ cards:
             entity: sensor.bedroom_ingeborg_climate_temperature
             detail: 1
             name: Temperatur
-          - type: custom:mushroom-template-card
-            primary: Varmeovn
-            secondary: >-
-              Forbruk nå: {{ states('sensor.bedroom_ingeborg_heater_plug_power') }}
-              W
-    
-              Forbruk i dag: {{
-              states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
-    
-              Tid på i dag: {{
-              (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3]
-              }}
-            icon: mdi:radiator
-            icon_color: |-
-              {% if is_state('sensor.bedroom_ingeborg_heater_running', 'True') %}
-                red
-              {% else %}
-                blue
-              {% endif %}
-                
-            entity: switch.bedroom_ingeborg_heater_plug
-            multiline_secondary: true
-            fill_container: false
-            badge_icon: mdi:lightning-bolt
-            badge_color: |-
-              {% if is_state('switch.bedroom_ingeborg_heater_plug', 'on') %}
-                green
-              {% else %}
-                red
-              {% endif %}
-            tap_action:
-              action: more-info
-            hold_action:
-              action: toggle
-            double_tap_action:
-              action: none
-            layout: vertical
-      - type: grid
-        square: false
-        columns: 2
-        cards:
+
+          - type: sensor
+            hours_to_show: 24
+            graph: line
+            entity: sensor.bedroom_ingeborg_climate_humidity
+            detail: 1
+            name: Luftfuktighet
+        
           - type: custom:mushroom-light-card
             entity: light.bedroom_ingeborg_light_ceiling
             name: Taklys
@@ -83,6 +50,44 @@ cards:
             collapsible_controls: true
             tap_action:
               action: toggle
+
+          - type: custom:mushroom-template-card
+            primary: Varmeovn
+            secondary: >-
+              Forbruk nå: {{ states('sensor.bedroom_ingeborg_heater_plug_power') }}
+              W
+    
+              Forbruk i dag: {{
+              states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
+    
+              Tid på i dag: {{
+              (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3]
+              }}
+            icon: mdi:radiator
+            icon_color: |-
+              {% if is_state('sensor.bedroom_ingeborg_heater_running', 'True') %}
+                red
+              {% else %}
+                blue
+              {% endif %}
+            entity: switch.bedroom_ingeborg_heater_plug
+            multiline_secondary: true
+            fill_container: false
+            badge_icon: mdi:lightning-bolt
+            badge_color: |-
+              {% if is_state('switch.bedroom_ingeborg_heater_plug', 'on') %}
+                green
+              {% else %}
+                red
+              {% endif %}
+            tap_action:
+              action: more-info
+            hold_action:
+              action: toggle
+            double_tap_action:
+              action: none
+            layout: vertical
+
       - type: grid
         square: false
         columns: 1
