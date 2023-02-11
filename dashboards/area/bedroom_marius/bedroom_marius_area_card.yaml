@@ -25,14 +25,16 @@ cards:
     fill_container: true
     layout: horizontal
     tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          content:
-            type: vertical-stack
-            cards:
-              - !include bedroom_marius_main_card.yaml
+      action: navigate
+      navigation_path: marius
+      # action: fire-dom-event
+      # browser_mod:
+      #   service: browser_mod.popup
+      #   data:
+      #     content:
+      #       type: vertical-stack
+      #       cards:
+      #         - !include bedroom_marius_main_card.yaml
     hold_action:
       action: toggle
 
