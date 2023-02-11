@@ -6,3 +6,4 @@ title: "Oversikt"
 views:
   - !include views/tablet_main_view.yaml
   - !include views/bedroom_ingeborg_view.yaml
+  - !include views/power_view.yaml

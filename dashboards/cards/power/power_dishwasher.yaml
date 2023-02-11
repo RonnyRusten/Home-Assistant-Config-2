@@ -1,0 +1,20 @@
+type: custom:mushroom-template-card
+layout: horizontal
+icon: mdi:dishwasher
+icon_color: blue
+entity: sensor.dishwasher_daily_energy
+primary: Oppvaskmaskin
+secondary: >-
+  {{ states('sensor.dishwasher_power') }} W
+  
+  {{ states('sensor.dishwasher_daily_energy') }} kWh
+  
+  {{ (timedelta(hours=(states('sensor.dishwasher_runtime_today')|float))|string)[:-3] }}
+multiline_secondary: true
+badge_icon: mdi:rotate-3d
+badge_color: |-
+  {% if states('sensor.dishwasher_running') == 'True' %}
+    red
+  {% endif %}
+tap_action:
+  action: more-info

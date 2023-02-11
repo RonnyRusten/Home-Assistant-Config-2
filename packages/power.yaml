@@ -181,19 +181,24 @@ sensor:
     filters:
       - filter: time_simple_moving_average
         window_size: "00:10"
+  
+  - platform: statistics
+    name: power_usage_last_quarter
+    unique_id: power_usage_last_quarter
+    entity_id: sensor.energy_total
+    state_characteristic: change
+    max_age:
+      minutes: 15
+    sampling_size: 15000
 
-  - platform: sql
-    queries:
-      - name: power_usage_last_quarter
-        query: "select round((max(state)-min(state)),4) as state
-          from states
-          where state like '%.%' and entity_id like 'sensor.energy_total'
-          and last_updated > datetime('now','-15 minutes')
-          and rowid > (select max(rowid)-10000 from states)
-          from states where rowid = (select max(rowid) from states));"
-        column: "state"
-        value_template: "{{ value | urlencode }}"
-        unit_of_measurement: "kWh"
+  - platform: statistics
+    name: power_usage_last_10
+    unique_id: power_usage_last_10
+    entity_id: sensor.energy_total
+    state_characteristic: change
+    max_age:
+      minutes: 10
+    sampling_size: 10000
 
 template:
   - sensor:

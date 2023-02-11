@@ -1,0 +1,24 @@
+title: Power
+path: power
+theme: minimalist-desktop
+icon: mdi:lightning-bolt
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 1
+    cards:
+      - !include ../cards/power/power_main.yaml
+      - !include ../cards/power/power_details.yaml      
+
+  - type: grid
+    square: false
+    columns: 1
+    cards:
+     - !include ../cards/power/power_chart.yaml        
+
+  - type: grid
+    square: false
+    columns: 1
+    cards: []
+       

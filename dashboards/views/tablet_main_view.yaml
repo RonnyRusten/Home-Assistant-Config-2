@@ -1,4 +1,4 @@
-
+theme: minimalist-desktop
 cards:
   - type: grid
     columns: 1
@@ -11,6 +11,7 @@ cards:
           - !include ../chips/waste_chip.yaml
           - !include ../chips/superb_chip.yaml
           - !include ../chips/gas_chip.yaml
+          - !include ../chips/power_chip.yaml
       - !include ../cards/people/people_card.yaml
       - type: vertical-stack
         cards:

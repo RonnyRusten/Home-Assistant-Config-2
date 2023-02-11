@@ -1,0 +1,18 @@
+type: grid
+columns: 2
+square: false
+cards:
+  - !include power_dishwasher.yaml
+  - !include power_fridge_kitchen.yaml
+  - !include power_air_condition.yaml
+  - !include power_fridge_basement.yaml
+  - !include power_freezer_basement.yaml
+  - !include power_freezer_garage.yaml
+  - !include power_floor_heating_basement_hall.yaml
+  - !include power_floor_heating_basement_bathroom.yaml
+  - !include power_washing_machine.yaml
+  - !include power_tumble_dryer.yaml
+  - !include power_hot_water.yaml
+  - !include power_master_bedroom_heater.yaml
+  - !include power_bedroom_ingeborg_heater.yaml
+  - !include power_bedroom_marius_heater.yaml

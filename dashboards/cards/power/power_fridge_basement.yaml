@@ -1,0 +1,22 @@
+type: custom:mushroom-template-card
+primary: Kjøleskap kjeller
+secondary: >-
+  {{ states('sensor.fridge_basement_power') }} W
+
+  {{ states('sensor.fridge_basement_daily_energy') }} kWh
+
+  {{
+  (timedelta(hours=(states('sensor.fridge_basement_runtime_today')|float))|string)[:-3]
+  }}
+icon: mdi:fridge
+layout: horizontal
+entity: sensor.fridge_basement_daily_energy
+icon_color: white
+tap_action:
+  action: more-info
+badge_icon: mdi:snowflake
+badge_color: |-
+  {% if states('sensor.fridge_basement_running') == 'True' %}
+    blue
+  {% endif %}
+multiline_secondary: true

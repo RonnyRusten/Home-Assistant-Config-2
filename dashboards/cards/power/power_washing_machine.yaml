@@ -1,0 +1,22 @@
+type: custom:mushroom-template-card
+primary: Vaskemaskin
+secondary: >-
+  {{ states('sensor.washing_machine_power') }} W
+
+  {{ states('sensor.washing_machine_daily_energy') }} kWh
+
+  {{
+  (timedelta(hours=(states('sensor.washing_machine_runtime_today')|float))|string)[:-3]
+  }}
+icon: mdi:washing-machine
+layout: horizontal
+entity: sensor.washing_machine_daily_energy
+icon_color: blue
+tap_action:
+  action: more-info
+badge_icon: mdi:rotate-3d
+badge_color: |-
+  {% if states('sensor.washing_machine_running') == 'True' %}
+    green
+  {% endif %}
+multiline_secondary: true

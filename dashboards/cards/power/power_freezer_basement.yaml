@@ -1,0 +1,22 @@
+type: custom:mushroom-template-card
+primary: Fryser kjeller
+secondary: >-
+  {{ states('sensor.basement_freezer_power') }} W
+
+  {{ states('sensor.basement_freezer_daily_energy') }} kWh
+
+  {{
+  (timedelta(hours=(states('sensor.basement_freezer_runtime_today')|float))|string)[:-3]
+  }}
+icon: mdi:fridge-industrial
+layout: horizontal
+entity: sensor.basement_freezer_daily_energy
+icon_color: white
+tap_action:
+  action: more-info
+badge_icon: mdi:snowflake
+badge_color: |-
+  {% if states('sensor.basement_freezer_running') == 'True' %}
+    blue
+  {% endif %}
+multiline_secondary: true

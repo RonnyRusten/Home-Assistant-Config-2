@@ -1,0 +1,22 @@
+type: custom:mushroom-template-card
+primary: Varmepumpe
+secondary: >-
+  {{ states('sensor.air_condition_power') }} W
+
+  {{ states('sensor.air_condition_daily_energy') }} kWh
+
+  {{
+  (timedelta(hours=(states('sensor.air_condition_runtime_today')|float))|string)[:-3]
+  }}
+icon: mdi:air-conditioner
+layout: horizontal
+entity: sensor.air_condition_daily_energy
+icon_color: blue
+tap_action:
+  action: more-info
+badge_icon: mdi:heat-wave
+badge_color: |-
+  {% if states('sensor.air_condition_running') == 'True' %}
+    green
+  {% endif %}
+multiline_secondary: true

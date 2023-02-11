@@ -1,0 +1,35 @@
+type: custom:mushroom-template-card
+primary: Varmeovn Ingeborg
+secondary: >-
+  Forbruk nå: {{ states('sensor.bedroom_ingeborg_heater_plug_power') }} W
+
+  Forbruk i dag: {{ states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
+
+  Tid på i dag: {{
+  (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3]
+  }}
+icon: mdi:radiator
+icon_color: |-
+  {% if is_state('sensor.bedroom_ingeborg_heater_running', 'True') %}
+    red
+  {% else %}
+    blue
+  {% endif %}
+    
+entity: switch.bedroom_ingeborg_heater_plug
+multiline_secondary: true
+fill_container: true
+badge_icon: mdi:lightning-bolt
+badge_color: |-
+  {% if is_state('switch.bedroom_ingeborg_heater_plug', 'on') %}
+    green
+  {% else %}
+    disabled
+  {% endif %}
+tap_action:
+  action: more-info
+hold_action:
+  action: toggle
+double_tap_action:
+  action: none
+layout: horizontal

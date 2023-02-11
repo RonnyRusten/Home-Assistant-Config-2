@@ -1,0 +1,22 @@
+type: custom:mushroom-template-card
+layout: horizontal
+entity: sensor.fridge_kitchen_daily_energy
+primary: Kjøleskap kjøkken
+secondary: >-
+  {{ states('sensor.fridge_kitchen_power') }} W
+
+  {{ states('sensor.fridge_kitchen_daily_energy') }} kWh
+
+  {{
+  (timedelta(hours=(states('sensor.fridge_kitchen_runtime_today')|float))|string)[:-3]
+  }}
+multiline_secondary: true
+icon: mdi:fridge
+icon_color: black
+tap_action:
+  action: more-info
+badge_icon: mdi:snowflake
+badge_color: |-
+  {% if states('sensor.fridge_kitchen_running') == 'True' %}
+    blue
+  {% endif %}

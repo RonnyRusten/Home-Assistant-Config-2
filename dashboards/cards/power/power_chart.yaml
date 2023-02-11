@@ -1,0 +1,117 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  title: Forbruk pr. time vs strømpris
+  show_states: true
+  colorize_states: true
+now:
+  show: true
+graph_span: 96h
+span:
+  start: day
+  offset: '-48h'
+apex_config:
+  xaxis:
+    labels:
+      format: dd.MM
+  chart:
+    zoom:
+      enabled: true
+    toolbar:
+      show: true
+      tools:
+        zoom: true
+        zoomin: false
+        zoomout: false
+        pan: false
+        reset: true
+  tooltip:
+    fixed:
+      enabled: true
+yaxis:
+  - id: first
+    min: 0
+    align_to: 0.5
+    apex_config:
+      opposite: true
+      tickAmount: 5
+      forceNiceScale: true
+      decimalsInFloat: 2
+      labels:
+        show: true
+  - id: second
+    min: 0
+    apex_config:
+      opposite: false
+      forceNiceScale: true
+      decimalsInFloat: 1
+      labels:
+        show: true
+all_series_config:
+  stroke_width: 4
+experimental:
+  color_threshold: true
+series:
+  - entity: sensor.consumption_current_hour
+    yaxis_id: second
+    name: Forbruk
+    type: column
+    color_threshold:
+      - value: 0
+        color: green
+      - value: 5
+        color: orange
+      - value: 10
+        color: red
+    stroke_width: 2
+    show:
+      in_header: true
+      legend_value: false
+    group_by:
+      func: max
+  - entity: sensor.nordpool_kwh_molde_nok_3_10_025
+    yaxis_id: first
+    name: Spotpris
+    type: area
+    curve: stepline
+    extend_to: now
+    float_precision: 2
+    stroke_width: 2
+    opacity: 0.2
+    color: 3f6fe5
+    show:
+      in_header: true
+      legend_value: false
+  - entity: sensor.nordpool_kwh_molde_nok_3_10_025
+    yaxis_id: first
+    name: Spotpris i dag
+    type: area
+    curve: stepline
+    extend_to: now
+    float_precision: 2
+    stroke_width: 2
+    opacity: 0.2
+    color: cyan
+    show:
+      in_header: false
+      legend_value: false
+    data_generator: |
+      return entity.attributes.raw_today.map((p) => {
+        return [new Date(p.start), p.value];
+      });
+  - entity: sensor.nordpool_kwh_molde_nok_3_10_025
+    yaxis_id: first
+    name: Spotpris i morgen
+    type: area
+    curve: stepline
+    extend_to: now
+    float_precision: 2
+    stroke_width: 2
+    opacity: 0.2
+    show:
+      in_header: false
+      legend_value: false
+    data_generator: |
+      return entity.attributes.raw_tomorrow.map((p) => {
+        return [new Date(p.start), p.value];
+      });
