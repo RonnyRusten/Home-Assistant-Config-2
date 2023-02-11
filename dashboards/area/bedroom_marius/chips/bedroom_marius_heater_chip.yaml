@@ -9,7 +9,7 @@ card_mod:
     }
 icon: mdi:radiator
 icon_color: |-
-  {% if is_state('binary_sensor.bedroom_marius_heater_running', 'True') %}
+  {% if is_state('sensor.bedroom_marius_heater_running', 'True') %}
     amber
   {% else %}
     disabled
