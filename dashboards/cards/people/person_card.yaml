@@ -4,6 +4,12 @@ type: grid
 columns: 1
 square: false
 cards:
+  - type: map
+    entities:
+      - {{ entity }}
+    hours_to_show: 24
+    #aspect_ratio: '1:1.4'
+    default_zoom: 15
   - type: history-graph
     entities:
       - entity: {{ entity }}
@@ -11,9 +17,3 @@ cards:
     hours_to_show: 24
     entities:
       - {{ entity }}
-  - type: map
-    entities:
-      - {{ entity }}
-    hours_to_show: 24
-    aspect_ratio: '1:1.4'
-    default_zoom: 15
