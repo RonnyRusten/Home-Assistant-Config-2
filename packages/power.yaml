@@ -348,7 +348,6 @@ utility_meter:
     unique_id: total_monthly_cost_nordpool
     cycle: monthly
 
-
 rest:
   - scan_interval: 43200
     resource: https://raw.githubusercontent.com/martinju/stromstotte/master/data/current_estimated_compensation.json
