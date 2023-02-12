@@ -12,7 +12,7 @@ icon_color: |-
   {% if is_state('sensor.master_bedroom_heater_running', 'True') %}
     amber
   {% else %}
-    disable
+    disabled
   {% endif %}
 tap_action:
   action: call-service
