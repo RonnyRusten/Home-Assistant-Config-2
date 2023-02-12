@@ -1,0 +1,21 @@
+# type: entity
+# entity: automation.check_power_consumption
+# name: Strømsparing
+# state_color: true
+
+type: custom:mushroom-template-card
+entity: automation.check_power_consumption
+primary: Strømsparing
+secondary: |-
+  {% if is_state('automation.check_power_consumption', 'on') %}
+    Stømsparing aktiv
+  {% else %}
+    Strømsparing inaktiv
+  {% endif %}
+icon: mdi:power
+icon_color: |-
+  {% if is_state('automation.check_power_consumption', 'on') %}
+    green
+  {% else %}
+    disabled
+  {% endif %}

@@ -15,7 +15,8 @@ cards:
     square: false
     columns: 1
     cards:
-     - !include ../cards/power/power_chart.yaml        
+     - !include ../cards/power/power_chart.yaml      
+     - !include ../cards/power/power_automation_card.yaml      
 
   - type: grid
     square: false
