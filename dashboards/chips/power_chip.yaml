@@ -1,7 +1,7 @@
 type: template
 icon: mdi:lightning-bolt           
 icon_color: orange
-content: ''
+content: "{{ states('sensor.han_port_power_corrected')}} W"
 tap_action:
   action: navigate
   navigation_path: power
