@@ -34,3 +34,14 @@ cards:
                   - !include ../area/bathroom_basement/bathroom_basement_area_card.yaml
                   - !include ../area/laundry/laundry_area_card.yaml
     
+  - type: grid
+    columns: 1
+    square: false
+    cards:
+      - type: picture-entity
+        name: Inngang
+        show_state: false
+        show_name: false
+        camera_view: auto
+        entity: camera.ezviz
+        camera_image: camera.ezviz
