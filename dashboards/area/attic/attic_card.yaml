@@ -73,6 +73,7 @@ cards:
           action: none
         double_tap_action:
           action: none
+  
   - type: grid
     square: false
     columns: 2
