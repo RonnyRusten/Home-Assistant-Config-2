@@ -33,6 +33,7 @@ cards:
                   - !include ../area/basement_hall/basement_hall_area_card.yaml
                   - !include ../area/bathroom_basement/bathroom_basement_area_card.yaml
                   - !include ../area/laundry/laundry_area_card.yaml
+                  - !include ../area/attic/attic_area_card.yaml
                   - !include ../area/garage/garage_area_card.yaml
     
   - type: grid
