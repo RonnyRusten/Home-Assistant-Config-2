@@ -19,19 +19,19 @@ cards:
     secondary: >-
       {{ states('sensor.brewpiless1_roomtemp') }} °C
     multiline_secondary: false
-    icon: mdi:garage
+    icon: mdi:garage-variant
     icon_color: ''
     fill_container: true
     layout: horizontal
     tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          content:
-            type: vertical-stack
-            cards:
-              - !include master_bedroom_card.yaml
+      # action: fire-dom-event
+      # browser_mod:
+      #   service: browser_mod.popup
+      #   data:
+      #     content:
+      #       type: vertical-stack
+      #       cards:
+      #         - !include master_bedroom_card.yaml
   - type: custom:mushroom-chips-card
     alignment: end
     card_mod:
@@ -42,6 +42,6 @@ cards:
           --chip-spacing: 0;
         }
     chips:
-      - !include chips/automation_chip.yaml
-      - !include chips/heater_chip.yaml
-      - !include chips/window_chip.yaml
+      - !include chips/garage_door_chip.yaml
+      # - !include chips/heater_chip.yaml
+      # - !include chips/window_chip.yaml
