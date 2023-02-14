@@ -1,0 +1,9 @@
+type: grid
+square: false
+columns: 1
+cards:
+  - !include bus_malaga_card.yaml
+  - !include bus_campus_card.yaml
+  - !include bus_roysegata_card.yaml
+  - !include bus_rutebilstasjonen_card.yaml
+

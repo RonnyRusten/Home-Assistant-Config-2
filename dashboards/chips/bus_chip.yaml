@@ -1,0 +1,18 @@
+type: template
+icon: mdi:bus           
+icon_color: blue
+content: ''
+tap_action:
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      size: normal
+      content:
+        type: vertical-stack
+        cards:
+          - !include ../cards/bus/bus_card.yaml
+double_tap_action:
+  action: none
+hold_action:
+  action: none

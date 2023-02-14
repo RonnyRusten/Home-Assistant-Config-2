@@ -9,6 +9,7 @@ cards:
           - !include ../chips/weather_chip.yaml
           - !include ../chips/mail_chip.yaml
           - !include ../chips/waste_chip.yaml
+          - !include ../chips/bus_chip.yaml
           - !include ../chips/superb_chip.yaml
           - !include ../chips/gas_chip.yaml
           - !include ../chips/power_chip.yaml
@@ -47,3 +48,5 @@ cards:
         camera_view: auto
         entity: camera.ezviz
         camera_image: camera.ezviz
+
+      - !include ../cards/calendar_card.yaml

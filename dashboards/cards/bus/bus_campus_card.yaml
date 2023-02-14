@@ -1,0 +1,30 @@
+type: custom:mushroom-template-card
+layout: horizontal
+primary: Fra Campus
+secondary: |-
+  Om {{ states('sensor.entur_campus_alesund') }} min
+  Rute - Til {{ state_attr('sensor.entur_campus_alesund','route') }}
+icon: mdi:bus-clock
+entity: sensor.entur_campus_alesund
+multiline_secondary: true
+tap_action:
+  action: more-info
+hold_action:
+  action: none
+double_tap_action:
+  action: none
+badge_color: >-
+  {% if state_attr('sensor.entur_campus_alesund','route') == '1 Moa' or
+  state_attr('sensor.entur_campus_alesund','route') == '1 Myrland' %}
+    blue
+  {% else %}
+    green
+  {% endif  %}
+badge_icon: >-
+  {% if state_attr('sensor.entur_campus_alesund','route') == '1 Moa' or
+  state_attr('sensor.entur_campus_alesund','route') == '1 Myrland' %}
+    mdi:shopping
+  {% else %}
+    mdi:city
+  {% endif  %}
+icon_color: amber

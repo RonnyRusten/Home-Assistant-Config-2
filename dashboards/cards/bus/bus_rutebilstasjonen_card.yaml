@@ -1,0 +1,33 @@
+type: custom:mushroom-template-card
+layout: horizontal
+primary: Fra Rutebilstasjonen
+secondary: |-
+  Om {{ states('sensor.entur_alesund_rutebilstasjon') }} min
+  Rute - Til {{ state_attr('sensor.entur_alesund_rutebilstasjon','route') }}
+icon: mdi:bus-clock
+entity: sensor.entur_alesund_rutebilstasjon
+multiline_secondary: true
+tap_action:
+  action: more-info
+hold_action:
+  action: none
+double_tap_action:
+  action: none
+fill_container: false
+badge_icon: >-
+  {% if state_attr('sensor.entur_alesund_rutebilstasjon','route') == '1 Moa'
+  or state_attr('sensor.entur_alesund_rutebilstasjon','route') == '1
+  Myrland' %}
+    mdi:shopping
+  {% else %}
+    mdi:city
+  {% endif  %}
+badge_color: >-
+  {% if state_attr('sensor.entur_alesund_rutebilstasjon','route') == '1 Moa'
+  or state_attr('sensor.entur_alesund_rutebilstasjon','route') == '1
+  Myrland' %}
+    blue
+  {% else %}
+    green
+  {% endif  %}
+icon_color: cyan
