@@ -1,0 +1,41 @@
+type: custom:atomic-calendar-revive
+name: Kalender
+entities:
+  - entity: calendar.familiekalender
+    icon: mdi:home
+    color: rgb(255,202,51)
+  - entity: calendar.birthdays
+    icon: mdi:cake-variant
+    color: rgb(159,36,217)
+  - entity: calendar.ronny_rusten_gmail_com
+    icon: mdi:alpha-r-box-outline
+    color: rgb(93,180,100)
+  - entity: calendar.helligdager_i_norge
+    icon: mdi:flag
+    color: rgb(218,29,26)
+firstDayOfWeek: 1
+maxDaysToShow: 15
+showDate: true
+sortByStartTime: true
+hoursFormat: HH:mm
+showMonth: true
+showWeekDay: true
+showDescription: false
+showCurrentEventLine: false
+showFullDayProgress: true
+showLocation: true
+calShowDescription: true
+showLastCalendarWeek: true
+enableModeChange: true
+defaultMode: Event
+fullDayEventText: Hele dagen
+dateSize: 90
+finishedEventOpacity: 0.6
+showProgressBar: true
+progressBarColor: blue
+showNoEventsForToday: true
+showEventIcon: true
+showHiddenText: false
+noEventsForTodayText: Ingen planer idag.
+showRelativeTime: true
+refreshInterval: 60
