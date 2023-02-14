@@ -9,7 +9,7 @@ climate:
     sleep_temp: 10
     comfort_temp: 28
     away_temp: 21
-    heater: switch.bathroom_basement_floor_heating
+    heater: switch.bathroom_basement_floor_heating_switch
     target_sensor: sensor.bathroom_basement_climate_temperature
 
 sensor:
@@ -31,9 +31,9 @@ sensor:
 
 template:
   - sensor:
-    - name: "Bathroom basement floor heating running"
-      unique_id: bathroom_basement_floor_heating_running
-      state: "{{ states('sensor.bathroom_basement_floor_heating_power_1') | float(0) > 10 }}"
+      - name: "Bathroom basement floor heating running"
+        unique_id: bathroom_basement_floor_heating_running
+        state: "{{ states('sensor.bathroom_basement_floor_heating_power_1') | float(0) > 10 }}"
 
 utility_meter:
   bathroom_basement_floor_heating_daily_energy:
