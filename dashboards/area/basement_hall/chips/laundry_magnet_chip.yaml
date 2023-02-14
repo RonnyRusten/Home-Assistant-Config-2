@@ -8,7 +8,7 @@ card_mod:
       margin-left: -10px;
     }
 entity: binary_sensor.laundry_magnet_contact
-content: VR
+# content: VR
 icon: |
   {{ 'mdi:door-closed' if
      (is_state(entity, 'off'))

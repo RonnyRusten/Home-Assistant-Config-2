@@ -8,7 +8,7 @@ card_mod:
       margin-left: -10px;
     }
 entity: binary_sensor.porch_motion_occupancy
-content: VF
+# content: VF
 icon: mdi:motion-sensor
 icon_color: |
   {{ 'disabled' if

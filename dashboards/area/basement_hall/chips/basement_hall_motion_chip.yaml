@@ -9,7 +9,7 @@ card_mod:
     }
 entity: binary_sensor.hall_basement_motion_occupancy
 icon: mdi:motion-sensor
-content: K
+# content: K
 icon_color: |
   {{ 'disabled' if
      (is_state(entity, 'off'))
