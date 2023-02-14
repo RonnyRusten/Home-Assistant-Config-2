@@ -47,7 +47,6 @@ cards:
           --chip-spacing: 0;
         }
     chips:
-      # - !include ../basement_hall/chips/laundry_magnet_chip.yaml
-      # - !include chips/washing_machine_chip.yaml
-      # - !include chips/tumble_dryer_chip.yaml
-      # - !include chips/hot_water_tank_chip.yaml
+      - !include chips/attic_google_tv_chip.yaml
+      - !include chips/attic_tv_box_chip.yaml
+      - !include chips/attic_tv_chip_chip.yaml
