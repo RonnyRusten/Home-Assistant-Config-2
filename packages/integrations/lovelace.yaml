@@ -8,7 +8,6 @@ lovelace:
       title: Oversikt
       icon: mdi:home
       show_in_sidebar: true
-      path: default_view
       filename: dashboards/tablet_dashboard.yaml
 
   resources:
