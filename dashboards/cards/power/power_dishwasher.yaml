@@ -2,7 +2,7 @@ type: custom:mushroom-template-card
 layout: horizontal
 icon: mdi:dishwasher
 icon_color: blue
-entity: sensor.dishwasher_daily_energy
+entity: sensor.dishwasher_power
 primary: Oppvaskmaskin
 secondary: >-
   {{ states('sensor.dishwasher_power') }} W

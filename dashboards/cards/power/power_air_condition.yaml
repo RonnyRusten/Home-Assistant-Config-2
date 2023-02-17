@@ -10,7 +10,7 @@ secondary: >-
   }}
 icon: mdi:air-conditioner
 layout: horizontal
-entity: sensor.air_condition_daily_energy
+entity: sensor.air_condition_power
 icon_color: blue
 tap_action:
   action: more-info

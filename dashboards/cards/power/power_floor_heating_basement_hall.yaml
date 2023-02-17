@@ -10,7 +10,7 @@ secondary: >-
   }}
 icon: mdi:heating-coil
 layout: horizontal
-entity: sensor.basement_hall_floor_heating_daily_energy
+entity: sensor.basement_hall_floor_heating_electric_consumption_w
 icon_color: blue
 tap_action:
   action: more-info

@@ -10,7 +10,7 @@ secondary: >-
   }}
 icon: mdi:water-boiler
 layout: horizontal
-entity: sensor.hot_water_daily_energy
+entity: sensor.hot_water_power
 icon_color: blue
 tap_action:
   action: more-info

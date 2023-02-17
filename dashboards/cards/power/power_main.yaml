@@ -2,56 +2,6 @@ type: grid
 columns: 2
 square: false
 cards: 
-  # - type: custom:mushroom-template-card
-  #   primary: Totalforbruk
-  #   secondary: >-
-  #     {{ states('sensor.han_port_power') }} W
-    
-  #     I dag: {{ states('sensor.totalt_daglig') }} kWh
-    
-  #     {{ as_timestamp(now())|timestamp_custom('%B') }}: {{ states('sensor.totalt_manedlig') }} kWh
-  #   icon: mdi:lightning-bolt
-  #   layout: horizontal
-  #   entity: sensor.han_port_power
-  #   icon_color: amber
-  #   tap_action:
-  #     action: more-info
-  #   badge_icon: mdi:access-point
-  #   badge_color: |-
-  #     {% if states('sensor.han_port_power')|float > 10000 %}
-  #       red
-  #     {% elif states('sensor.han_port_power')|float > 5000 %}
-  #       orange
-  #     {% else %}
-  #       green
-  #     {% endif %}
-  #   multiline_secondary: true
-  #   fill_container: true
-    
-  # - type: custom:mushroom-template-card
-  #   primary: >-
-  #     Estimat {{ states('sensor.power_usage_current_hour_estimated_from_last_10_min') }} kWt
-  #   secondary: >-
-  #     Siste 10 min. {{ states('sensor.power_usage_last_10') }} kWt
-      
-  #     Snittpris: {{ states('sensor.nordpool_average_price')|round(3) }} kr/kWt
-      
-  #     I morgen: {{ average(state_attr('sensor.nordpool_kwh_molde_nok_3_10_025','tomorrow'), 0)|round(3) }} kr/kWt
-  #   icon: mdi:lightning-bolt
-  #   multiline_secondary: true
-  #   badge_color: |-
-  #     {% if is_state('sensor.nordpool_price_high', 'True') %}
-  #       red
-  #     {% else %}
-  #       green
-  #     {% endif %}
-  #   badge_icon: mdi:cash-multiple
-  #   icon_color: ''
-  #   tap_action:
-  #     action: more-info
-  #   entity: sensor.power_usage_current_hour_estimated_from_last_10_min
-  #   fill_container: true
-  
   - type: markdown
     content: >-
       Forbruk nå: {{ states('sensor.han_port_power') }} W

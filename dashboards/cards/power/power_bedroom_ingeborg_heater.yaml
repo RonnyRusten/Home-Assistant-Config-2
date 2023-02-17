@@ -16,7 +16,7 @@ icon_color: |-
     blue
   {% endif %}
     
-entity: switch.bedroom_ingeborg_heater_plug
+entity: sensor.bedroom_ingeborg_heater_power
 multiline_secondary: true
 fill_container: true
 badge_icon: mdi:lightning-bolt

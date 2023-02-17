@@ -1,6 +1,6 @@
 type: custom:mushroom-template-card
 layout: horizontal
-entity: sensor.fridge_kitchen_daily_energy
+entity: sensor.fridge_kitchen_power
 primary: Kjøleskap kjøkken
 secondary: >-
   {{ states('sensor.fridge_kitchen_power') }} W

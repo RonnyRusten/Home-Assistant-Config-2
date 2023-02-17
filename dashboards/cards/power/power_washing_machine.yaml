@@ -10,7 +10,7 @@ secondary: >-
   }}
 icon: mdi:washing-machine
 layout: horizontal
-entity: sensor.washing_machine_daily_energy
+entity: sensor.washing_machine_power
 icon_color: blue
 tap_action:
   action: more-info

@@ -10,7 +10,7 @@ secondary: >-
   }}
 icon: mdi:fridge-industrial
 layout: horizontal
-entity: sensor.garage_freezer_daily_energy
+entity: sensor.garage_freezer_power
 icon_color: white
 tap_action:
   action: more-info

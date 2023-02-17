@@ -9,7 +9,7 @@ secondary: >-
   (timedelta(hours=(states('sensor.master_bedroom_heater_runtime_today')|float))|string)[:-3]
   }}
 icon: mdi:radiator
-entity: sensor.master_bedroom_daily_energy
+entity: sensor.master_bedroom_power
 icon_color: |-
   {% if is_state('switch.master_bedroom_heater_plug','on') %}
     disabled
