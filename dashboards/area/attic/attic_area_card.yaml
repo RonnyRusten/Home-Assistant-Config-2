@@ -49,4 +49,4 @@ cards:
     chips:
       - !include chips/attic_google_tv_chip.yaml
       - !include chips/attic_tv_box_chip.yaml
-      - !include chips/attic_tv_chip_chip.yaml
+      - !include chips/attic_tv_chip.yaml
