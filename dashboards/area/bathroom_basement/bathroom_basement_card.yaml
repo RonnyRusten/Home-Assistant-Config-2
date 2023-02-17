@@ -2,12 +2,12 @@ type: grid
 square: false
 columns: 1
 cards:
-  - type: custom:mushroom-chips-card
-    chips:
-      - type: back
-  - square: false
+  # - type: custom:mushroom-chips-card
+  #   chips:
+  #     - type: back
+  - type: grid
+    square: false
     columns: 2
-    type: grid
     cards:
       - type: sensor
         hours_to_show: 24
@@ -45,9 +45,9 @@ cards:
             red
           {% endif %}
 
-  - square: false
+  - type: grid
+    square: false
     columns: 1
-    type: grid
     cards:
       - type: thermostat
         entity: climate.bathroom_basement_temperature
