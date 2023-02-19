@@ -43,6 +43,9 @@ automation:
   - id: "washing_machine_finished"
     alias: _Vaskemaskin ferdig
     description: ""
+    variables:
+      notification_message: Vaskemaskinen er ferdig
+      notification_title: The computer says
     trigger:
       - platform: state
         entity_id: sensor.washing_machine_running
@@ -54,12 +57,16 @@ automation:
       - service: tts.cloud_say
         data:
           entity_id: media_player.kjellerkontoret_speaker
-          message: Vaskemaskinen er ferdig
+          message: "{{notification_message}}"
           cache: true
+      - service: notify.mobile_app_iphone
+        data:
+          title: "{{notification_title}}"
+          message: "{{notification_message}}"
       - service: notify.mobile_app_pixel_7_pro
         data:
-          message: Vaskemaskinen er ferdig
-          title: The computer says
+          title: "{{notification_title}}"
+          message: "{{notification_message}}"
           data:
             ttl: 0
             priority: high
@@ -71,15 +78,11 @@ automation:
           sequence:
             - service: notify.mobile_app_iphone_ingeborg
               data:
-                message: Vaskemaskinen er ferdig
-                title: The computer says
+                title: "{{notification_title}}"
+                message: "{{notification_message}}"
                 data:
                   ttl: 0
                   priority: high
-      - service: notify.mobile_app_iphone
-        data:
-          message: Vaskemaskinen er ferdig
-          title: The computer says
       # - service: notify.telia_box_loftet
       #   data:
       #     data:
@@ -89,8 +92,8 @@ automation:
       #       transparency: 50%
       #       image:
       #         url: !secret washing_machine_image_url
-      #     message: Vaskemaskinen er ferdig
-      #     title: The computer says
+      #     title: "{{notification_title}}"
+      #     message: "{{notification_message}}"
       # - service: notify.telia_box_ingeborg
       #   data:
       #     data:
@@ -100,8 +103,8 @@ automation:
       #       transparency: 50%
       #       image:
       #         url: !secret washing_machine_image_url
-      #     message: Vaskemaskinen er ferdig
-      #     title: The computer says
+      #     title: "{{notification_title}}"
+      #     message: "{{notification_message}}"
       # - service: notify.telia_box_stue
       #   data:
       #     data:
@@ -111,6 +114,6 @@ automation:
       #       transparency: 50%
       #       image:
       #         url: !secret washing_machine_image_url
-      #     message: Vaskemaskinen er ferdig
-      #     title: The computer says
+      #     title: "{{notification_title}}"
+      #     message: "{{notification_message}}"
     mode: single

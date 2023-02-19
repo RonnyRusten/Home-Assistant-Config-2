@@ -60,6 +60,9 @@ automation:
   - id: 'dishwasher_finished'
     alias: _Oppvaskmaskin ferdig
     description: ''
+    variables:
+      notification_message: Oppvaskmaskinen er ferdig
+      notification_title: The computer says
     trigger:
     - platform: state
       entity_id: sensor.dishwasher_running
@@ -71,26 +74,26 @@ automation:
     - service: tts.cloud_say
       data:
         entity_id: media_player.kjellerkontoret_speaker
-        message: Oppvaskmaskinen er ferdig
+        message: "{{notification_message}}"
         cache: true
-    - service: notify.mobile_app_pixel_7_pro #notify.mobile_app_ronnys_iphone
+    - service: notify.mobile_app_pixel_7_pro
       data:
-        message: Oppvaskmaskinen er ferdig
-        title: The computer says
+        message: "{{notification_message}}"
+        title: "{{notification_title}}"
         data:
           ttl: 0
           priority: high
     # - service: notify.mobile_app_ronnys_iphone
     #   data:
-    #     message: Oppvaskmaskinen er ferdig
-    #     title: The computer says
+    #     message: "{{notification_message}}"
+    #     title: "{{notification_title}}"
     #     data:
     #       ttl: 0
     #       priority: high
     - service: notify.mobile_app_iphone
       data:
-        message: Oppvaskmaskinen er ferdig
-        title: The computer says
+        message: "{{notification_message}}"
+        title: "{{notification_title}}"
     # - service: notify.telia_box_loftet
     #   data:
     #     data:
@@ -100,8 +103,8 @@ automation:
     #       transparency: 50%
     #       image:
     #         url: !secret dishwasher_image_url
-    #     message: Oppvaskmaskinen er ferdig
-    #     title: The computer says
+    #     message: "{{notification_message}}"
+    #     title: "{{notification_title}}"
     # - service: notify.telia_box_stue
     #   data:
     #     data:
@@ -111,8 +114,8 @@ automation:
     #       transparency: 50%
     #       image:
     #         url: !secret dishwasher_image_url
-    #     message: Oppvaskmaskinen er ferdig
-    #     title: The computer says
+    #     message: "{{notification_message}}"
+    #     title: "{{notification_title}}"
     mode: single
 
 alert:

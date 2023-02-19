@@ -62,20 +62,6 @@ automation:
       at: '18:00'
     - platform: state
       entity_id: binary_sensor.master_bedroom_magnet_window_contact
-    - platform: numeric_state
-      entity_id: sensor.master_bedroom_climate_temperature
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
-      below: '20'
-    - platform: numeric_state
-      entity_id: sensor.master_bedroom_climate_temperature
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
-      above: '25'
     condition: []
     action:
     - choose:
@@ -133,8 +119,11 @@ automation:
     mode: single
   
   - id: 'master_bedroom_window_open'
-    alias: Soverom varsling vindu åpent
+    alias: _Soverom varsling vindu åpent
     description: ''
+    variables:
+      notification_title: Åpent vindu
+      notification_message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
     trigger:
     - platform: time
       at: '18:00'
@@ -145,8 +134,8 @@ automation:
     action:
     - service: notify.mobile_app_pixel_7_pro
       data:
-        message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
-        title: Åpent vindu
+        title: "{{ notification_title }}"
+        message: "{{ notification_message }}"
         data:
           ttl: 0
           priority: high
