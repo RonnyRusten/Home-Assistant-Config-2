@@ -4,17 +4,40 @@ type: grid
 square: false
 columns: 1
 cards:
-  - type: sensor
-    hours_to_show: 48
-    graph: line
-    entity: {{ power_entity }}
-    detail: 2
-    theme: minimalist-desktop
-    name: Effekt
-  - type: sensor
-    hours_to_show: 48
-    graph: line
-    entity: {{ energy_entity }}
-    detail: 2
-    theme: minimalist-desktop
-    name: Forbruk
+  # - type: sensor
+  #   hours_to_show: 96
+  #   graph: line
+  #   entity: {{ power_entity }}
+  #   detail: 2
+  #   theme: minimalist-desktop
+  #   name: Effekt
+
+  # - type: sensor
+  #   hours_to_show: 96
+  #   graph: line
+  #   entity: {{ energy_entity }}
+  #   detail: 2
+  #   theme: minimalist-desktop
+  #   name: Forbruk
+
+  - type: custom:mini-graph-card
+    hours_to_show: 96
+    line_width: 1
+    font_size: 30
+    animate: true
+    points_per_hour: 30
+    entities:
+      - entity: {{ energy_entity }}
+        color: '#00bb33'
+      - entity: {{ power_entity }}
+        color: teal
+        y_axis: secondary
+    show:
+      name: false
+      labels: false
+      icon: false
+      state: true
+      legend: false
+      fill: fade
+    
+  
