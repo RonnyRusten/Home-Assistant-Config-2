@@ -38,7 +38,7 @@ cards:
             blue
           {% endif %}
             
-        entity: switch.air_condition_plug
+        entity: sensor.air_condition_power
         multiline_secondary: true
         fill_container: false
         badge_icon: mdi:lightning-bolt
@@ -50,9 +50,19 @@ cards:
           {% endif %}
         layout: vertical
         tap_action:
-          action: more-info
-        hold_action:
-          action: toggle
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              content:
+                type: vertical-stack
+                cards:
+                  - !include
+                    - ../../cards/power/power_details_template.yaml
+                    - power_entity: sensor.air_condition_power
+                      energy_entity: sensor.air_condition_daily_energy
+                hold_action:
+                  action: toggle
 
   - type: custom:mini-media-player
     entity: media_player.telia_box_stue
