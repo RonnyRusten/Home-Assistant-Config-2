@@ -6,7 +6,7 @@
 #!/entities/
 !/esphome/
 #!/other/
-!*.yamls
+!*.yaml
 !*.json
 
 google_calendars.yaml
