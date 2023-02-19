@@ -5,6 +5,7 @@
 !/dashboards/
 #!/entities/
 !/esphome/
+!/wiki_images/
 #!/other/
 !*.yaml
 !*.json
