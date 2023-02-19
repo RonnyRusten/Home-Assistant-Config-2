@@ -56,7 +56,7 @@ automation:
           entity_id: media_player.kjellerkontoret_speaker
           message: Tørketrommelen er ferdig
           cache: true
-      - service: notify.mobile_app_ronny_pixel_7_pro
+      - service: notify.mobile_app_pixel_7_pro
         data:
           message: Tørketrommelen er ferdig
           title: The computer says

@@ -89,12 +89,7 @@ automation:
         - condition: time
           after: '18:00:00'
           before: 06:30:00
-          #weekday: []
         sequence:
-        # - service: switch.turn_on
-        #   data: {}
-        #   target:
-        #     entity_id: switch.master_bedroom_heater_plug
         - service: climate.set_temperature
           target:
             entity_id: climate.master_bedroom_temperature
@@ -110,10 +105,6 @@ automation:
             entity_id: sensor.master_bedroom_climate_temperature
             above: '25'
         sequence:
-        # - service: switch.turn_off
-        #   data: {}
-        #   target:
-        #     entity_id: switch.master_bedroom_heater_plug
         - service: climate.set_temperature
           target:
             entity_id: climate.master_bedroom_temperature
@@ -129,9 +120,8 @@ automation:
         - condition: time
           after: '18:00:00'
           before: '18:01:00'
-          #weekday: []
         sequence:
-        - service: notify.mobile_app_ronny_pixel_7_pro
+        - service: notify.mobile_app_pixel_7_pro
           data: 
             message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
             title: Åpent vindu
@@ -142,26 +132,26 @@ automation:
       default: []
     mode: single
   
-  # - id: 'master_bedroom_window_open'
-  #   alias: Soverom varsling vindu åpent
-  #   description: ''
-  #   trigger:
-  #   - platform: time
-  #     at: '18:00'
-  #   condition:
-  #   - condition: state
-  #     entity_id: binary_sensor.master_bedroom_magnet_window_contact
-  #     state: 'on'
-  #   action:
-  #   - service: notify.mobile_app_kb2003
-  #     data:
-  #       message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
-  #       title: Åpent vindu
-  #       data:
-  #         ttl: 0
-  #         priority: high
-  #   - service: notify.mobile_app_sbm_2016
-  #     data:
-  #       message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
-  #       title: Åpent vindu
-  #   mode: single
+  - id: 'master_bedroom_window_open'
+    alias: Soverom varsling vindu åpent
+    description: ''
+    trigger:
+    - platform: time
+      at: '18:00'
+    condition:
+    - condition: state
+      entity_id: binary_sensor.master_bedroom_magnet_window_contact
+      state: 'on'
+    action:
+    - service: notify.mobile_app_pixel_7_pro
+      data:
+        message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
+        title: Åpent vindu
+        data:
+          ttl: 0
+          priority: high
+    # - service: notify.mobile_app_sbm_2016
+    #   data:
+    #     message: Vinduet på soverommet er åpent. Lukk vinduet for å slå på varme.
+    #     title: Åpent vindu
+    mode: single

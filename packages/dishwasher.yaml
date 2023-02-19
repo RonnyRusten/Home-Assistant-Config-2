@@ -73,7 +73,7 @@ automation:
         entity_id: media_player.kjellerkontoret_speaker
         message: Oppvaskmaskinen er ferdig
         cache: true
-    - service: notify.mobile_app_ronny_pixel_7_pro #notify.mobile_app_ronnys_iphone
+    - service: notify.mobile_app_pixel_7_pro #notify.mobile_app_ronnys_iphone
       data:
         message: Oppvaskmaskinen er ferdig
         title: The computer says
