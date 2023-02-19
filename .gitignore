@@ -5,9 +5,8 @@
 !/dashboards/
 #!/entities/
 !/esphome/
-!/wiki_images/
 #!/other/
-!*.yaml
+!*.yamls
 !*.json
 
 google_calendars.yaml
