@@ -20,7 +20,7 @@ icon_color: |-
     blue
   {% endif %}
     
-entity: sensor.bedroom_ingeborg_heater_power
+entity: sensor.bedroom_marius_heater_power
 multiline_secondary: true
 fill_container: true
 badge_icon: mdi:lightning-bolt
