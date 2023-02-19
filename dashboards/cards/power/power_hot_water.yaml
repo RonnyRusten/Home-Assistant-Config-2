@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.hot_water_power
+  energy: &energy sensor.hot_water_daily_energy
+
 type: custom:mushroom-template-card
 primary: Varmtvannstank
 secondary: >-
@@ -13,7 +17,17 @@ layout: horizontal
 entity: sensor.hot_water_power
 icon_color: blue
 tap_action:
-  action: more-info
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      content:
+        type: vertical-stack
+        cards:
+          - !include
+            - power_details_template.yaml
+            - power_entity: *power
+              energy_entity: *energy
 multiline_secondary: true
 badge_icon: mdi:heating-coil
 badge_color: |-

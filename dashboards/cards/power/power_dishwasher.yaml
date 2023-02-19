@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.dishwasher_power
+  energy: &energy sensor.dishwasher_daily_energy
+
 type: custom:mushroom-template-card
 layout: horizontal
 icon: mdi:dishwasher
@@ -17,4 +21,14 @@ badge_color: |-
     red
   {% endif %}
 tap_action:
-  action: more-info
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      content:
+        type: vertical-stack
+        cards:
+          - !include
+            - power_details_template.yaml
+            - power_entity: *power
+              energy_entity: *energy

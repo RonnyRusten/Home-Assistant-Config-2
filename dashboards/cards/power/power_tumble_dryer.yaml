@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.tumble_dryer_power
+  energy: &energy sensor.tumble_dryer_daily_energy
+
 type: custom:mushroom-template-card
 primary: Tørketrommel
 secondary: >-
@@ -13,7 +17,17 @@ layout: horizontal
 entity: sensor.tumble_dryer_power
 icon_color: blue
 tap_action:
-  action: more-info
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      content:
+        type: vertical-stack
+        cards:
+          - !include
+            - power_details_template.yaml
+            - power_entity: *power
+              energy_entity: *energy
 badge_icon: mdi:rotate-3d
 badge_color: |-
   {% if states('sensor.tumble_dryer_running') == 'True' %}

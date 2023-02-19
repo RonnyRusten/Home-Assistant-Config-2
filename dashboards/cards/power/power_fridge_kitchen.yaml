@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.fridge_kitchen_power
+  energy: &energy sensor.fridge_kitchen_daily_energy
+
 type: custom:mushroom-template-card
 layout: horizontal
 entity: sensor.fridge_kitchen_power
@@ -14,7 +18,17 @@ multiline_secondary: true
 icon: mdi:fridge
 icon_color: black
 tap_action:
-  action: more-info
+  action: fire-dom-event
+  browser_mod:
+    service: browser_mod.popup
+    data:
+      content:
+        type: vertical-stack
+        cards:
+          - !include
+            - power_details_template.yaml
+            - power_entity: *power
+              energy_entity: *energy
 badge_icon: mdi:snowflake
 badge_color: |-
   {% if states('sensor.fridge_kitchen_running') == 'True' %}
