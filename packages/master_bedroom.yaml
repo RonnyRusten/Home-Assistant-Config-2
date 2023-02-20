@@ -47,10 +47,10 @@ template:
       state: "{{ states('sensor.master_bedroom_heater_power') | float(0) > 10 }}"
 
 utility_meter:
-  master_bedroom_daily_energy:
+  master_bedroom_heater_daily_energy:
     source: sensor.master_bedroom_energy
-    name: master_bedroom_daily_energy
-    unique_id: master_bedroom_daily_energy
+    name: master_bedroom_heater_daily_energy
+    unique_id: master_bedroom_heater_daily_energy
     cycle: daily
 
 automation:
