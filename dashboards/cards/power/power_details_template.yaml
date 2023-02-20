@@ -21,10 +21,12 @@ cards:
   #   name: Forbruk
 
   - type: custom:mini-graph-card
+    height: 300
     hours_to_show: 96
     line_width: 1
     font_size: 30
     animate: true
+    hour24: true
     points_per_hour: 30
     entities:
       - entity: {{ energy_entity }}
