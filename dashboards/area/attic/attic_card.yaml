@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.tv_attic_power
+  energy: &energy sensor.tv_attic_daily_energy
+
 type: grid
 square: false
 columns: 1
@@ -93,7 +97,17 @@ cards:
         entity: sensor.tv_attic_daily_energy
         icon_color: blue
         tap_action:
-          action: more-info
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              content:
+                type: vertical-stack
+                cards:
+                  - !include
+                    - ../../cards/power/power_details_template.yaml
+                    - power_entity: *power
+                      energy_entity: *energy
         multiline_secondary: true
         badge_icon: mdi:power
         badge_color: |-

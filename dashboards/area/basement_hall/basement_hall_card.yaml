@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.basement_hall_floor_heating_electric_consumption_w
+  energy: &energy sensor.basement_hall_floor_heating_daily_energy
+
 type: grid
 square: false
 columns: 1
@@ -83,7 +87,17 @@ cards:
         entity: sensor.basement_hall_floor_heating_daily_energy
         icon_color: blue
         tap_action:
-          action: more-info
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              content:
+                type: vertical-stack
+                cards:
+                  - !include
+                    - ../../cards/power/power_details_template.yaml
+                    - power_entity: *power
+                      energy_entity: *energy
         badge_icon: mdi:heating-coil
         badge_color: |-
           {% if states('sensor.basement_hall_floor_heating_running') == 'True' %}

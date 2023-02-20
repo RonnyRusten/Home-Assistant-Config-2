@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.master_bedroom_heater_plug_power
+  energy: &energy sensor.master_bedroom_heater_daily_energy
+
 type: grid
 square: false
 columns: 1
@@ -26,20 +30,30 @@ cards:
         secondary: >-
           Effekt nå: {{ states('sensor.master_bedroom_heater_plug_power') }} W
 
-          Forbruk i dag: {{ states('sensor.master_bedroom_daily_energy') }} kWh
+          Forbruk i dag: {{ states('sensor.master_bedroom_heater_daily_energy') }} kWh
 
           Tid på i dag: {{
           (timedelta(hours=(states('sensor.master_bedroom_heater_runtime_today')|float))|string)[:-3]
           }}
         icon: mdi:radiator
-        entity: sensor.master_bedroom_daily_energy
+        entity: sensor.master_bedroom_heater_daily_energy
         icon_color: |-
           {% if is_state('switch.master_bedroom_heater_plug','on') %}
             amber
           {% endif %}
         multiline_secondary: true
         tap_action:
-          action: more-info
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              content:
+                type: vertical-stack
+                cards:
+                  - !include
+                    - ../../cards/power/power_details_template.yaml
+                    - power_entity: *power
+                      energy_entity: *energy
         hold_action:
           action: toggle
         badge_color: |-
