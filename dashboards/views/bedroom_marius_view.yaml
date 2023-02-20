@@ -1,3 +1,7 @@
+vars:
+  power: &power sensor.bedroom_marius_heater_plug_power
+  energy: &energy sensor.bedroom_marius_heater_daily_energy
+
 title: Marius
 path: marius
 theme: minimalist-desktop
@@ -87,7 +91,17 @@ cards:
                 red
               {% endif %}
             tap_action:
-              action: more-info
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                    type: vertical-stack
+                    cards:
+                      - !include
+                        - ../cards/power/power_details_template.yaml
+                        - power_entity: *power
+                          energy_entity: *energy
             hold_action:
               action: toggle
             double_tap_action:
