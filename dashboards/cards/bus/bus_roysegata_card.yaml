@@ -2,8 +2,9 @@ type: custom:mushroom-template-card
 layout: horizontal
 primary: Fra Røysegata
 secondary: |-
-  Om {{ states('sensor.entur_roysegata') }} min
-  Rute - Til {{ state_attr('sensor.entur_roysegata','route') }}
+  Om {{ states(entity) }} min
+  Rute - {{ state_attr(entity,'route') }}
+  Neste: {{ state_attr(entity,'next_route')}} - {{ state_attr(entity,'next_due_at')}}
 icon: mdi:bus-clock
 multiline_secondary: true
 entity: sensor.entur_roysegata
@@ -14,15 +15,15 @@ hold_action:
 double_tap_action:
   action: none
 badge_color: >-
-  {% if state_attr('sensor.entur_roysegata','route') == '1 Moa' or
-  state_attr('sensor.entur_roysegata','route') == '1 Myrland' %}
+  {% if state_attr(entity,'route') == '1 Moa' or
+  state_attr(entity,'route') == '1 Myrland' %}
     blue
   {% else %}
     green
   {% endif  %}
 badge_icon: >-
-  {% if state_attr('sensor.entur_roysegata','route') == '1 Moa' or
-  state_attr('sensor.entur_roysegata','route') == '1 Myrland' %}
+  {% if state_attr(entity,'route') == '1 Moa' or
+  state_attr(entity,'route') == '1 Myrland' %}
     mdi:shopping
   {% else %}
     mdi:city
