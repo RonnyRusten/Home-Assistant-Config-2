@@ -4,7 +4,7 @@ primary: Fra Røysegata
 secondary: |-
   Om {{ states(entity) }} min
   Rute - {{ state_attr(entity,'route') }}
-  Neste: {{ state_attr(entity,'next_route')}} - {{ state_attr(entity,'next_due_at')}}
+  Neste: {{ state_attr(entity,'next_route')}} - kl {{ state_attr(entity,'next_due_at')}}
 icon: mdi:bus-clock
 multiline_secondary: true
 entity: sensor.entur_roysegata
