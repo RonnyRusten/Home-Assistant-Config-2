@@ -8,6 +8,7 @@ cards:
     cards:
       - type: custom:mushroom-light-card
         entity: light.livingroom_lights
+        fill_container: true
         name: Alle lamper
         icon: mdi:lamps-outline
         use_light_color: true
@@ -23,6 +24,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_cupboard
+        fill_container: true
         name: Skjenk
         icon: mdi:lamp-outline
         use_light_color: true
@@ -35,6 +37,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_north_east
+        fill_container: true
         name: Vindu nord
         icon: mdi:lamp-outline
         use_light_color: true
@@ -43,9 +46,22 @@ cards:
         show_color_control: false
         tap_action:
           action: toggle
+        
+      - type: custom:mushroom-light-card
+        entity: light.livingroom_light_floor_arch
+        fill_container: true
+        name: Gulvlampe nord-vest
+        icon: mdi:floor-lamp-outline
+        use_light_color: false
+        show_brightness_control: false
+        show_color_temp_control: false
+        show_color_control: false
+        tap_action:
+          action: toggle
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_tv_board
+        fill_container: true
         name: TV-bord
         icon: mdi:lamp-outline
         use_light_color: true
@@ -57,6 +73,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_north_east
+        fill_container: true
         name: Ved trappa
         icon: mdi:lamp-outline
         use_light_color: true
@@ -69,6 +86,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_window_south_1
+        fill_container: true
         name: Vindu sør-vest
         icon: mdi:lamp-outline
         use_light_color: true
@@ -80,6 +98,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_window_south_2
+        fill_container: true
         name: Vindu sør-øst
         icon: mdi:lamp-outline
         use_light_color: true
@@ -91,6 +110,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_floorlamp
+        fill_container: true
         name: Stålampe
         icon: mdi:lava-lamp
         use_light_color: true
@@ -102,6 +122,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_dining_table
+        fill_container: true
         name: Spisetue
         icon: mdi:ceiling-light-multiple
         use_light_color: true
@@ -113,6 +134,7 @@ cards:
 
       - type: custom:mushroom-light-card
         entity: light.outdoors_light_terrace
+        fill_container: true
         name: Hagestue
         icon: mdi:outdoor-lamp
         use_light_color: true
