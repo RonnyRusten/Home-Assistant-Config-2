@@ -7,14 +7,14 @@ automation:
         minutes: /10
       - platform: numeric_state
         entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-        above: "9.5"
+        above: "4.9"
         for:
           hours: 0
           minutes: 0
           seconds: 30
       - platform: numeric_state
         entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-        below: "9.5"
+        below: "4.9"
         for:
           hours: 0
           minutes: 5
@@ -31,13 +31,13 @@ script:
     description: "Turn on and of utilities to control power consumption"
     mode: restart
     variables:
-      power_limit: 9.95
+      power_limit: 4.9
     sequence:
       - choose:
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "9.5"
+              above: "4.9"
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 24
@@ -52,14 +52,14 @@ script:
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "9.5"              
+              above: "4.9"              
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 20
               attribute: temperature
             - condition: state
               entity_id: climate.bathroom_basement_temperature
-              state: 27
+              state: 29
               attribute: temperature
             sequence:    
               - service: climate.set_temperature
@@ -71,7 +71,7 @@ script:
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "9.5"
+              above: "4.9"
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 20
@@ -91,7 +91,7 @@ script:
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "9.5"
+              below: "4.9"
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 20
@@ -111,7 +111,7 @@ script:
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "9.5"
+              below: "4.9"
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 20
@@ -125,12 +125,12 @@ script:
                 target:
                   entity_id: climate.bathroom_basement_temperature
                 data:
-                  temperature: 27
+                  temperature: 29
 
           - conditions:
             - condition: numeric_state
               entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "9.5"
+              below: "4.9"
             - condition: state
               entity_id: climate.basement_hall_floor_heating
               state: 20
