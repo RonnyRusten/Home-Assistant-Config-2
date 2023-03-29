@@ -1,0 +1,10 @@
+type: entities
+entities:
+  - entity: sensor.ronny_s_superb_oil_inspection_days
+    name: Tid til neste oljeskift
+  - entity: sensor.ronny_s_superb_oil_inspection_distance
+    name: Distanse til neste oljeskift
+  - entity: sensor.ronny_s_superb_service_inspection_days
+    name: Tid til neste service
+  - entity: sensor.ronny_s_superb_service_inspection_distance
+    name: Distanse til neste service

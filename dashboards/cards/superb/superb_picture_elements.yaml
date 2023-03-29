@@ -1,0 +1,29 @@
+type: picture-elements
+elements:
+  - type: state-badge
+    entity: binary_sensor.ronny_s_superb_doors_locked
+    style:
+      top: 90%
+      left: 75%
+      color: transparent
+  - type: state-badge
+    entity: binary_sensor.ronny_s_superb_windows_closed
+    style:
+      top: 90%
+      left: 90%
+      color: transparent
+  - type: state-badge
+    entity: binary_sensor.ronny_s_superb_sunroof_closed
+    style:
+      top: 25%
+      left: 60%
+      color: transparent
+  - type: state-badge
+    entity: sensor.ronny_s_superb_odometer
+    style:
+      top: 90%
+      left: 60%
+      color: transparent
+image: >-
+  https://ip-modcwp.azureedge.net//modcwp3v5b20180115/F6F6I-.7-v2EThuDLalsA86qGQ0-Xv83WTIMLQ56_z-ENyACWiZvte6V7pGJn0r.hQ_l3-Ov52r8mdiWlxDBF0ZhPtb-RATWGKBF-1080570studiovbeauty_connectview101281.png
+        

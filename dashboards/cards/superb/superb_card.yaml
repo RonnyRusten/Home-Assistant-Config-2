@@ -9,57 +9,26 @@ tabs:
       columns: 1
       cards:
         - !include superb_status.yaml
+        - !include superb_picture_elements.yaml       
         
-        - type: entities
-          entities:
-            - entity: sensor.ronny_s_superb_last_trip_average_fuel_consumption
-              name: Gjennomsnittsforbruk
-            - entity: sensor.ronny_s_superb_last_trip_average_speed
-              name: Gjennomsnittshastighet
-            - entity: sensor.ronny_s_superb_last_trip_duration
-              name: Varighet
-            - entity: sensor.ronny_s_superb_last_trip_length
-              name: Avstand tilbakelagt
-            - entity: sensor.ronny_s_superb_odometer
-              name: Kilometerstand
-          title: Siste tur
-        
-        - type: picture-elements
-          elements:
-            - type: state-badge
-              entity: binary_sensor.ronny_s_superb_doors_locked
-              style:
-                top: 90%
-                left: 75%
-                color: transparent
-            - type: state-badge
-              entity: binary_sensor.ronny_s_superb_windows_closed
-              style:
-                top: 90%
-                left: 90%
-                color: transparent
-            - type: state-badge
-              entity: binary_sensor.ronny_s_superb_sunroof_closed
-              style:
-                top: 25%
-                left: 60%
-                color: transparent
-            - type: state-badge
-              entity: sensor.ronny_s_superb_odometer
-              style:
-                top: 90%
-                left: 60%
-                color: transparent
-          image: >-
-            https://ip-modcwp.azureedge.net//modcwp3v5b20180115/F6F6I-.7-v2EThuDLalsA86qGQ0-Xv83WTIMLQ56_z-ENyACWiZvte6V7pGJn0r.hQ_l3-Ov52r8mdiWlxDBF0ZhPtb-RATWGKBF-1080570studiovbeauty_connectview101281.png
-        
-
   - attributes:
-      label: Info
-      icon: mdi:information-outline
+      label: Service
+      icon: mdi:garage-variant
     card:
       type: grid
       square: false
       columns: 1
       cards:
+        - !include superb_service.yaml
+
+  - attributes:
+      label: Kart
+      icon: mdi:map
+    card:
+      type: grid
+      square: false
+      columns: 1
+      cards:
+        - !include superb_map.yaml
+        - !include superb_last_trip.yaml
         

@@ -1,0 +1,7 @@
+type: map
+entities:
+  - entity: device_tracker.ronny_s_superb_position
+default_zoom: 13
+aspect_ratio: '1:0.8'
+hours_to_show: 12
+dark_mode: true

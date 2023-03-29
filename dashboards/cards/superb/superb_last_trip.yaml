@@ -1,0 +1,13 @@
+type: entities
+title: Siste tur
+entities:
+  - entity: sensor.ronny_s_superb_last_trip_average_fuel_consumption
+    name: Gjennomsnittsforbruk
+  - entity: sensor.ronny_s_superb_last_trip_average_speed
+    name: Gjennomsnittshastighet
+  - entity: sensor.ronny_s_superb_last_trip_duration
+    name: Varighet
+  - entity: sensor.ronny_s_superb_last_trip_length
+    name: Avstand tilbakelagt
+  - entity: sensor.ronny_s_superb_odometer
+    name: Kilometerstand
