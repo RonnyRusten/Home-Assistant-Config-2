@@ -1,0 +1,44 @@
+type: custom:stack-in-card
+card_mod:
+  style: |
+    ha-card {
+      height: 102px;
+    }
+cards:
+  - type: custom:mushroom-template-card
+    card_mod:
+      style: |
+        :host([dark-mode]) {
+          background: rgba(var(--rgb-primary-background-color), 0.2);
+        } 
+        :host {
+          background: rgba(var(--rgb-primary-text-color), 0.025);
+        }
+    entity: ''
+    primary: Kjøkken
+    secondary: >-
+      {{ states('sensor.kitchen_total_power') }} W
+    multiline_secondary: false
+    icon: mdi:countertop-outline
+    icon_color: ''
+    fill_container: true
+    layout: horizontal
+    tap_action:
+      action: none
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+  - type: custom:mushroom-chips-card
+    alignment: end
+    card_mod:
+      style: |
+        ha-card {
+          --chip-box-shadow: none;
+          --chip-background: none;
+          --chip-spacing: 0;
+        }
+    chips:
+      - !include chips/fridge_chip.yaml
+      - !include chips/dishwasher_chip.yaml
+      # - !include chips/window_chip.yaml

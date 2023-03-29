@@ -28,6 +28,7 @@ cards:
                 columns: 2
                 cards:
                   - !include ../area/livingroom/livingroom_area_card.yaml
+                  - !include ../area/kitchen/kitchen_area_card.yaml
                   - !include ../area/master_bedroom/master_bedroom_area_card.yaml
                   - !include ../area/bedroom_ingeborg/bedroom_ingeborg_area_card.yaml
                   - !include ../area/bedroom_marius/bedroom_marius_area_card.yaml
