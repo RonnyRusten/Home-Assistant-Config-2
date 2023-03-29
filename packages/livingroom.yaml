@@ -26,8 +26,15 @@ automation:
                 target:
                   entity_id:
                     - light.livingroom_lights #Gruppe i Zigbee2MQTT
-                    - light.livingroom_light_window_south_1
+                    #- light.livingroom_light_window_south_1
                     - light.livingroom_light_window_south_2
+
+              # - service: switch.turn_on
+              #   data: {}
+              #   target:
+              #     entity_id:
+              #       - switch.livingroom_light_floor_arch
+
               - service: input_boolean.turn_on
                 data: {}
                 target:
@@ -43,11 +50,34 @@ automation:
                 target:
                   entity_id:
                     - light.livingroom_lights #Gruppe i Zigbee2MQTT
-                    - light.livingroom_light_window_south_1
+                    #- light.livingroom_light_window_south_1
                     - light.livingroom_light_window_south_2
+
+              # - service: switch.turn_off
+              #   data: {}
+              #   target:
+              #     entity_id:
+              #       - switch.livingroom_light_floor_arch
+
               - service: input_boolean.turn_off
                 data: {}
                 target:
                   entity_id: input_boolean.livingroom_lights_on
         default: []
+    mode: single
+
+  - id: 'livingroom_arch_light'
+    alias: '_Stue gulvlampe bak sofa'
+    description: ''
+    trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/livingroom_switch_double
+      payload: "single_left"
+      value_template: "{{ value_json.action }}"
+    condition: []
+    action:
+      - service: switch.toggle
+        data: {}
+        target:
+          entity_id: switch.livingroom_light_floor_arch
     mode: single
