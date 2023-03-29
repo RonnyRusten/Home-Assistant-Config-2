@@ -206,6 +206,13 @@ template:
       #     or (now() >= intervall_3[0].start and now() <= intervall_3[0].end)
       #     or (now() >= intervall_3[1].start and now() <= intervall_3[1].end) }}
 
+      - name: kitchen_total_power
+        unique_id: kitchen_total_power
+        device_class: power
+        state: >
+          {{ states('sensor.fridge_kitchen_power')|float(0) + states('sensor.dishwasher_power')|float(0) }}
+        unit_of_measurement: W
+
       - name: han_port_power_corrected
         unique_id: han_port_power_corrected
         device_class: power
