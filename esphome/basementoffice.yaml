@@ -1,0 +1,47 @@
+esphome:
+  name: basementoffice
+  friendly_name: basement_office_esp
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "YQp1bFEf8gRgFZhL1Y/BSdtKQ47nAToztZxqbQ9Zbp0="
+
+ota:
+  password: "2f1f0c4edbeb5adb787626fe133fb943"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Basementoffice Fallback Hotspot"
+    password: "32CHbaIHwvI1"
+
+captive_portal:
+
+dallas:
+  - pin: GPIO14
+
+sensor:
+  - platform: adc
+    pin: VCC
+    name: "basement_office_esp_battery"
+    force_update: true
+    accuracy_decimals: 2  
+    
+  - platform: dallas
+    name: "basement_office_esp_temperature"
+    address: "0x913C01A816738C28"
+    force_update: true
+    accuracy_decimals: 2
+    filters:
+    - offset: 1
+
