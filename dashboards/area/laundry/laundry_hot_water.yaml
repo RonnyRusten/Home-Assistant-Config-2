@@ -11,6 +11,7 @@ secondary: >-
 
   {{ (timedelta(hours=(states('sensor.hot_water_runtime_today')|float))|string)[:-3] }}
 multiline_secondary: true
+fill_container: true
 icon: mdi:water-boiler
 layout: horizontal
 entity: sensor.hot_water_daily_energy

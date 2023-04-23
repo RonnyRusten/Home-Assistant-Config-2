@@ -1,10 +1,20 @@
 
+type: grid
 square: false
 columns: 2
-type: grid
 cards:
+  - type: sensor
+    entity: sensor.mi_laundry_temperature
+    name: Temperatur
+    hours_to_show: 24
+    graph: line
+    detail: 1
+  - type: sensor
+    entity: sensor.mi_laundry_humidity
+    name: Luftfuktighet
+    hours_to_show: 24
+    graph: line
+    detail: 1
   - !include laundry_washing_machine.yaml
-
   - !include laundry_tumble_dryer.yaml
-
   - !include laundry_hot_water.yaml

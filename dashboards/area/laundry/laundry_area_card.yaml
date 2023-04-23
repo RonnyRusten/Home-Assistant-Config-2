@@ -16,8 +16,8 @@ cards:
         }
     entity: ''
     primary: Vaskerom
-    # secondary: >-
-    #   {{ states('sensor.bedroom_ingeborg_climate_temperature') }} °C - {{ states('sensor.bedroom_ingeborg_climate_humidity') }} %
+    secondary: >-
+      {{ states('sensor.mi_laundry_temperature') }} °C - {{ states('sensor.mi_laundry_humidity') }} %
     multiline_secondary: false
     icon: mdi:washing-machine
     # icon_color: '{{ 'pink' if is_state(entity, 'on') else 'disabled' }}'
