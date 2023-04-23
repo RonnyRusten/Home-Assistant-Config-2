@@ -5,13 +5,11 @@ vars:
 type: custom:mushroom-template-card
 primary: Varmeovn Ingeborg
 secondary: >-
-  Forbruk nå: {{ states('sensor.bedroom_ingeborg_heater_plug_power') }} W
+  {{ states('sensor.bedroom_ingeborg_heater_plug_power') }} W
 
-  Forbruk i dag: {{ states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
+  {{ states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
 
-  Tid på i dag: {{
-  (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3]
-  }}
+  {{ (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3] }}
 icon: mdi:radiator
 icon_color: |-
   {% if is_state('sensor.bedroom_ingeborg_heater_running', 'True') %}
