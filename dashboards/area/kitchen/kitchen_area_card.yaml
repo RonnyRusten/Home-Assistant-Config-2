@@ -17,14 +17,21 @@ cards:
     entity: ''
     primary: Kjøkken
     secondary: >-
-      {{ states('sensor.kitchen_total_power') }} W
-    multiline_secondary: false
+      {{ states('sensor.mi_kitchen_temperature') }} °C - {{ states('sensor.mi_kitchen_humidity') }} %
+    multiline_secondary: true
     icon: mdi:countertop-outline
     icon_color: ''
     fill_container: true
     layout: horizontal
     tap_action:
-      action: none
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: vertical-stack
+            cards:
+              - !include kitchen_card.yaml
     hold_action:
       action: none
     double_tap_action:
