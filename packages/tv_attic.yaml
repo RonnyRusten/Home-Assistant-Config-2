@@ -1,6 +1,6 @@
 sensor:
   - platform: integration
-    source: sensor.tv_attic_power
+    source: sensor.tv_attic_power2
     name: tv_attic_energy
     unique_id: tv_attic_energy
     round: 2
