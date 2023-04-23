@@ -1,5 +1,5 @@
 vars:
-  power: &power sensor.tv_attic_power
+  power: &power sensor.tv_attic_power2
   energy: &energy sensor.tv_attic_daily_energy
 
 type: grid
@@ -85,7 +85,7 @@ cards:
       - type: custom:mushroom-template-card
         primary: Strømforbruk
         secondary: >-
-          Effekt nå: {{ states('sensor.tv_attic_power') }} W
+          Effekt nå: {{ states('sensor.tv_attic_power2') }} W
         
           Forbruk i dag: {{ states('sensor.tv_attic_daily_energy') }} kWh
         
