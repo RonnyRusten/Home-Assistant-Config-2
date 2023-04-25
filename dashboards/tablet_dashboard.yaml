@@ -9,3 +9,4 @@ views:
   - !include views/bedroom_marius_view.yaml
   - !include views/power_view.yaml
   - !include views/livingroom_view.yaml
+  - !include area/greenhouse/greenhouse_view.yaml

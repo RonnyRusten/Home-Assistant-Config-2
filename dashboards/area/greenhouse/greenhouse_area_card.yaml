@@ -1,0 +1,45 @@
+type: custom:stack-in-card
+card_mod:
+  style: |
+    ha-card {
+      height: 102px;
+    }
+cards:
+  - type: custom:mushroom-template-card
+    card_mod:
+      style: |
+        :host([dark-mode]) {
+          background: rgba(var(--rgb-primary-background-color), 0.2);
+        } 
+        :host {
+          background: rgba(var(--rgb-primary-text-color), 0.025);
+        }
+    entity: ''
+    primary: Minidrivhus
+    secondary: >-
+      {{ states('sensor.greenhouse_temperature') }} °C - {{ states('sensor.greenhouse_outdoor_temperature') }} °C
+    multiline_secondary: true
+    icon: mdi:countertop-outline
+    icon_color: ''
+    fill_container: true
+    layout: horizontal
+    tap_action:
+      action: navigate
+      navigation_path: greenhouse
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+  - type: custom:mushroom-chips-card
+    alignment: end
+    card_mod:
+      style: |
+        ha-card {
+          --chip-box-shadow: none;
+          --chip-background: none;
+          --chip-spacing: 0;
+        }
+    chips:
+      # - !include chips/fridge_chip.yaml
+      # - !include chips/dishwasher_chip.yaml
+      # - !include chips/window_chip.yaml

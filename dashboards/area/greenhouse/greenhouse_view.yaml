@@ -1,0 +1,96 @@
+
+title: Minidrivhus
+path: greenhouse
+theme: minimalist-desktop
+icon: mdi:greenhouse
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 3
+    cards:
+      - type: custom:button-card
+        entity: sensor.greenhouse_temperature
+        aspect_ratio: 1/1
+        icon: mdi:thermometer
+        name: Minidrivhus
+        show_state: true
+      - type: custom:button-card
+        entity: sensor.greenhouse_outdoor_temperature
+        aspect_ratio: 1/1
+        icon: mdi:thermometer
+        name: Ute
+        show_state: true
+      - type: custom:button-card
+        entity: sensor.greenhouse_battery
+        aspect_ratio: 1/1
+        icon: mdi:battery-50
+        name: Batteri
+        show_state: true
+        styles:
+          icon:
+            - color: green
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: button
+        show_name: true
+        show_icon: true
+        tap_action:
+          action: toggle
+        entity: input_boolean.greenhouse_deep_sleep
+        name: Deep sleep
+        icon: mdi:light-switch
+        show_state: true
+      - type: custom:mushroom-template-card
+        primary: Oppdatert
+        secondary: >-
+          {{ as_timestamp(states.sensor.greenhouse_temperature.last_updated) | timestamp_custom('%H:%M:%S', true) }}
+        icon: mdi:timer-sync-outline
+        layout: vertical
+        fill_container: true
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: Temperatur
+      show_states: true
+      colorize_states: true
+    graph_span: 72h
+    apex_config:
+      xaxis:
+        labels:
+          format: dd.MM
+      tooltip:
+        fixed:
+          enabled: true
+    yaxis:
+      - id: first
+        min: 1.5
+        apex_config:
+          opposite: true
+          forceNiceScale: true
+          decimalsInFloat: 2
+          labels:
+            show: true
+      - id: second
+        apex_config:
+          opposite: false
+          forceNiceScale: true
+          decimalsInFloat: 1
+          labels:
+            show: true
+    series:
+      - entity: sensor.greenhouse_temperature
+        name: Minidrivhus
+        stroke_width: 2
+        yaxis_id: second
+      - entity: sensor.greenhouse_outdoor_temperature
+        name: Minidrivhus ute
+        stroke_width: 2
+        yaxis_id: second
+      - entity: sensor.greenhouse_battery
+        name: Minidrivhus batteri
+        stroke_width: 2
+        yaxis_id: first
+        color: green
