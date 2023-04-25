@@ -30,15 +30,31 @@ captive_portal:
 dallas:
   - pin: GPIO14
 
+binary_sensor:
+  - platform: homeassistant
+    name: "Greenhouse Deep Sleep"
+    entity_id: input_boolean.greenhouse_deep_sleep
+    id: greenhouse_deep_sleep
+    publish_initial_state: true
+    on_state:
+      then:
+        - lambda: !lambda |-
+            if(x){
+              id(deep_sleep_1).set_sleep_duration(555000);
+              id(deep_sleep_1).begin_sleep(true);
+            } else {
+              id(deep_sleep_1).prevent_deep_sleep();
+            }
+
 sensor:
   - platform: adc
     pin: VCC
-    name: "greenhouse_battery"
+    name: "battery"
     force_update: true
     accuracy_decimals: 2  
     
   - platform: dallas
-    name: "greenhouse_temperature"
+    name: "temperature"
     address: "0xc70319a2792fe328"
     force_update: true
     accuracy_decimals: 2
@@ -46,9 +62,13 @@ sensor:
     - offset: 0.2
     
   - platform: dallas
-    name: "greenhouse_outdoor_temperature"
+    name: "outdoor_temperature"
     address: "0x890316a279018928"
     force_update: true
     accuracy_decimals: 2
     filters:
     - offset: 0.6
+
+deep_sleep:
+  run_duration: 45s
+  id: deep_sleep_1
