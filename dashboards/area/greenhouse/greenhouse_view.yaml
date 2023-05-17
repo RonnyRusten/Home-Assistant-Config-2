@@ -32,7 +32,7 @@ cards:
             - color: green
   - type: grid
     square: false
-    columns: 2
+    columns: 3
     cards:
       - type: button
         show_name: true
@@ -94,3 +94,8 @@ cards:
         stroke_width: 2
         yaxis_id: first
         color: green
+  - type: picture-entity
+    entity: camera.back
+    show_state: false
+    show_name: false
+    camera_view: auto
