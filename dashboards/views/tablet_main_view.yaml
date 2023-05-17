@@ -17,11 +17,21 @@ cards:
       - type: vertical-stack
         cards:
           - type: custom:swipe-card
-            start_card: 1
-            simulateTouch: true
-            spaceBetween: 8
-            preventInteractionOnTransition: true
-            freeMode: true
+            # start_card: 1
+            # simulateTouch: true
+            # preventInteractionOnTransition: true
+            # freeMode: true
+            parameters:
+              spaceBetween: 30
+              slides_per_view: 1
+              grabCursor: true
+              scrollbar:
+                hide: false
+                draggable: true
+                snapOnRelease: true
+              navigation:
+              # pagination:
+              #   type: 'progressbar'
             cards:
               - type: grid
                 square: false
@@ -35,6 +45,10 @@ cards:
                   - !include ../area/basement_hall/basement_hall_area_card.yaml
                   - !include ../area/bathroom_basement/bathroom_basement_area_card.yaml
                   - !include ../area/laundry/laundry_area_card.yaml
+              - type: grid
+                square: false
+                columns: 2
+                cards:
                   - !include ../area/attic/attic_area_card.yaml
                   - !include ../area/garage/garage_area_card.yaml
                   - !include ../area/greenhouse/greenhouse_area_card.yaml
@@ -43,12 +57,19 @@ cards:
     columns: 1
     square: false
     cards:
-      - type: picture-entity
-        name: Inngang
-        show_state: false
-        show_name: false
-        camera_view: auto
-        entity: camera.ezviz
-        camera_image: camera.ezviz
+      - type: custom:frigate-card
+        cameras:
+          - camera_entity: camera.ezviz
+            live_provider: go2rtc
+          - camera_entity: camera.garage
+            live_provider: go2rtc
+          - camera_entity: camera.back
+            live_provider: go2rtc
+            go2rtc:
+              modes: []
+        view:
+          update_cycle_camera: true
+          scan:
+            enabled: true
 
       - !include ../cards/calendar_card.yaml
