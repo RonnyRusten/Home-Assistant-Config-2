@@ -1,22 +1,37 @@
 type: grid
-columns: 2
+columns: 1
 square: false
 cards: 
-  - type: markdown
-    content: >-
-      Forbruk nå: {{ states('sensor.han_port_power') }} W
+  - type: grid
+    columns: 2
+    square: false
+    cards: 
+      - type: markdown
+        content: >-
+          Forbruk nå: {{ states('sensor.han_port_power') }} W
+     
+          Forbruk i dag: {{ states('sensor.totalt_daglig') }} kWh
+        
+          {{ as_timestamp(now())|timestamp_custom('%B') }}: {{ states('sensor.totalt_manedlig') }} kWh
     
-      Forbruk i dag: {{ states('sensor.totalt_daglig') }} kWh
+      - type: markdown
+        content: >-
+          Estimert denne timen: {{ states('sensor.power_usage_current_hour_estimated_from_last_10_min') }} kWt </td>
+          
+          Siste 10 min. {{ states('sensor.power_usage_last_10') }} kWt 
     
-      {{ as_timestamp(now())|timestamp_custom('%B') }}: {{ states('sensor.totalt_manedlig') }} kWh
-
-  - type: markdown
-    content: >-
-      Estimert denne timen: {{ states('sensor.power_usage_current_hour_estimated_from_last_10_min') }} kWt </td>
-      
-      Siste 10 min. {{ states('sensor.power_usage_last_10') }} kWt 
-
-      Snittpris: {{ states('sensor.nordpool_average_price')|round(3) }} kr/kWt
-
-      I morgen: {{ average(state_attr('sensor.nordpool_kwh_molde_nok_3_10_025','tomorrow'),0)|round(3) }} kr/kWt
-
+          Snittpris: {{ states('sensor.nordpool_average_price')|round(3) }} kr/kWt
+    
+          I morgen: {{ average(state_attr('sensor.nordpool_kwh_molde_nok_3_10_025','tomorrow'),0)|round(3) }} kr/kWt
+  - type: grid
+    columns: 1
+    square: false
+    cards: 
+    - type: markdown
+      content: >-
+        Pris nå: {{ states('sensor.nordpool_kwh_molde_nok_3_10_025') }} kr/kWh 
+        ({{ states('sensor.nordpool_kwh_molde_nok_3_10_025')|float(0)*100 }} øre/kWh)
+        (Nordpool)
+        
+        Inkludert avgifter: {{ states('sensor.electricity_total_price_deal') }} kr/kWh
+        ({{ states('sensor.electricity_total_price_deal')|float(0)*100 }} øre/kWh)
