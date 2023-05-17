@@ -40,6 +40,6 @@ cards:
           --chip-spacing: 0;
         }
     chips:
-      # - !include chips/fridge_chip.yaml
+      - !include chips/greenhouse_deep_sleep_chip.yaml
       # - !include chips/dishwasher_chip.yaml
       # - !include chips/window_chip.yaml
