@@ -18,3 +18,27 @@ cards:
   - !include laundry_washing_machine.yaml
   - !include laundry_tumble_dryer.yaml
   - !include laundry_hot_water.yaml
+  - type: custom:mushroom-template-card
+    entity: switch.hot_water_plug
+    primary: Varmtvannstank
+    # secondary: |-
+    #   {% if is_state('automation.check_power_consumption', 'on') %}
+    #     Stømsparing aktiv
+    #   {% else %}
+    #     Strømsparing inaktiv
+    #   {% endif %}
+    icon: mdi:power
+    icon_color: |-
+      {% if is_state('switch.hot_water_plug', 'on') %}
+        green
+      {% else %}
+        disabled
+      {% endif %}
+    tap_action:
+      action: toggle
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+    fill_container: true
+    multiline_secondary: true

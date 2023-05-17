@@ -11,5 +11,5 @@ cards:
       {% set days = states('sensor.posten_sensor').split(',') %}
     
       {% for day in days -%}
-          {{ day | replace("[","") | replace("]","") | replace("'","") | replace('i dag','') | title }}{{'\r\n'}} 
+          {{ as_timestamp(day | replace("[","") | replace("]","") | replace("'","") | replace(" ","") + 'T00:00:00') | timestamp_custom('%d.%m.%Y') | title }}{{'\r\n'}} 
       {%- endfor %}
