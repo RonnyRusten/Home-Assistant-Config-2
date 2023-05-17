@@ -1,6 +1,15 @@
 esphome:
   name: greenhouse
   friendly_name: greenhouse
+  on_boot:
+    - priority: 200
+      then:
+        - lambda: |-        
+            delay(500);
+    - priority: -100
+      then:
+        - component.update: dallas_temp
+        - component.update: battery_voltage
 
 esp8266:
   board: esp01_1m
@@ -29,6 +38,8 @@ captive_portal:
     
 dallas:
   - pin: GPIO14
+    update_interval: 30s
+    id: dallas_temp
 
 binary_sensor:
   - platform: homeassistant
@@ -40,7 +51,7 @@ binary_sensor:
       then:
         - lambda: !lambda |-
             if(x){
-              id(deep_sleep_1).set_sleep_duration(555000);
+              id(deep_sleep_1).set_sleep_duration(270000);
               id(deep_sleep_1).begin_sleep(true);
             } else {
               id(deep_sleep_1).prevent_deep_sleep();
@@ -50,7 +61,8 @@ sensor:
   - platform: adc
     pin: VCC
     name: "battery"
-    force_update: true
+    id: battery_voltage
+    # force_update: true
     accuracy_decimals: 2  
     
   - platform: dallas
@@ -58,17 +70,19 @@ sensor:
     address: "0xc70319a2792fe328"
     force_update: true
     accuracy_decimals: 2
+    resolution: 12
     filters:
-    - offset: 0.2
+    - offset: 0.3
     
   - platform: dallas
     name: "outdoor_temperature"
     address: "0x890316a279018928"
-    force_update: true
+    # force_update: true
     accuracy_decimals: 2
+    resolution: 12
     filters:
-    - offset: 0.6
+    - offset: 0.5
 
 deep_sleep:
-  run_duration: 45s
+  run_duration: 60s
   id: deep_sleep_1
