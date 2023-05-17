@@ -21,12 +21,6 @@ cards:
   - type: custom:mushroom-template-card
     entity: switch.hot_water_plug
     primary: Varmtvannstank
-    # secondary: |-
-    #   {% if is_state('automation.check_power_consumption', 'on') %}
-    #     Stømsparing aktiv
-    #   {% else %}
-    #     Strømsparing inaktiv
-    #   {% endif %}
     icon: mdi:power
     icon_color: |-
       {% if is_state('switch.hot_water_plug', 'on') %}
