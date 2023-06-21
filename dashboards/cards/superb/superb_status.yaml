@@ -38,7 +38,7 @@ cards:
           red: 0
         theme: temp_gauge
   - type: grid
-    columns: 3
+    columns: 2
     square: false
     cards:      
       - type: custom:mushroom-template-card
@@ -69,10 +69,11 @@ cards:
     columns: 3
     square: false
     cards:
-      - type: button
-        name: Varme
+      - type: custom:mushroom-template-card
+        primary: Varme
         entity: switch.ronny_s_superb_parking_heater_heating
         icon: mdi:radiator
+        fill_container: true
         tap_action:
           action: toggle
       - type: custom:mushroom-template-card
@@ -87,8 +88,8 @@ cards:
           {% else %}
             mdi:fan-off
           {% endif %}
-      - type: button
-        name: Kjøling
+      - type: custom:mushroom-template-card
+        primary: Kjøling
         entity: switch.ronny_s_superb_parking_heater_ventilation
         icon: mdi:snowflake
         tap_action:
