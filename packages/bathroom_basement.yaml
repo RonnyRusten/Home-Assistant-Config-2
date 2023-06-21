@@ -10,7 +10,7 @@ climate:
     comfort_temp: 28
     away_temp: 21
     heater: switch.bathroom_basement_floor_heating_switch
-    target_sensor: sensor.bathroom_basement_climate_temperature
+    target_sensor: sensor.mi_bathroom_basement_temperature
 
 sensor:
   - platform: integration

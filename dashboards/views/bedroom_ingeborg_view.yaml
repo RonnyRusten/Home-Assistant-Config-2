@@ -20,14 +20,14 @@ cards:
           - type: sensor
             hours_to_show: 24
             graph: line
-            entity: sensor.bedroom_ingeborg_climate_temperature
+            entity: sensor.mi_bedroom_ingeborg_temperature
             detail: 1
             name: Temperatur
 
           - type: sensor
             hours_to_show: 24
             graph: line
-            entity: sensor.bedroom_ingeborg_climate_humidity
+            entity: sensor.mi_bedroom_ingeborg_humidity
             detail: 1
             name: Luftfuktighet
         

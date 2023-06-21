@@ -17,7 +17,7 @@ cards:
     entity: 'light.bedroom_marius_light_desk'
     primary: Soverom Marius
     secondary: >-
-      {{ states('sensor.bedroom_marius_climate_temperature') }} °C - {{ states('sensor.bedroom_marius_climate_humidity') }} %
+      {{ states('sensor.mi_bedroom_marius_temperature') }} °C - {{ states('sensor.mi_bedroom_marius_humidity') }} %
     multiline_secondary: false
     icon: mdi:face-man-shimmer-outline
     # icon_color: '{{ 'blue' if is_state(entity, 'on') else 'disabled' }}'

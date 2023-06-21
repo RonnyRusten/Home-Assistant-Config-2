@@ -16,13 +16,13 @@ cards:
       - type: sensor
         hours_to_show: 24
         graph: line
-        entity: sensor.bathroom_basement_climate_temperature
+        entity: sensor.mi_bathroom_basement_temperature
         detail: 1
         name: Temperatur
       - type: sensor
         hours_to_show: 24
         graph: line
-        entity: sensor.bathroom_basement_climate_humidity
+        entity: sensor.mi_bathroom_basement_humidity
         detail: 1
         name: Luftfuktighet
       - type: custom:mushroom-template-card

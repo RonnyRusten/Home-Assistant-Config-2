@@ -2,8 +2,8 @@
 homeassistant:
   customize:
     package.node_anchors:
-      temp: &temp sensor.bathroom_basement_climate_temperature
-      humidity: &humidity sensor.bathroom_basement_climate_humidity
+      temp: &temp sensor.mi_bathroom_basement_temperature
+      humidity: &humidity sensor.mi_bathroom_basement_humidity
 
 type: custom:stack-in-card
 card_mod:
@@ -15,7 +15,7 @@ cards:
   - type: custom:mushroom-template-card
     primary: Bad kjeller
     secondary: >-
-      {{ states('sensor.bathroom_basement_climate_temperature') }} °C - {{ states('sensor.bathroom_basement_climate_humidity') }} %   
+      {{ states('sensor.mi_bathroom_basement_temperature') }} °C - {{ states('sensor.mi_bathroom_basement_humidity') }} %   
     icon: mdi:shower
     # entity: basement_floor_heating
     icon_color: |-

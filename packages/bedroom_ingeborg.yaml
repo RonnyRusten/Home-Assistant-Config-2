@@ -10,7 +10,7 @@ climate:
     comfort_temp: 25
     away_temp: 19
     heater: switch.bedroom_ingeborg_heater_plug
-    target_sensor: sensor.bedroom_ingeborg_climate_temperature
+    target_sensor: sensor.mi_bedroom_ingeborg_temperature
 
 sensor:
   - platform: integration

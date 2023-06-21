@@ -17,13 +17,13 @@ cards:
           - hours_to_show: 24
             graph: line
             type: sensor
-            entity: sensor.bedroom_marius_climate_temperature
+            entity: sensor.mi_bedroom_marius_temperature
             detail: 1
             name: Temperatur
           - hours_to_show: 24
             graph: line
             type: sensor
-            entity: sensor.bedroom_marius_climate_humidity
+            entity: sensor.mi_bedroom_marius_humidity
             detail: 1
             name: Luftfuktighet
       - square: false

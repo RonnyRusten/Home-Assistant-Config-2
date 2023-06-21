@@ -17,7 +17,7 @@ cards:
     entity: 'light.bedroom_ingeborg_light_ceiling'
     primary: Soverom Ingeborg
     secondary: >-
-      {{ states('sensor.bedroom_ingeborg_climate_temperature') }} °C - {{ states('sensor.bedroom_ingeborg_climate_humidity') }} %
+      {{ states('sensor.mi_bedroom_ingeborg_temperature') }} °C - {{ states('sensor.mi_bedroom_ingeborg_humidity') }} %
     multiline_secondary: false
     icon: mdi:face-woman-shimmer-outline
     # icon_color: '{{ 'pink' if is_state(entity, 'on') else 'disabled' }}'
