@@ -43,7 +43,7 @@ cards:
       {{ states('sensor.min_renovasjon_next_glass_metall') }}
 
       {{ states('sensor.glass_og_metallemballasje') }}
-      multiline_secondary: true
+    multiline_secondary: true
     icon: mdi:trash-can
     layout: vertical
     entity: sensor.glass_metallemballasje
