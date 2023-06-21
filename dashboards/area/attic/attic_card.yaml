@@ -114,3 +114,20 @@ cards:
           {% if states('sensor.tv_attic_running') == 'True' %}
             green
           {% endif %}  
+
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: sensor
+        entity: sensor.attic_climate_temperature
+        name: Temperatur
+        hours_to_show: 24
+        graph: line
+        detail: 1
+      - type: sensor
+        entity: sensor.attic_climate_humidity
+        name: Luftfuktighet
+        hours_to_show: 24
+        graph: line
+        detail: 1
