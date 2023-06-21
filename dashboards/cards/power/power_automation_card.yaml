@@ -1,21 +1,45 @@
-# type: entity
-# entity: automation.check_power_consumption
-# name: Strømsparing
-# state_color: true
-
-type: custom:mushroom-template-card
-entity: automation.check_power_consumption
-primary: Strømsparing
-secondary: |-
-  {% if is_state('automation.check_power_consumption', 'on') %}
-    Stømsparing aktiv
-  {% else %}
-    Strømsparing inaktiv
-  {% endif %}
-icon: mdi:power
-icon_color: |-
-  {% if is_state('automation.check_power_consumption', 'on') %}
-    green
-  {% else %}
-    disabled
-  {% endif %}
+type: custom:stack-in-card
+cards:
+  - type: custom:mushroom-template-card
+    entity: automation.check_power_consumption
+    primary: Strømsparing
+    secondary: |-
+      {% if is_state('automation.check_power_consumption', 'on') %}
+        Stømsparing aktiv
+      {% else %}
+        Strømsparing inaktiv
+      {% endif %}
+    icon: mdi:power
+    icon_color: |-
+      {% if is_state('automation.check_power_consumption', 'on') %}
+        green
+      {% else %}
+        disabled
+      {% endif %}
+  - type: custom:mushroom-chips-card
+    alignment: end    
+    chips:
+      - type: template
+        icon: mdi:floor-plan
+        icon_color: |-
+          {% if state_attr('climate.basement_hall_floor_heating', 'temperature')|float<24 %}
+            red
+          {% else  %}
+            green
+          {% endif %}
+      - type: template
+        icon: mdi:bathtub
+        icon_color: |-
+          {% if state_attr('climate.bathroom_basement_temperature', 'temperature')|float<29 %}
+            red
+          {% else  %}
+            green
+          {% endif %}
+      - type: template
+        icon: mdi:water-boiler
+        icon_color: |-
+          {% if is_state('switch.hot_water_plug', 'off') %}
+            red
+          {% else  %}
+            green
+          {% endif %}    
