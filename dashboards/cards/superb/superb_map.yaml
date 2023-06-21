@@ -4,4 +4,3 @@ entities:
 default_zoom: 13
 aspect_ratio: '1:0.8'
 hours_to_show: 12
-dark_mode: true
