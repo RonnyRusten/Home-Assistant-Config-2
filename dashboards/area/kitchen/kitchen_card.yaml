@@ -15,3 +15,4 @@ cards:
     graph: line
     detail: 1
   - !include kitchen_dishwasher.yaml
+  - !include kitchen_fridge.yaml
