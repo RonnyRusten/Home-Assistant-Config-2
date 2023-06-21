@@ -30,7 +30,7 @@ apex_config:
       enabled: true
 yaxis:
   - id: first
-    min: 0
+    min: -0.5
     align_to: 0.5
     apex_config:
       opposite: true
