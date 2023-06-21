@@ -19,22 +19,6 @@
 #
 ###############################################################################
 
-min_renovasjon:
-  street_name: !secret min_renovasjon_street_name
-  house_no: !secret min_renovasjon_house_no
-  street_code: !secret min_renovasjon_street_code
-  county_id: "1507"
-  date_format: "%d.%m.%Y"
-
-sensor:
-  - platform: min_renovasjon
-    fraction_id:
-      - 1 # sensor.restavfall
-      - 2 # sensor.papp_papir_og_drikkekartong
-      - 3 # sensor.matavfall
-      - 4 # sensor.glass_og_metallemballasje
-      - 19 #
-
 # Stolen from AVM and changed to fit my needs
 template:
   - sensor:
@@ -56,6 +40,19 @@ template:
         icon: mdi:trash-can
         state: >
           {% set seconds = as_timestamp(strptime(states('sensor.papp_papir_og_drikkekartong'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+          {% if (seconds/86400) | round() == 1 %}
+          I morgen
+          {% elif (seconds/86400) | round() == 0 %}
+          I dag
+          {% else %}
+          Om {{(seconds / 86400)|round() }} dager
+          {% endif %}
+
+      - name: min_renovasjon_next_plastemballasje
+        unique_id: min_renovasjon_next_plastemballasje
+        icon: mdi:trash-can
+        state: >
+          {% set seconds = as_timestamp(strptime(states('sensor.plastemballasje'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
           {% if (seconds/86400) | round() == 1 %}
           I morgen
           {% elif (seconds/86400) | round() == 0 %}
