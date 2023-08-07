@@ -7,13 +7,13 @@ cards:
       - type: custom:mushroom-chips-card
         chips:
           - !include ../chips/weather_chip.yaml
+          - !include ../chips/people_chip.yaml
           - !include ../chips/mail_chip.yaml
           - !include ../chips/waste_chip.yaml
           - !include ../chips/bus_chip.yaml
           - !include ../chips/superb_chip.yaml
           - !include ../chips/gas_chip.yaml
           - !include ../chips/power_chip.yaml
-      - !include ../cards/people/people_card.yaml
       - type: vertical-stack
         cards:
           - type: custom:swipe-card
