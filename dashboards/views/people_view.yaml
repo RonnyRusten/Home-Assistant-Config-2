@@ -1,0 +1,21 @@
+title: People
+path: people
+theme: minimalist-desktop
+icon: mdi:account-group
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 1
+    cards:
+      - !include ../cards/people/people_card.yaml
+
+  - type: map
+    entities:
+      - person.ronny_rusten
+      - person.anne_lise
+      - person.ingeborg
+      - person.marius
+    hours_to_show: 24
+    aspect_ratio: '1.5:1'
+    default_zoom: 15
