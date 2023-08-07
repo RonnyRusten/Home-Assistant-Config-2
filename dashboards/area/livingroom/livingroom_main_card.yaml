@@ -9,14 +9,14 @@ cards:
       - type: sensor
         hours_to_show: 24
         graph: line
-        entity: sensor.livingroom_climate_temperature
+        entity: sensor.mi_livingroom_temperature
         detail: 1
         name: Temperatur
 
       - type: sensor
         hours_to_show: 24
         graph: line
-        entity: sensor.livingroom_climate_humidity
+        entity: sensor.mi_livingroom_humidity
         detail: 1
         name: Luftfuktighet
 

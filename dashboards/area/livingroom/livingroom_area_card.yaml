@@ -2,8 +2,8 @@
 homeassistant:
   customize:
     package.node_anchors:
-      temp: &temp sensor.livingroom_climate_temperature
-      humidity: &humidity sensor.livingroom_climate_humidity
+      temp: &temp sensor.mi_livingroom_temperature
+      humidity: &humidity sensor.mi_livingroom__humidity
 
 type: custom:stack-in-card
 card_mod:
@@ -16,7 +16,7 @@ cards:
     entity: light.livingroom_lights
     primary: Stue
     secondary: >-
-      {{ states('sensor.livingroom_climate_temperature') }} °C - {{ states('sensor.livingroom_climate_humidity') }} %       
+      {{ states('sensor.mi_livingroom_temperature') }} °C - {{ states('sensor.mi_livingroom_humidity') }} %       
     multiline_secondary: false
     icon: mdi:sofa
     icon_color: "{{ 'orange' if is_state(entity, 'on') else 'disabled' }}"
