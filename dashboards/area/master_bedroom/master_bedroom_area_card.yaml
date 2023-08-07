@@ -17,21 +17,15 @@ cards:
     entity: automation.soverom_varme
     primary: Soverom
     secondary: >-
-      {{ states('sensor.master_bedroom_climate_temperature') }} °C - {{ states('sensor.master_bedroom_climate_humidity') }} %
+      {{ states('sensor.mi_master_bedroom_temperature') }} °C - {{ states('sensor.mi_master_bedroom_humidity') }} %
     multiline_secondary: false
     icon: mdi:bed-double-outline
     icon_color: '{{ ''orange'' if is_state(entity, ''on'') else ''disabled'' }}'
     fill_container: true
     layout: horizontal
     tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          content:
-            type: vertical-stack
-            cards:
-              - !include master_bedroom_card.yaml
+      action: navigate
+      navigation_path: master-bedroom
   - type: custom:mushroom-chips-card
     alignment: end
     card_mod:
