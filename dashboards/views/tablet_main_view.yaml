@@ -39,6 +39,7 @@ cards:
                 cards:
                   - !include ../area/livingroom/livingroom_area_card.yaml
                   - !include ../area/kitchen/kitchen_area_card.yaml
+                  - !include ../area/bathroom_main_floor/bathroom_main_floor_area_card.yaml
                   - !include ../area/master_bedroom/master_bedroom_area_card.yaml
                   - !include ../area/bedroom_ingeborg/bedroom_ingeborg_area_card.yaml
                   - !include ../area/bedroom_marius/bedroom_marius_area_card.yaml
@@ -57,19 +58,25 @@ cards:
     columns: 1
     square: false
     cards:
-      - type: custom:frigate-card
-        cameras:
-          - camera_entity: camera.ezviz
-            live_provider: go2rtc
-          - camera_entity: camera.garage
-            live_provider: go2rtc
-          - camera_entity: camera.back
-            live_provider: go2rtc
-            go2rtc:
-              modes: []
-        view:
-          update_cycle_camera: true
-          scan:
-            enabled: true
+      - show_state: false
+        show_name: false
+        camera_view: auto
+        type: picture-entity
+        entity: camera.ezviz
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+      # - type: custom:frigate-card
+      #   cameras:
+      #     - camera_entity: camera.ezviz
+      #       live_provider: go2rtc
+      #     - camera_entity: camera.garage
+      #       live_provider: go2rtc
+      #     - camera_entity: camera.back
+      #       live_provider: go2rtc
+      #       go2rtc:
+      #         modes: []
+      #   view:
+      #     update_cycle_camera: true
+      #     scan:
+      #       enabled: true
 
       - !include ../cards/calendar_card.yaml

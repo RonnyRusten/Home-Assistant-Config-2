@@ -1,0 +1,34 @@
+vars:
+  power: &power sensor.bedroom_ingeborg_heater_plug_power
+  energy: &energy sensor.bedroom_ingeborg_heater_daily_energy
+
+title: Bad 1. etg
+path: bathroom-main-floor
+theme: minimalist-desktop
+icon: mdi:shower
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 1
+    cards:
+      - type: grid
+        square: false
+        # title: Ingeborg
+        columns: 2
+        cards:
+          - type: sensor
+            hours_to_show: 24
+            graph: line
+            entity: sensor.mi_bathroom_main_floor_temperature
+            detail: 1
+            name: Temperatur
+
+          - type: sensor
+            hours_to_show: 24
+            graph: line
+            entity: sensor.mi_bathroom_main_floor_humidity
+            detail: 1
+            name: Luftfuktighet
+            
+        
