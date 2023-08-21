@@ -11,5 +11,6 @@ views:
   - !include views/people_view.yaml
   - !include views/livingroom_view.yaml
   - !include views/master_bedroom_view.yaml
-  - !include area/greenhouse/greenhouse_view.yaml
+  - !include views/greenhouse_view.yaml
   - !include views/bathroom_main_floor_view.yaml
+  - !include views/kitchen_view.yaml

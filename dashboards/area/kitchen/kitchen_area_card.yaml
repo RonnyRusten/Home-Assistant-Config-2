@@ -24,14 +24,8 @@ cards:
     fill_container: true
     layout: horizontal
     tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          content:
-            type: vertical-stack
-            cards:
-              - !include kitchen_card.yaml
+      action: navigate
+      navigation_path: kitchen
     hold_action:
       action: none
     double_tap_action:

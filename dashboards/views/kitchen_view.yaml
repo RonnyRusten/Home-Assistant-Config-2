@@ -1,0 +1,24 @@
+title: Kjøkken
+path: kitchen
+theme: minimalist-desktop
+icon: mdi:kitchen
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: sensor
+        entity: sensor.mi_kitchen_temperature
+        name: Temperatur
+        hours_to_show: 24
+        graph: line
+        detail: 1
+      - type: sensor
+        entity: sensor.mi_kitchen_humidity
+        name: Luftfuktighet
+        hours_to_show: 24
+        graph: line
+        detail: 1
+      - !include ../area/kitchen/kitchen_dishwasher.yaml
+      - !include ../area/kitchen/kitchen_fridge.yaml
