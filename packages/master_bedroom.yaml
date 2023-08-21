@@ -27,7 +27,7 @@ climate:
     comfort_temp: 25
     away_temp: 19
     heater: switch.master_bedroom_heater_plug
-    target_sensor: sensor.master_bedroom_climate_temperature    
+    target_sensor: sensor.mi_master_bedroom_temperature
 
 template:
   - sensor:
@@ -66,9 +66,9 @@ automation:
     action:
     - choose:
       - conditions:
-        - condition: numeric_state
-          entity_id: sensor.master_bedroom_climate_temperature
-          below: '20'
+        # - condition: numeric_state
+        #   entity_id: sensor.master_bedroom_climate_temperature
+        #   below: '20'
         - condition: state
           entity_id: binary_sensor.master_bedroom_magnet_window_contact
           state: 'off'
@@ -97,9 +97,9 @@ automation:
           data:
             temperature: 1
       - conditions:
-        - condition: numeric_state
-          entity_id: sensor.master_bedroom_climate_temperature
-          below: '20'
+        # - condition: numeric_state
+        #   entity_id: sensor.master_bedroom_climate_temperature
+        #   below: '20'
         - condition: state
           entity_id: binary_sensor.master_bedroom_magnet_window_contact
           state: 'on'
