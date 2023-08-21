@@ -1,10 +1,11 @@
 esphome:
-  name: esp32bt01
+  name: esp32bt02
+  friendly_name: esp32bt02
 
 esp32:
   board: esp32dev
   framework:
-    type: esp-idf
+    type: arduino
 
 # Enable logging
 logger:
@@ -12,10 +13,10 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "GAnXzirSaxIaN04kn9wXFaiyctkAm9XP4iSgmpSMN1w="
+    key: "dEWtf7dNyEcX5e1v0yWA4y9Gdz2Mb1R+/fH5woBpWRU="
 
 ota:
-  password: "1ca05d4ea51c0983666f055b36aa5772"
+  password: "bbd993758bf7fa11f6d349f71f60aaa9"
 
 wifi:
   ssid: !secret wifi_ssid
@@ -23,13 +24,15 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Esp32Bt01 Fallback Hotspot"
-    password: "NR3X99Mc9YlN"
+    ssid: "Esp32Bt02 Fallback Hotspot"
+    password: "cAv5BXSngp8T"
 
+captive_portal:
+    
 esp32_ble_tracker:
   scan_parameters:
     active: true
     interval: 1100ms
     window: 1100ms
     
-bluetooth_proxy:
+bluetooth_proxy:    
