@@ -236,7 +236,7 @@ template:
 
       - name: electricity_total_price
         unique_id: electricity_total_price
-        state: "{{ states('sensor.electricity_total_price_deal') | float(0)  +  (states('sensor.electricity_energy_cost') | float(0) + (19.26 | float(0)) / 100) }}"
+        state: "{{ states('sensor.electricity_total_price_deal') | float(0)  +  states('sensor.electricity_energy_cost') | float(0) }}"
         unit_of_measurement: NOK/kWh
 
       - name: monthly_energy_cost_nok
@@ -276,9 +276,9 @@ template:
         unique_id: electricity_energy_cost
         state: >-
           {% if (now().hour | float > 6  and now().hour | float < 22) %}
-          0.2125
+          0.4542
           {% else %}
-          0.1375
+          0.3667
           {% endif %}
         unit_of_measurement: NOK/kWh
 
