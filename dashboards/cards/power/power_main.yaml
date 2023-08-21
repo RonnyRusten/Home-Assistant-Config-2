@@ -30,8 +30,16 @@ cards:
     - type: markdown
       content: >-
         Pris nå: {{ states('sensor.nordpool_kwh_molde_nok_3_10_025') }} kr/kWh 
-        ({{ states('sensor.nordpool_kwh_molde_nok_3_10_025')|float(0)*100 }} øre/kWh)
+        ({{ (states('sensor.nordpool_kwh_molde_nok_3_10_025')|float(0)*100)|round(3) }} øre/kWh)
         (Nordpool)
         
-        Inkludert avgifter: {{ states('sensor.electricity_total_price_deal') }} kr/kWh
-        ({{ states('sensor.electricity_total_price_deal')|float(0)*100 }} øre/kWh)
+        Påslag avtale: 4.5 øre/kWh
+
+        Pris inkludert påslag: {{ states('sensor.electricity_total_price_deal') }} kr/kWh
+        ({{ (states('sensor.electricity_total_price_deal')|float(0)*100)|round(3) }} øre/kWh)
+
+        Energiledd: {{ states('sensor.electricity_energy_cost') | float(0) }} kr/kWh 
+        ({{ (states('sensor.electricity_energy_cost')|float(0)*100)|round(3) }} øre/kWh)
+
+        Totalpris: {{ states('sensor.electricity_total_price') | float(0)  }}
+        ({{ (states('sensor.electricity_total_price')|float(0)*100)|round(3) }} øre/kWh)
