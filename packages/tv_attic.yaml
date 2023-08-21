@@ -48,4 +48,4 @@ template:
 
       - name: "TV attic running"
         unique_id: "tv_attic_running"
-        state: "{{ states('sensor.tv_attic_power') | float(0) > 15 }}"
+        state: "{{ states('sensor.tv_attic_power2') | float(0) > 15 }}"
