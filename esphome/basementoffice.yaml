@@ -33,15 +33,37 @@ dallas:
 sensor:
   - platform: adc
     pin: VCC
-    name: "basement_office_esp_battery"
+    name: "battery"
     force_update: true
     accuracy_decimals: 2  
     
   - platform: dallas
-    name: "basement_office_esp_temperature"
+    name: "temperature"
     address: "0x913C01A816738C28"
     force_update: true
     accuracy_decimals: 2
     filters:
     - offset: 1
 
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db
+    name: "WiFi Signal Percent"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal %"
+    entity_category: "diagnostic"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: IP Address
+    ssid:
+      name: Connected SSID
+    mac_address:
+      name: Mac Wifi Address
