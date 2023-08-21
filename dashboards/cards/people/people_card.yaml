@@ -8,12 +8,12 @@ homeassistant:
 
 type: grid
 square: false
-columns: 4
+columns: 2
 cards:
   - type: custom:mushroom-person-card
     entity: *annelise
     icon_type: entity-picture
-    layout: vertical
+    layout: horizontal
     tap_action:
       action: fire-dom-event
       browser_mod:
@@ -28,7 +28,7 @@ cards:
   - type: custom:mushroom-person-card
     entity: *ingeborg
     icon_type: entity-picture
-    layout: vertical
+    layout: horizontal
     tap_action:
       action: fire-dom-event
       browser_mod:
@@ -43,7 +43,7 @@ cards:
   - type: custom:mushroom-person-card
     entity: *marius
     icon_type: entity-picture
-    layout: vertical
+    layout: horizontal
     tap_action:
       action: fire-dom-event
       browser_mod:
@@ -58,7 +58,7 @@ cards:
   - type: custom:mushroom-person-card
     entity: *ronny
     icon_type: entity-picture
-    layout: vertical
+    layout: horizontal
     tap_action:
       action: fire-dom-event
       browser_mod:
