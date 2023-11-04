@@ -17,20 +17,20 @@ sensor:
 
 template:
   - sensor:
-    - name: tumble_dryer_power
-      unique_id: tumble_dryer_power
-      device_class: power
-      state: >-
-        {% if states('sensor.tumble_dryer_plug_power') | float(0) < 0 %}
-          0
-        {% else %}
-          {{ states('sensor.tumble_dryer_plug_power') | float(0) }}
-        {% endif %}
-      unit_of_measurement: W
+      - name: tumble_dryer_power
+        unique_id: tumble_dryer_power
+        device_class: power
+        state: >-
+          {% if states('sensor.tumble_dryer_plug_power') | float(0) < 0 %}
+            0
+          {% else %}
+            {{ states('sensor.tumble_dryer_plug_power') | float(0) }}
+          {% endif %}
+        unit_of_measurement: W
 
-    - name: "tumble_dryer_running"
-      unique_id: "tumble_dryer_running"
-      state: "{{ states('sensor.tumble_dryer_power') | float(0) > 0 }}"
+      - name: "tumble_dryer_running"
+        unique_id: "tumble_dryer_running"
+        state: "{{ states('sensor.tumble_dryer_power') | float(0) > 0 }}"
 
 utility_meter:
   tumble_dryer_daily_energy:
@@ -59,6 +59,10 @@ automation:
           entity_id: media_player.kjellerkontoret_speaker
           message: "{{notification_message}}"
           cache: true
+      - service: notify.mobile_app_sbm_2016
+        data:
+          title: "{{notification_title}}"
+          message: "{{notification_message}}"
       - service: notify.mobile_app_pixel_7_pro
         data:
           title: "{{notification_title}}"
@@ -67,18 +71,18 @@ automation:
             ttl: 0
             priority: high
       - choose:
-        - conditions:
-          - condition: state
-            entity_id: person.ingeborg
-            state: home
-          sequence:
-            - service: notify.mobile_app_iphone_ingeborg
-              data:
-                title: "{{notification_title}}"
-                message: "{{notification_message}}"
+          - conditions:
+              - condition: state
+                entity_id: person.ingeborg
+                state: home
+            sequence:
+              - service: notify.mobile_app_iphone_ingeborg
                 data:
-                  ttl: 0
-                  priority: high
+                  title: "{{notification_title}}"
+                  message: "{{notification_message}}"
+                  data:
+                    ttl: 0
+                    priority: high
       - service: notify.mobile_app_iphone
         data:
           title: "{{notification_title}}"

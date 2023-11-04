@@ -17,20 +17,20 @@ sensor:
 
 template:
   - sensor:
-    - name: washing_machine_power
-      unique_id: washing_machine_power
-      device_class: power
-      state: >-
-        {% if states('sensor.washing_machine_plug_power') | float(0) < 0 %}
-          0
-        {% else %}
-          {{ states('sensor.washing_machine_plug_power') | float(0) }}
-        {% endif %}
-      unit_of_measurement: W
+      - name: washing_machine_power
+        unique_id: washing_machine_power
+        device_class: power
+        state: >-
+          {% if states('sensor.washing_machine_plug_power') | float(0) < 0 %}
+            0
+          {% else %}
+            {{ states('sensor.washing_machine_plug_power') | float(0) }}
+          {% endif %}
+        unit_of_measurement: W
 
-    - name: "washing_machine_running"
-      unique_id: "washing_machine_running"
-      state: "{{ states('sensor.washing_machine_power') | float(0) > 6 }}"
+      - name: "washing_machine_running"
+        unique_id: "washing_machine_running"
+        state: "{{ states('sensor.washing_machine_power') | float(0) > 6 }}"
 
 utility_meter:
   washing_machine_daily_energy:
@@ -59,7 +59,7 @@ automation:
           entity_id: media_player.kjellerkontoret_speaker
           message: "{{notification_message}}"
           cache: true
-      - service: notify.mobile_app_iphone
+      - service: notify.mobile_app_sbm_2016
         data:
           title: "{{notification_title}}"
           message: "{{notification_message}}"
@@ -71,18 +71,18 @@ automation:
             ttl: 0
             priority: high
       - choose:
-        - conditions:
-          - condition: state
-            entity_id: person.ingeborg
-            state: home
-          sequence:
-            - service: notify.mobile_app_iphone_ingeborg
-              data:
-                title: "{{notification_title}}"
-                message: "{{notification_message}}"
+          - conditions:
+              - condition: state
+                entity_id: person.ingeborg
+                state: home
+            sequence:
+              - service: notify.mobile_app_iphone_ingeborg
                 data:
-                  ttl: 0
-                  priority: high
+                  title: "{{notification_title}}"
+                  message: "{{notification_message}}"
+                  data:
+                    ttl: 0
+                    priority: high
       # - service: notify.telia_box_loftet
       #   data:
       #     data:

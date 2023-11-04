@@ -76,6 +76,10 @@ automation:
         entity_id: media_player.kjellerkontoret_speaker
         message: "{{notification_message}}"
         cache: true
+    - service: notify.mobile_app_sbm_2016
+        data:
+          title: "{{notification_title}}"
+          message: "{{notification_message}}"
     - service: notify.mobile_app_pixel_7_pro
       data:
         message: "{{notification_message}}"
@@ -90,10 +94,6 @@ automation:
     #     data:
     #       ttl: 0
     #       priority: high
-    - service: notify.mobile_app_iphone
-      data:
-        message: "{{notification_message}}"
-        title: "{{notification_title}}"
     # - service: notify.telia_box_loftet
     #   data:
     #     data:
