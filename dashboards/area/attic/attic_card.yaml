@@ -120,13 +120,13 @@ cards:
     columns: 2
     cards:
       - type: sensor
-        entity: sensor.attic_climate_temperature
+        entity: sensor.mi_attic_temperature
         name: Temperatur
         hours_to_show: 24
         graph: line
         detail: 1
       - type: sensor
-        entity: sensor.attic_climate_humidity
+        entity: sensor.mi_attic_humidity
         name: Luftfuktighet
         hours_to_show: 24
         graph: line

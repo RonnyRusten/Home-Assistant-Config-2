@@ -17,7 +17,7 @@ cards:
     entity: ''
     primary: Loftstue
     secondary: >-
-      {{ states('sensor.attic_climate_temperature') }} °C - {{ states('sensor.attic_climate_humidity') }} %
+      {{ states('sensor.mi_attic_temperature') }} °C - {{ states('sensor.mi_attic_humidity') }} %
     multiline_secondary: false
     icon: mdi:home-roof
     # icon_color: '{{ 'pink' if is_state(entity, 'on') else 'disabled' }}'
