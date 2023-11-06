@@ -24,6 +24,20 @@ automation:
       - service: script.power_control
     mode: single
 
+  - id: "restart_integrations"
+    alias: _Restart integrations
+    description: ""
+    trigger:
+      - platform: time
+        at: "12:00:00"
+    condition: []
+    action:
+      - service: homeassistant.reload_config_entry
+        data: {}
+        target:
+          device_id: b91c1ffbaf74521c19ca82adbeefb911
+    mode: single
+
 script:
   power_control:
     alias: Control power consumption
@@ -35,33 +49,33 @@ script:
     sequence:
       - choose:
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "4.9"
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 24
-              attribute: temperature
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                above: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 26
+                attribute: temperature
             sequence:
               - service: climate.set_temperature
                 target:
                   entity_id: climate.basement_hall_floor_heating
                 data:
-                  temperature: 20              
+                  temperature: 20
 
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "4.9"              
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: climate.bathroom_basement_temperature
-              state: 29
-              attribute: temperature
-            sequence:    
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                above: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: climate.bathroom_basement_temperature
+                state: 29
+                attribute: temperature
+            sequence:
               - service: climate.set_temperature
                 target:
                   entity_id: climate.bathroom_basement_temperature
@@ -69,58 +83,58 @@ script:
                   temperature: 20
 
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              above: "4.9"
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: climate.bathroom_basement_temperature
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: switch.hot_water_plug
-              state: "on"
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                above: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: climate.bathroom_basement_temperature
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: switch.hot_water_plug
+                state: "on"
             sequence:
               - service: switch.turn_off
                 target:
                   entity_id: switch.hot_water_plug
 
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "4.9"
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: climate.bathroom_basement_temperature
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: switch.hot_water_plug
-              state: "off"
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                below: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: climate.bathroom_basement_temperature
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: switch.hot_water_plug
+                state: "off"
             sequence:
               - service: switch.turn_on
                 target:
                   entity_id: switch.hot_water_plug
 
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "4.9"
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 20
-              attribute: temperature
-            - condition: state
-              entity_id: climate.bathroom_basement_temperature
-              state: 20
-              attribute: temperature
-            sequence:              
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                below: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 20
+                attribute: temperature
+              - condition: state
+                entity_id: climate.bathroom_basement_temperature
+                state: 20
+                attribute: temperature
+            sequence:
               - service: climate.set_temperature
                 target:
                   entity_id: climate.bathroom_basement_temperature
@@ -128,43 +142,44 @@ script:
                   temperature: 29
 
           - conditions:
-            - condition: numeric_state
-              entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
-              below: "4.9"
-            - condition: state
-              entity_id: climate.basement_hall_floor_heating
-              state: 20
-              attribute: temperature
+              - condition: numeric_state
+                entity_id: sensor.power_usage_current_hour_estimated_from_last_10_min
+                below: "4.9"
+              - condition: state
+                entity_id: climate.basement_hall_floor_heating
+                state: 20
+                attribute: temperature
             sequence:
               - service: climate.set_temperature
                 target:
                   entity_id: climate.basement_hall_floor_heating
                 data:
-                  temperature: 24
+                  temperature: 26
 
-        default: []
+        default:
+          []
 
-              # - service: climate.set_preset_mode
-              #   target:
-              #     entity_id: climate.bedroom_ingeborg_temperature
-              #   data:
-              #     preset_mode: away
-              # - service: climate.set_preset_mode
-              #   target:
-              #     entity_id: climate.bedroom_marius_temperature
-              #   data:
-              #     preset_mode: away
+          # - service: climate.set_preset_mode
+          #   target:
+          #     entity_id: climate.bedroom_ingeborg_temperature
+          #   data:
+          #     preset_mode: away
+          # - service: climate.set_preset_mode
+          #   target:
+          #     entity_id: climate.bedroom_marius_temperature
+          #   data:
+          #     preset_mode: away
 
-              # - service: climate.set_preset_mode
-              #   target:
-              #     entity_id: climate.bedroom_ingeborg_temperature
-              #   data:
-              #     preset_mode: none
-              # - service: climate.set_preset_mode
-              #   target:
-              #     entity_id: climate.bedroom_marius_temperature
-              #   data:
-              #     preset_mode: none
+          # - service: climate.set_preset_mode
+          #   target:
+          #     entity_id: climate.bedroom_ingeborg_temperature
+          #   data:
+          #     preset_mode: none
+          # - service: climate.set_preset_mode
+          #   target:
+          #     entity_id: climate.bedroom_marius_temperature
+          #   data:
+          #     preset_mode: none
 
 sensor:
   - platform: integration
@@ -346,46 +361,46 @@ rest:
         value_template: "{{ value_json.48.compensation | round (2)}}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
       - name: "Estimated power payback 97,5%"
         json_attributes_path: "$.26"
         value_template: "{{ value_json.26.compensation | round (2)}}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
       - name: "Estimated power average price"
         json_attributes_path: "$.16"
         value_template: "{{ value_json.16.mean_price | round (2)}}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
       - name: "Estimated power average price 2,5%"
         json_attributes_path: "$.19"
         value_template: "{{ value_json.19.mean_price | round (2)}}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
       - name: "Estimated power average price 97,5%"
         json_attributes_path: "$.26"
         value_template: "{{ value_json.26.mean_price | round (2)}}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
       - name: "Estimated power payback 95%s"
         json_attributes_path: "$.25"
         value_template: "{{ value_json.25.compensation |float }}"
         unit_of_measurement: "NOK/kWh"
         json_attributes:
-        - "estimation_date"
-        - "computation_year"
-        - "computation_month"
+          - "estimation_date"
+          - "computation_year"
+          - "computation_month"
