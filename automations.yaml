@@ -1,1 +1,13 @@
-[]
+- id: '1680038154207'
+  alias: Restart integrations
+  description: ''
+  trigger:
+  - platform: time
+    at: '12:00:00'
+  condition: []
+  action:
+  - service: homeassistant.reload_config_entry
+    data: {}
+    target:
+      device_id: b91c1ffbaf74521c19ca82adbeefb911
+  mode: single
