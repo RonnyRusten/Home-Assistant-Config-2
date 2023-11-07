@@ -16,6 +16,6 @@ cards:
       - person.anne_lise
       - person.ingeborg
       - person.marius
-    hours_to_show: 24
+    hours_to_show: 12
     aspect_ratio: '1.5:1'
     default_zoom: 15
