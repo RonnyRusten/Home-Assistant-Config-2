@@ -36,7 +36,7 @@ cards:
         primary_info: name
 
       - type: custom:mushroom-light-card
-        entity: light.livingroom_light_north_east
+        entity: light.livingroom_light_window_north_west
         fill_container: true
         name: Vindu nord
         icon: mdi:lamp-outline
@@ -46,7 +46,7 @@ cards:
         show_color_control: false
         tap_action:
           action: toggle
-        
+
       - type: custom:mushroom-light-card
         entity: light.livingroom_light_floor_arch
         fill_container: true
@@ -132,15 +132,15 @@ cards:
         tap_action:
           action: toggle
 
-      - type: custom:mushroom-light-card
-        entity: light.outdoors_light_terrace
-        fill_container: true
-        name: Hagestue
-        icon: mdi:outdoor-lamp
-        use_light_color: true
-        show_brightness_control: true
-        show_color_temp_control: true
-        show_color_control: false
-        tap_action:
-          action: toggle
-        primary_info: name
+      # - type: custom:mushroom-light-card
+      #   entity: light.outdoors_light_terrace
+      #   fill_container: true
+      #   name: Hagestue
+      #   icon: mdi:outdoor-lamp
+      #   use_light_color: true
+      #   show_brightness_control: true
+      #   show_color_temp_control: true
+      #   show_color_control: false
+      #   tap_action:
+      #     action: toggle
+      #   primary_info: name
