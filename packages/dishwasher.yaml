@@ -1,4 +1,3 @@
-
 sensor:
   - platform: integration
     source: sensor.dishwasher_power
@@ -25,68 +24,68 @@ utility_meter:
 
 template:
   - sensor:
-    - name: dishwasher_power
-      unique_id: dishwasher_power
-      device_class: power
-      state: >-
-        {% if states('sensor.dishwasher_plug_power') | float(0) < 0 %}
-          0
-        {% else %}
-          {{ states('sensor.dishwasher_plug_power') | float(0) }}
-        {% endif %}
-      unit_of_measurement: W
+      - name: dishwasher_power
+        unique_id: dishwasher_power
+        device_class: power
+        state: >-
+          {% if states('sensor.dishwasher_plug_power') | float(0) < 0 %}
+            0
+          {% else %}
+            {{ states('sensor.dishwasher_plug_power') | float(0) }}
+          {% endif %}
+        unit_of_measurement: W
 
   - trigger:
-    - platform: numeric_state
-      entity_id: sensor.dishwasher_power
-      above: 15
-      for: 
-        hours: 0
-        minutes: 1
-        seconds: 00
-    - platform: numeric_state
-      entity_id: sensor.dishwasher_power
-      below: 15
-      for: 
-        hours: 0
-        minutes: 1
-        seconds: 00
+      - platform: numeric_state
+        entity_id: sensor.dishwasher_power
+        above: 15
+        for:
+          hours: 0
+          minutes: 1
+          seconds: 00
+      - platform: numeric_state
+        entity_id: sensor.dishwasher_power
+        below: 15
+        for:
+          hours: 0
+          minutes: 1
+          seconds: 00
     sensor:
       - name: "Dishwasher running"
-        unique_id : "dishwasher_running"
-        state: "{{ states('sensor.dishwasher_power') | float(0) > 15 }}"    
-      
+        unique_id: "dishwasher_running"
+        state: "{{ states('sensor.dishwasher_power') | float(0) > 15 }}"
+
 automation:
-  - id: 'dishwasher_finished'
+  - id: "dishwasher_finished"
     alias: _Oppvaskmaskin ferdig
-    description: ''
+    description: ""
     variables:
       notification_message: Oppvaskmaskinen er ferdig
       notification_title: The computer says
     trigger:
-    - platform: state
-      entity_id: sensor.dishwasher_running
-      to: 'False'
-      for: 00:01:30
-      from: 'True'
+      - platform: state
+        entity_id: sensor.dishwasher_running
+        to: "False"
+        for: 00:01:30
+        from: "True"
     condition: []
     action:
-    - service: tts.cloud_say
-      data:
-        entity_id: media_player.kjellerkontoret_speaker
-        message: "{{notification_message}}"
-        cache: true
-    - service: notify.mobile_app_sbm_2016
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.kjellerkontoret_speaker
+          message: "{{notification_message}}"
+          cache: true
+      - service: notify.mobile_app_sbm_2016
         data:
           title: "{{notification_title}}"
           message: "{{notification_message}}"
-    - service: notify.mobile_app_pixel_7_pro
-      data:
-        message: "{{notification_message}}"
-        title: "{{notification_title}}"
+      - service: notify.mobile_app_pixel_7_pro
         data:
-          ttl: 0
-          priority: high
+          message: "{{notification_message}}"
+          title: "{{notification_title}}"
+          data:
+            ttl: 0
+            priority: high
     # - service: notify.mobile_app_ronnys_iphone
     #   data:
     #     message: "{{notification_message}}"
