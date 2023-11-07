@@ -30,7 +30,7 @@ cards:
             entity: sensor.mi_bedroom_ingeborg_humidity
             detail: 1
             name: Luftfuktighet
-        
+
           - type: custom:mushroom-light-card
             entity: light.bedroom_ingeborg_light_ceiling
             name: Taklys
@@ -60,10 +60,10 @@ cards:
             secondary: >-
               Forbruk nå: {{ states('sensor.bedroom_ingeborg_heater_plug_power') }}
               W
-    
+
               Forbruk i dag: {{
               states('sensor.bedroom_ingeborg_heater_daily_energy') }} kWt
-    
+
               Tid på i dag: {{
               (timedelta(hours=(states('sensor.bedroom_ingeborg_heater_runtime_today')|float))|string)[:-3]
               }}
@@ -115,7 +115,7 @@ cards:
             source: full
             sound_mode: full
             info: scroll
-        
+
   - type: grid
     square: false
     columns: 1
@@ -129,4 +129,3 @@ cards:
         type: picture-entity
         entity: camera.ezviz
         image: https://demo.home-assistant.io/stub_config/bedroom.png
-        
