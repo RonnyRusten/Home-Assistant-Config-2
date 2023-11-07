@@ -14,6 +14,7 @@ cards:
           - !include ../chips/superb_chip.yaml
           - !include ../chips/gas_chip.yaml
           - !include ../chips/power_chip.yaml
+
       - type: vertical-stack
         cards:
           - type: custom:swipe-card
@@ -53,7 +54,7 @@ cards:
                   - !include ../area/attic/attic_area_card.yaml
                   - !include ../area/garage/garage_area_card.yaml
                   - !include ../area/greenhouse/greenhouse_area_card.yaml
-    
+
   - type: grid
     columns: 1
     square: false
