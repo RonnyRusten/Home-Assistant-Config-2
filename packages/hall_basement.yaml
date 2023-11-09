@@ -57,7 +57,7 @@ automation:
           - service: light.turn_on
             data:
               transition: 1
-              brightness_pct: 60
+              brightness_pct: 50
             target:
               entity_id:
                 - light.hall_basement_light_switch
@@ -87,12 +87,13 @@ automation:
                 after: 01:00
                 before: 06:00
             sequence:
-              - service: light.turn_off
+              - service: light.turn_on
+                data:
+                  transition: 2
+                  brightness_pct: 5
                 target:
                   entity_id:
                     - light.hall_basement_light_switch
-                data:
-                  transition: 1
         default:
           - service: light.turn_on
             data:
