@@ -28,7 +28,7 @@ automation:
       #         url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
       #         username: !secret adm_user
       #         password: !secret adm_password
-      - service: notify.attic_google_tv
+      - service: notify.google_tv_loftstue
         data:
           message: En luring er observert...
           title: Så noen
@@ -41,7 +41,7 @@ automation:
               url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
               username: !secret adm_user
               password: !secret adm_password
-      
+
       # - service: notify.telia_box_stue
       #   data:
       #     message: En luring er observert...
