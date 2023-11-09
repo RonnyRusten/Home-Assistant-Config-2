@@ -59,7 +59,7 @@ automation:
           entity_id: media_player.kjellerkontoret_speaker
           message: "{{notification_message}}"
           cache: true
-      - service: notify.mobile_app_sbm_2016
+      - service: notify.mobile_app_iphone_anne_lise
         data:
           title: "{{notification_title}}"
           message: "{{notification_message}}"
@@ -70,7 +70,7 @@ automation:
           data:
             ttl: 0
             priority: high
-      - service: notify.attic_google_tv
+      - service: notify.google_tv_loftstue
         data:
           title: "{{notification_title}}"
           message: "{{notification_message}}"

@@ -59,7 +59,7 @@ automation:
           entity_id: media_player.kjellerkontoret_speaker
           message: "{{notification_message}}"
           cache: true
-      - service: notify.mobile_app_sbm_2016
+      - service: notify.mobile_app_iphone_anne_lise
         data:
           title: "{{notification_title}}"
           message: "{{notification_message}}"
@@ -87,17 +87,17 @@ automation:
       #   data:
       #     title: "{{notification_title}}"
       #     message: "{{notification_message}}"
-      # - service: notify.attic_google_tv
-      #   data:
-      #     data:
-      #       fontsize: large
-      #       position: bottom-right
-      #       duration: 10
-      #       transparency: 50%
-      #       image:
-      #         url: !secret tumble_dryer_image_url
-      #     title: "{{notification_title}}"
-      #     message: "{{notification_message}}"
+      - service: notify.google_tv_loftstue
+        data:
+          data:
+            fontsize: large
+            position: bottom-right
+            duration: 10
+            transparency: 50%
+            image:
+              url: !secret tumble_dryer_image_url
+          title: "{{notification_title}}"
+          message: "{{notification_message}}"
       # - service: notify.telia_box_ingeborg
       #   data:
       #     data:
