@@ -40,21 +40,21 @@ cards:
   - type: grid
     columns: 2
     square: false
-    cards:      
+    cards:
       - type: custom:mushroom-template-card
         primary: Rekkevidde
-        secondary: '{{ states(''sensor.ronny_s_superb_combustion_range'') }} km'
+        secondary: "{{ states('sensor.ronny_s_superb_combustion_range') }} km"
         icon: mdi:fuel
         fill_container: true
       - type: custom:mushroom-template-card
         primary: Oppdatert
         secondary: >-
-                  {{
-                  as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%d.%m.%Y')
-                  }}
-                  {{
-                  as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%H.%M.%S')
-                  }}
+          {{
+          as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%d.%m.%Y')
+          }}
+          {{
+          as_timestamp(states('sensor.ronny_s_superb_last_connected'))|timestamp_custom('%H.%M.%S')
+          }}
         multiline_secondary: true
         icon: mdi:clock
         fill_container: true
@@ -73,6 +73,7 @@ cards:
         primary: Varme
         entity: switch.ronny_s_superb_parking_heater_heating
         icon: mdi:radiator
+        icon_color: orange
         fill_container: true
         tap_action:
           action: toggle
@@ -88,9 +89,18 @@ cards:
           {% else %}
             mdi:fan-off
           {% endif %}
+        icon_color: >-
+          {% if states('sensor.ronny_s_superb_parking_heater_heating_ventilation_status') == 'heating' %}
+            orange
+          {% elif states('sensor.ronny_s_superb_parking_heater_heating_ventilation_status') == 'cooling' %}
+            blue
+          {% else %}
+            disabled
+          {% endif %}
       - type: custom:mushroom-template-card
         primary: Kjøling
         entity: switch.ronny_s_superb_parking_heater_ventilation
         icon: mdi:snowflake
+        icon_color: blue
         tap_action:
           action: toggle
