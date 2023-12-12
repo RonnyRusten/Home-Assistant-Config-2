@@ -5,7 +5,7 @@ icon_color: |
     orange
   {% elif is_state('sensor.power_price_level','high') %}
     red
-  {& else %}
+  {% else %}
     green
   {% endif %}
 
