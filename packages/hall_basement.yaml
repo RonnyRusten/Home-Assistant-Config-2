@@ -90,7 +90,7 @@ automation:
               - service: light.turn_on
                 data:
                   transition: 2
-                  brightness_pct: 5
+                  brightness_pct: 15
                 target:
                   entity_id:
                     - light.hall_basement_light_switch
