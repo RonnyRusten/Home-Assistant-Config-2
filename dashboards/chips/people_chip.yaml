@@ -1,7 +1,12 @@
 type: template
-icon: mdi:account-group           
-icon_color: orange
-content: ''
+icon: mdi:account-group
+icon_color: |-
+  {% if is_state('group.all_people','home') %}
+    green
+  {% else %}
+    orange 
+  {% endif %}
+content: ""
 tap_action:
   action: navigate
   navigation_path: people
