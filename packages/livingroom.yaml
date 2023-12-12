@@ -4,25 +4,59 @@ input_boolean:
     icon: mdi:lightbulb
 
 automation:
-  - id: 'livingroom_lights'
-    alias: '_Stue lys'
-    description: ''
+  - id: "livingroom_auto_lights_on"
+    alias: _Stue lys auto
+    mode: single
     trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/livingroom_switch_double
-      payload: "single_right"
-      value_template: "{{ value_json.action }}"
+      - platform: numeric_state
+        entity_id:
+          - sensor.outdoor_motion_east_illuminance_lux
+        for:
+          hours: 0
+          minutes: 10
+          seconds: 0
+        below: 5
+        id: evening
+      - platform: state
+        entity_id:
+          - group.all_people
+        to: "on"
+        id: coming_home
+    condition:
+      - condition: state
+        entity_id: group.all_people
+        state: home
+      - condition: state
+        entity_id: input_boolean.livingroom_lights_on
+        state: "off"
+      - condition: time
+        after: "14:00:00"
+    action:
+      - service: automation.trigger
+        target:
+          entity_id: automation.stue_lys
+
+  - id: "livingroom_lights"
+    alias: "_Stue lys"
+    description: ""
+    mode: single
+    trigger:
+      - platform: mqtt
+        topic: zigbee2mqtt/livingroom_switch_double
+        payload: "single_right"
+        value_template: "{{ value_json.action }}"
     condition: []
     action:
       - choose:
           - conditions:
               - condition: state
                 entity_id: input_boolean.livingroom_lights_on
-                state: 'off'
+                state: "off"
             sequence:
               - service: light.turn_on
                 data:
                   transition: 1
+                  brightness_pct: 55
                 target:
                   entity_id:
                     - light.livingroom_lights #Gruppe i Zigbee2MQTT
@@ -42,7 +76,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_boolean.livingroom_lights_on
-                state: 'on'
+                state: "on"
             sequence:
               - service: light.turn_off
                 data:
@@ -64,20 +98,19 @@ automation:
                 target:
                   entity_id: input_boolean.livingroom_lights_on
         default: []
-    mode: single
 
-  - id: 'livingroom_arch_light'
-    alias: '_Stue gulvlampe bak sofa'
-    description: ''
+  - id: "livingroom_arch_light"
+    alias: "_Stue gulvlampe bak sofa"
+    description: ""
+    mode: single
     trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/livingroom_switch_double
-      payload: "single_left"
-      value_template: "{{ value_json.action }}"
+      - platform: mqtt
+        topic: zigbee2mqtt/livingroom_switch_double
+        payload: "single_left"
+        value_template: "{{ value_json.action }}"
     condition: []
     action:
       - service: switch.toggle
         data: {}
         target:
           entity_id: switch.livingroom_light_floor_arch
-    mode: single
