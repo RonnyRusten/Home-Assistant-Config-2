@@ -1,5 +1,5 @@
 type: grid
-columns: 3
+columns: 2
 square: false
 cards:
   - type: custom:mushroom-template-card
@@ -20,6 +20,24 @@ cards:
       action: none
 
   - type: custom:mushroom-template-card
+    primary: Matavfall
+    secondary: >-
+      {{ states('sensor.min_renovasjon_next_matavfall') }}
+
+      {{ states('sensor.matavfall') }}
+    multiline_secondary: true
+    icon: mdi:trash-can
+    icon_color: green
+    layout: vertical
+    entity: sensor.min_renovasjon_matavfall
+    tap_action:
+      action: more-info
+    hold_action:
+      action: none
+    double_tap_action:
+      action: none
+
+  - type: custom:mushroom-template-card
     primary: Papir og plast
     secondary: >-
       {{ states('sensor.min_renovasjon_next_papir') }}
@@ -27,6 +45,7 @@ cards:
       {{ states('sensor.papp_papir_og_drikkekartong') }}
     multiline_secondary: true
     icon: mdi:trash-can
+    icon_color: blue
     layout: vertical
     entity: sensor.papir
     tap_action:
@@ -35,7 +54,6 @@ cards:
       action: none
     double_tap_action:
       action: none
-    icon_color: blue
 
   - type: custom:mushroom-template-card
     primary: Glass og metall
@@ -45,6 +63,7 @@ cards:
       {{ states('sensor.glass_og_metallemballasje') }}
     multiline_secondary: true
     icon: mdi:trash-can
+    icon_color: orange
     layout: vertical
     entity: sensor.glass_metallemballasje
     tap_action:
@@ -53,4 +72,3 @@ cards:
       action: none
     double_tap_action:
       action: none
-    icon_color: orange

@@ -61,13 +61,18 @@ template:
           Om {{(seconds / 86400)|round() }} dager
           {% endif %}
 
-      # No food waste in my county, yet.
-      # - name: min_renovasjon_next_mat
-      #   unique_id: min_renovasjon_next_mat
-      #   icon: mdi:trash-can
-      #   state: >
-      #     {% set seconds = as_timestamp(strptime(states('sensor.matavfall'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
-      #     {{(seconds / 86400)|round()}} dager
+      - name: min_renovasjon_next_matavfall
+        unique_id: min_renovasjon_next_mat
+        icon: mdi:trash-can
+        state: >
+          {% set seconds = as_timestamp(strptime(states('sensor.matavfall'),'%d.%m.%Y')) - as_timestamp(now().replace(hour=0, minute=0, second=0)) %}
+          {% if (seconds/86400) | round() == 1 %}
+          I morgen
+          {% elif (seconds/86400) | round() == 0 %}
+          I dag
+          {% else %}
+          Om {{(seconds / 86400)|round() }} dager
+          {% endif %}
 
       - name: min_renovasjon_next_glass_metall
         unique_id: min_renovasjon_next_glass_metall
