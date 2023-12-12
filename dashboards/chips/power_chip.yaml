@@ -1,6 +1,14 @@
 type: template
-icon: mdi:lightning-bolt           
-icon_color: orange
+icon: mdi:lightning-bolt
+icon_color: |
+  {% if is_state('sensor.power_price_level','avg') %}
+    orange
+  {% elif is_state('sensor.power_price_level','high') %}
+    red
+  {& else %}
+    green
+  {% endif %}
+
 content: "{{ states('sensor.han_port_power_corrected')}} W"
 tap_action:
   action: navigate
