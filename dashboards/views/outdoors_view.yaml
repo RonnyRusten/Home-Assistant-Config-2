@@ -1,0 +1,73 @@
+title: Utendørs
+path: outdoors
+theme: minimalist-desktop
+icon: mdi:border-outside
+subview: true
+cards:
+  - type: grid
+    square: false
+    columns: 1
+    title: Utelys
+    cards:
+      - type: grid
+        square: false
+        columns: 2
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_west_up
+            name: Vest opp
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_west_down
+            name: Vest ned
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+      - type: grid
+        square: false
+        columns: 2
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_middle_up
+            name: Midt opp
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_middle_down
+            name: Midt ned
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+      - type: grid
+        square: false
+        columns: 2 
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_east_up
+            name: Øst opp
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+          - type: custom:mushroom-light-card
+            entity: light.entrance_light_east_down
+            name: Øst ned
+            fill_container: true
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+      - type: custom:mini-graph-card
+        name: Lux
+        hours_to_show: 12
+        points_per_hour: 24
+        line_width: 1
+        hour24: true
+        entities:
+          - sensor.outdoor_motion_east_illuminance_lux
