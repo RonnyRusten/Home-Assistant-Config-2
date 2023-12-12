@@ -93,3 +93,8 @@ cards:
   - type: thermostat
     entity: climate.master_bedroom_temperature
     name: Temperatur
+    features:
+      - type: climate-hvac-modes
+        hvac_modes:
+          - 'off'
+          - heat

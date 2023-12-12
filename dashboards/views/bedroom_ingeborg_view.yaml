@@ -123,6 +123,11 @@ cards:
       - type: thermostat
         entity: climate.bedroom_ingeborg_temperature
         name: Temperatur
+        features:
+          - type: climate-hvac-modes
+            hvac_modes:
+              - 'off'
+              - heat
       - show_state: false
         show_name: false
         camera_view: auto
