@@ -3,7 +3,7 @@ homeassistant:
   customize:
     package.node_anchors:
       temp: &temp sensor.basement_hall_floor_heating_air_temperature
-      # humidity: &humidity sensor.livingroom_climate_humidity
+      humidity: &humidity sensor.livingroom_climate_humidity
 
 type: custom:stack-in-card
 card_mod:
@@ -17,10 +17,7 @@ cards:
     secondary: '  {{ states(''sensor.basement_hall_floor_heating_air_temperature'') }} °C'
     icon: mdi:floor-plan
     entity: basement_floor_heating
-    icon_color: |-
-      {% if is_state('sensor.basement_hall_floor_heating_running', 'on') %}
-      amber
-      {% endif %}
+    icon_color: grey
     badge_icon: >-
       {% if is_state('binary_sensor.laundry_magnet_contact', 'on') or
       is_state('binary_sensor.porch_magnet_contact', 'on') %}

@@ -18,10 +18,7 @@ cards:
       {{ states('sensor.mi_bathroom_basement_temperature') }} °C - {{ states('sensor.mi_bathroom_basement_humidity') }} %   
     icon: mdi:shower
     # entity: basement_floor_heating
-    icon_color: |-
-      {% if is_state('sensor.bathroom_basement_floor_heating_running', 'on') %}
-      amber
-      {% endif %}
+    icon_color: blue
     # badge_icon: >-
     #   {% if is_state('binary_sensor.laundry_magnet_contact', 'on') or
     #   is_state('binary_sensor.porch_magnet_contact', 'on') %}
