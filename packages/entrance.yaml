@@ -1,33 +1,13 @@
 automation:
   - id: "person_observed_at_entrance"
     alias: _Person observert ved inngangsdør
-    description: ""
+    description: "Sender en notifikasjon når det oppdages en person ved inngangsdør"
     trigger:
       - platform: state
         entity_id: binary_sensor.ezviz_person_occupancy
         to: "on"
     condition: []
     action:
-      # - service: notify.mobile_app_ronny_pixel_7_pro #notify.mobile_app_ronnys_iphone
-      #   data:
-      #     message: Person observert
-      #     title: The computer says
-      #     data:
-      #       ttl: 0
-      #       priority: high
-      # - service: notify.telia_box_loftet
-      #   data:
-      #     message: En luring er observert...
-      #     title: Så noen
-      #     data:
-      #       fontsize: small
-      #       position: bottom-right
-      #       duration: 10
-      #       transparency: 50%
-      #       image:
-      #         url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
-      #         username: !secret adm_user
-      #         password: !secret adm_password
       - service: notify.google_tv_loftstue
         data:
           message: En luring er observert...
@@ -41,31 +21,66 @@ automation:
               url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
               username: !secret adm_user
               password: !secret adm_password
-
-      # - service: notify.telia_box_stue
-      #   data:
-      #     message: En luring er observert...
-      #     title: Så noen
-      #     data:
-      #       fontsize: small
-      #       position: bottom-right
-      #       duration: 10
-      #       transparency: 50%
-      #       image:
-      #         url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
-      #         username: !secret adm_user
-      #         password: !secret adm_password
-      # - service: notify.telia_box_ingeborg
-      #   data:
-      #     message: En luring er observert...
-      #     title: Så noen
-      #     data:
-      #       fontsize: small
-      #       position: bottom-right
-      #       duration: 10
-      #       transparency: 50%
-      #       image:
-      #         url: http://192.168.68.43:8123{{ state_attr('camera.ezviz_person','entity_picture') }}
-      #         username: !secret adm_user
-      #         password: !secret adm_password
     mode: single
+
+  - id: "entrance_lights"
+    alias: _Utelys
+    description: "Slår utelys av eller på ift. lysnivået"
+    mode: single
+    trigger:
+      - platform: numeric_state
+        entity_id:
+          - sensor.outdoor_motion_east_illuminance_lux
+        for:
+          hours: 0
+          minutes: 10
+          seconds: 0
+        above: 10
+        id: morning
+      - platform: numeric_state
+        entity_id:
+          - sensor.outdoor_motion_east_illuminance_lux
+        for:
+          hours: 0
+          minutes: 10
+          seconds: 0
+        below: 10
+        id: evening
+    condition: []
+    action:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id:
+                  - evening
+            sequence:
+              - service: light.turn_on
+                data:
+                  transition: 2
+                target:
+                  device_id:
+                    - 3d128407a78d606d76516e7e80610610
+                    - 54c1879356d14a78e950c7a89bcd05a6
+                    - 83071f95d2340c7d18d0db45e89871cf
+                    - f2e1eaf69a31e3da40e03871b7a1ea99
+                    - eabec760e691315c77337147948cead2
+                    - 501ff348662707b26c3f25dedd6e3316
+          - conditions:
+              - condition: trigger
+                id:
+                  - morning
+              - condition: time
+                after: "06:00:00"
+            sequence:
+              - service: light.turn_off
+                data:
+                  transition: 2
+                target:
+                  device_id:
+                    - 3d128407a78d606d76516e7e80610610
+                    - 83071f95d2340c7d18d0db45e89871cf
+                    - 54c1879356d14a78e950c7a89bcd05a6
+                    - f2e1eaf69a31e3da40e03871b7a1ea99
+                    - eabec760e691315c77337147948cead2
+                    - 501ff348662707b26c3f25dedd6e3316
+                enabled: true
