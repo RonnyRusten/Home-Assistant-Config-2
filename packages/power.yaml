@@ -208,18 +208,17 @@ sensor:
 
 template:
   - sensor:
-      # - name: Strøm billig segment
-      #   unique_id: power_cheap_period
-      #   state: >-
-      #     {% set intervall_1=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[0:8] | sort(attribute='value') %}
-      #     {% set intervall_2=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[8:16] | sort(attribute='value') %}
-      #     {% set intervall_3=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[16:24] | sort(attribute='value') %}
-      #     {{ (now() >= intervall_1[0].start and now() <= intervall_1[0].end)
-      #     or (now() >= intervall_1[1].start and now() <= intervall_1[1].end)
-      #     or (now() >= intervall_2[0].start and now() <= intervall_2[0].end)
-      #     or (now() >= intervall_2[1].start and now() <= intervall_2[1].end)
-      #     or (now() >= intervall_3[0].start and now() <= intervall_3[0].end)
-      #     or (now() >= intervall_3[1].start and now() <= intervall_3[1].end) }}
+      - name: power_price_level
+        unique_id: power_price_level
+        state: >
+          {% set price_percent_to_average = (state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'price_percent_to_average') | float(0)) * 100 %}
+          {% if price_percent_to_average >= 90 and price_percent_to_average <= 110 %}
+          avg
+          {% elif price_percent_to_average > 110 %}
+          high
+          {% else %}
+          low
+          {% endif %}
 
       - name: kitchen_total_power
         unique_id: kitchen_total_power
@@ -296,6 +295,19 @@ template:
           0.3667
           {% endif %}
         unit_of_measurement: NOK/kWh
+
+      # - name: Strøm billig segment
+      #   unique_id: power_cheap_period
+      #   state: >-
+      #     {% set intervall_1=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[0:8] | sort(attribute='value') %}
+      #     {% set intervall_2=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[8:16] | sort(attribute='value') %}
+      #     {% set intervall_3=state_attr('sensor.nordpool_kwh_molde_nok_3_10_025', 'raw_today')[16:24] | sort(attribute='value') %}
+      #     {{ (now() >= intervall_1[0].start and now() <= intervall_1[0].end)
+      #     or (now() >= intervall_1[1].start and now() <= intervall_1[1].end)
+      #     or (now() >= intervall_2[0].start and now() <= intervall_2[0].end)
+      #     or (now() >= intervall_2[1].start and now() <= intervall_2[1].end)
+      #     or (now() >= intervall_3[0].start and now() <= intervall_3[0].end)
+      #     or (now() >= intervall_3[1].start and now() <= intervall_3[1].end) }}
 
 utility_meter:
   total_hourly_energy:
