@@ -6,7 +6,7 @@ cards:
   - !include bunker_oil_norvevika.yaml
   - !include circle_k_hatlane.yaml
   - !include circle_k_moa.yaml
-  - !include esso_norvegata.yaml
+  # - !include esso_norvegata.yaml
   - !include esso_spjelkavik.yaml
   - !include shell_lerstad.yaml
   - !include uno_x_gaseid.yaml

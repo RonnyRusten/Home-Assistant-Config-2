@@ -47,11 +47,11 @@ rest:
         force_update: true
         json_attributes: *jsonAttributes
 
-      - name: "Esso Nørvegata rest"
-        json_attributes_path: "$..[?(@.id==532)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
+      # - name: "Esso Nørvegata rest"
+      #   json_attributes_path: "$..[?(@.id==532)]"
+      #   value_template: "OK"
+      #   force_update: true
+      #   json_attributes: *jsonAttributes
 
       - name: "Bunker Oil Nørvevika rest"
         json_attributes_path: "$..[?(@.id==2102)]"
@@ -144,18 +144,18 @@ template:
           location: "{{ state_attr('sensor.circle_k_moa_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
-      - name: "Nørvegata"
-        unique_id: "esso_norvegata"
-        picture: "{{ state_attr('sensor.esso_norvegata_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
-        icon: "mdi:gas-station"
-        unit_of_measurement: "Kr/l"
-        attributes:
-          lastUpdate: "{{ ((state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.esso_norvegata_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.esso_norvegata_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.esso_norvegata_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+      # - name: "Nørvegata"
+      #   unique_id: "esso_norvegata"
+      #   picture: "{{ state_attr('sensor.esso_norvegata_rest', 'pictureUrl') }}"
+      #   state: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+      #   icon: "mdi:gas-station"
+      #   unit_of_measurement: "Kr/l"
+      #   attributes:
+      #     lastUpdate: "{{ ((state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
+      #     longitude: "{{ state_attr('sensor.esso_norvegata_rest', 'longitude') }}"
+      #     latitude: "{{ state_attr('sensor.esso_norvegata_rest', 'latitude') }}"
+      #     location: "{{ state_attr('sensor.esso_norvegata_rest', 'location') }}"
+      #     gas: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
 
       - name: "Spjelkavik"
         unique_id: "esso_spjelkavik"
@@ -208,7 +208,7 @@ template:
           latitude: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'latitude') }}"
           location: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'location') }}"
           gas: "{{ (state_attr('sensor.yx_7_eleven_ysteneset_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
-      
+
       - name: "Shell Express Ørsta"
         unique_id: "shell_express_orsta"
         picture: "{{ state_attr('sensor.shell_express_orsta_rest', 'pictureUrl') }}"
