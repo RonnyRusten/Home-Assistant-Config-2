@@ -24,7 +24,7 @@ command_line:
         app_id="com.raskebiler.drivstoff.appen.android";
         api_brands="https://api.drivstoffappen.no/api/v1/brands";
         api_sessions="https://api.drivstoffappen.no/api/v1/authorization-sessions";
-        api_stations="https://api.drivstoffappen.no/api/v1/stations?stationTypeId=1";
+        api_stations="https://api.drivstoffappen.no/api/v1/stations?stationTypeId=1&countryId=1";
         auth_token=$(curl -s $api_sessions | jq -r ".token");
         api_key=$(python -c "import hashlib; auth_token = \"$auth_token\";
         shifted_auth_token=bytearray(auth_token, 'utf-8')[1:] + bytearray(auth_token, 'utf-8')[:1];
