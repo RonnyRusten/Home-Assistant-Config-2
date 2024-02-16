@@ -1,237 +1,222 @@
 ########################################################################################
 #   @author       :   RRU
-#   @date         :   21.march.2022
+#   @date         :   14.02.2024
 #   @solution     :   gas stations
 #   @description  :   Solution to get gas prices from Drivstoffappen.
 #   @basic concept:
-#      Rest integration gets prices from Drivstoffappen and puts them in sensors
-#      Templates are populating sensors with attributes for better presentation in maps.
-#      For a list of gas stations, use a tool like postman and run a query on the api with the apropriate headers.
-#      Link to postman collection:
-#      https://github.com/RonnyRusten/Home-Assistant-Config/blob/master/other/Drivstoffappen.postman_collection.json
+#      Commant_line integration gets prices from Drivstoffappen API and puts them in a sensor
+#      Templates are populating sensors with attributes.
+#      For a list of gas stations, run the command without selecting any IDs
+#      or use a tool like Postman to get them:
+#        get "https://api.drivstoffappen.no/api/v1/stations?stationTypeId=1"
+#        add headers:
+#          X-CLIENT-ID : com.raskebiler.drivstoff.appen.ios
+#          X-API-KEY : check attribute on sensor ;-)
+#      Enter station ids in the "contains parenthesis"
+#   @thank you   :   Terje M for the command line
 ########################################################################################
 
-rest:
-  - scan_interval: 600
-    method: GET
-    headers:
-      Content-Type: application/json
-      X-API-KEY: 24ACBFDD74F54688B46D425104009AD9FC48CEBC-A
-      User-Agent: Drivstoffappen/1.3.8 (com.raskebiler.drivstoff.appen; build:130; iOS 15.2.1) Alamofire/5.4.4
-      Accept-Language: nb-NO;q=1.0, en-GB;q=0.9
-      Accept-Encoding: br;q=1.0, gzip;q=0.9, deflate;q=0.8
-      Connection: keep-alive
-    resource: https://api.drivstoffappen.no/api/stations?stationType=0&countryCode=NO
+command_line:
+  - sensor:
+      name: fuel_prices_command
+      scan_interval: 600
+      command: >
+        app_id="com.raskebiler.drivstoff.appen.android";
+        api_brands="https://api.drivstoffappen.no/api/v1/brands";
+        api_sessions="https://api.drivstoffappen.no/api/v1/authorization-sessions";
+        api_stations="https://api.drivstoffappen.no/api/v1/stations?stationTypeId=1";
+        auth_token=$(curl -s $api_sessions | jq -r ".token");
+        api_key=$(python -c "import hashlib; auth_token = \"$auth_token\";
+        shifted_auth_token=bytearray(auth_token, 'utf-8')[1:] + bytearray(auth_token, 'utf-8')[:1];
+        print(hashlib.md5(shifted_auth_token).hexdigest())");
+        stations=$(curl -s -H "X-API-KEY: $api_key" -H "X-CLIENT-ID: $app_id" $api_stations);
+        brands=$(curl -s -H "X-API-KEY: $api_key" -H "X-CLIENT-ID: $app_id" $api_brands);
+        merged=$(jq -s '[.[0][] as $stations | .[1][] as $brands | select($stations.brandId == $brands.id) | $stations | .brand = $brands]' <(echo "$stations") <(echo "$brands"));
+        echo "{\"stations\": $(echo "$merged" | jq -c '[ .[] | select( .id | contains(42, 532, 564, 723, 748, 1093, 1322, 2102, 2129)) ]'), \"api-key\":\" $(echo "$api_key")\" }"
+      json_attributes:
+        - api-key
+        - stations
+      value_template: OK
 
-    sensor:
-      - name: "Circle K Hatlane rest"
-        json_attributes_path: "$..[?(@.id==748)]" #.stationDetails..[?(@.type=='D')]"
-        value_template: "OK" # "{{ state_attr('sensor.circle_k_hatlane_2', 'stationDetails')[1].price }}"
-        force_update: true
-        json_attributes: &jsonAttributes
-          - "stationDetails"
-          - "location"
-          - "latitude"
-          - "longitude"
-          - "pictureUrl"
-
-      - name: "Circle K Moa rest"
-        json_attributes_path: "$..[?(@.id==723)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "Esso Spjelkavik rest"
-        json_attributes_path: "$..[?(@.id==564)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      # - name: "Esso Nørvegata rest"
-      #   json_attributes_path: "$..[?(@.id==532)]"
-      #   value_template: "OK"
-      #   force_update: true
-      #   json_attributes: *jsonAttributes
-
-      - name: "Bunker Oil Nørvevika rest"
-        json_attributes_path: "$..[?(@.id==2102)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "Bunker Oil Breivika rest"
-        json_attributes_path: "$..[?(@.id==2129)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "Shell Lerstad rest"
-        json_attributes_path: "$..[?(@.id==1322)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "Uno-X Gåseid rest"
-        json_attributes_path: "$..[?(@.id==42)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "YX 7-Eleven Ysteneset rest"
-        json_attributes_path: "$..[?(@.id==1093)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-      - name: "Shell Express Ørsta rest"
-        json_attributes_path: "$..[?(@.id==1239)]"
-        value_template: "OK"
-        force_update: true
-        json_attributes: *jsonAttributes
-
-# New sensors with more suitable state and attributes.
+# New sensors from command line output.
 template:
   - sensor:
       - name: "Breivika"
         unique_id: "bunker_oil_breivika"
-        picture: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.bunker_oil_breivika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.bunker_oil_breivika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.bunker_oil_breivika_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.bunker_oil_breivika_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2129) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Nørvevika"
         unique_id: "bunker_oil_norvevika"
-        picture: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.bunker_oil_norvevika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.bunker_oil_norvevika_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.bunker_oil_norvevika_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.bunker_oil_norvevika_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 2102) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Hatlane"
         unique_id: "circle_k_hatlane"
-        picture: "{{ state_attr('sensor.circle_k_hatlane_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.circle_k_hatlane_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.circle_k_hatlane_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.circle_k_hatlane_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.circle_k_hatlane_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.circle_k_hatlane_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.circle_k_hatlane_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 748) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Moa"
         unique_id: "circle_k_moa"
-        picture: "{{ state_attr('sensor.circle_k_moa_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.circle_k_moa_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.circle_k_moa_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.circle_k_moa_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.circle_k_moa_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 723) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       # - name: "Nørvegata"
       #   unique_id: "esso_norvegata"
-      #   picture: "{{ state_attr('sensor.esso_norvegata_rest', 'pictureUrl') }}"
-      #   state: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+      #   state: >
+      #     {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
       #   icon: "mdi:gas-station"
+      #   picture: >
+      #     {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).brand.pictureUrl }}
       #   unit_of_measurement: "Kr/l"
       #   attributes:
-      #     lastUpdate: "{{ ((state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-      #     longitude: "{{ state_attr('sensor.esso_norvegata_rest', 'longitude') }}"
-      #     latitude: "{{ state_attr('sensor.esso_norvegata_rest', 'latitude') }}"
-      #     location: "{{ state_attr('sensor.esso_norvegata_rest', 'location') }}"
-      #     gas: "{{ (state_attr('sensor.esso_norvegata_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+      #     lastUpdate: >
+      #       {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+      #     longitude: >
+      #       {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).longitude }}
+      #     latitude: >
+      #       {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).latitude }}
+      #     location: >
+      #       {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).location }}
+      #     gas: >
+      #       {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 532) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Spjelkavik"
         unique_id: "esso_spjelkavik"
-        picture: "{{ state_attr('sensor.esso_spjelkavik_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.esso_spjelkavik_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.esso_spjelkavik_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.esso_spjelkavik_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.esso_spjelkavik_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.esso_spjelkavik_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.esso_spjelkavik_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 564) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Lerstad"
         unique_id: "shell_lerstad"
-        picture: "{{ state_attr('sensor.shell_lerstad_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.shell_lerstad_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.shell_lerstad_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.shell_lerstad_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.shell_lerstad_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.shell_lerstad_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.shell_lerstad_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1322) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Gåseid"
         unique_id: "uno_x_gaseid"
-        picture: "{{ state_attr('sensor.uno_x_gaseid_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.uno_x_gaseid_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.uno_x_gaseid_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.uno_x_gaseid_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.uno_x_gaseid_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.uno_x_gaseid_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.uno_x_gaseid_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 42) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
 
       - name: "Ysteneset"
         unique_id: "yx_7_eleven_ysteneset"
-        picture: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.yx_7_eleven_ysteneset_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
+        state: >
+          {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).price }}
         icon: "mdi:gas-station"
+        picture: >
+          {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).brand.pictureUrl }}
         unit_of_measurement: "Kr/l"
         attributes:
-          lastUpdate: "{{ ((state_attr('sensor.yx_7_eleven_ysteneset_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.yx_7_eleven_ysteneset_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.yx_7_eleven_ysteneset_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
-
-      - name: "Shell Express Ørsta"
-        unique_id: "shell_express_orsta"
-        picture: "{{ state_attr('sensor.shell_express_orsta_rest', 'pictureUrl') }}"
-        state: "{{ (state_attr('sensor.shell_express_orsta_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='price') | list)[0] }}"
-        icon: "mdi:gas-station"
-        unit_of_measurement: "Kr/l"
-        attributes:
-          lastUpdate: "{{ ((state_attr('sensor.shell_express_orsta_rest','stationDetails') | selectattr('type', '==', 'D') | map(attribute='lastUpdated') | list)[0] | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-          longitude: "{{ state_attr('sensor.shell_express_orsta_rest', 'longitude') }}"
-          latitude: "{{ state_attr('sensor.shell_express_orsta_rest', 'latitude') }}"
-          location: "{{ state_attr('sensor.shell_express_orsta_rest', 'location') }}"
-          gas: "{{ (state_attr('sensor.shell_express_orsta_rest','stationDetails') | selectattr('type', '==', '95') | map(attribute='price') | list)[0] }}"
-
-    # - name: "YX Larsnes"
-    #   unique_id: "yx_larsnes"
-    #   picture: "{{ state_attr('sensor.yx_larsnes_rest', 'pictureUrl') }}"
-    #   state: "{{  (state_attr('sensor.yx_larsnes_rest','stationDetails')[1].price) }}"
-    #   icon: "mdi:gas-station"
-    #   unit_of_measurement: "Kr/l"
-    #   attributes:
-    #     lastUpdate: "{{  (state_attr('sensor.yx_larsnes_rest','stationDetails')[1].lastUpdated|int/1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}"
-    #     longitude: "{{ state_attr('sensor.yx_larsnes_rest', 'longitude') }}"
-    #     latitude: "{{ state_attr('sensor.yx_larsnes_rest', 'latitude') }}"
-    #     location: "{{ state_attr('sensor.yx_larsnes_rest', 'location') }}"
-    #     lead95: "{{  (state_attr('sensor.yx_larsnes_rest','stationDetails')[0].price) }}"
-    #     diesel: "{{  (state_attr('sensor.yx_larsnes_rest','stationDetails')[1].price) }}"
+          lastUpdate: >
+            {{ ((((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).prices) | selectattr("fuelTypeId", "==", 1) | first).lastUpdated | int / 1000) | timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          longitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).longitude }}
+          latitude: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).latitude }}
+          location: >
+            {{ (state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).location }}
+          gas: >
+            {{ (((state_attr('sensor.fuel_prices_command','stations') | selectattr("id", "==", 1093) | first).prices) | selectattr("fuelTypeId", "==", 2) | first).price }}
